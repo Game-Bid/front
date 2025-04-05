@@ -1,5 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata } from "next/types";
 import "./globals.css";
+import QueryProvider from "@/components/QueryProvider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export const metadata: Metadata = {
   title: "Game-Bid",
@@ -12,8 +14,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="ko">
+      <body>
+        <QueryProvider>
+          {children}
+          <ReactQueryDevtools />
+        </QueryProvider>
+      </body>
     </html>
   );
 }
