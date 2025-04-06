@@ -32,6 +32,7 @@ export default {
         bgGrayDepth2: "var(--gray-700)",
         bgGrayDepth3: "var(--gray-600)",
 
+        borderPrimary: "var(--primary-300)",
         borderDefault: "var(--gray-300)",
         borderFocused: "var(--gray-200)",
         borderDivider: "var(--gray-600)",

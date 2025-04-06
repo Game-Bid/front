@@ -17,6 +17,8 @@
 
 body {
   font-family: "Pretendard-Regular";
+  background-color: var(--gray-800);
+  color: var(--gray-50);
 }
 
 .absolute-center {
