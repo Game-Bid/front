@@ -5,9 +5,11 @@ import ICONS from "./Constants";
 type IconProps = {
   icon: IconList;
   className?: string;
+  fill?: string;
+  stroke?: string;
 };
 
-const CustomIcon = ({ icon, className }: IconProps) => {
+const CustomIcon = ({ icon, className, fill, stroke }: IconProps) => {
   const iconData = ICONS[icon];
   const svgOptions = iconData.svgOptions || {};
 
@@ -15,7 +17,8 @@ const CustomIcon = ({ icon, className }: IconProps) => {
     <svg
       className={cn("fill-current", className)}
       viewBox={svgOptions.viewBox || "0 0 20 20"}
-      fill="none"
+      fill={fill}
+      stroke={stroke}
       xmlns="http://www.w3.org/2000/svg"
       {...svgOptions}
     >
