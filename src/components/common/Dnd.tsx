@@ -72,11 +72,11 @@ const Dnd = ({ files, setFiles }: Props) => {
   const addFiles = (newFiles: File[]) => {
     console.log(newFiles);
     const existingFileNames = files.map((file) => file.name);
-    let duplicateFileName: string | null = null;
+    // let duplicateFileName: string | null = null;
 
     const filteredFiles = newFiles.filter((file) => {
       if (existingFileNames.includes(file.name)) {
-        duplicateFileName = file.name;
+        // duplicateFileName = file.name;
         return false;
       }
       return true;

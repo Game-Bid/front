@@ -14,7 +14,7 @@ const ConfirmPasswordSection = ({
       <input
         id="checkPassword"
         type="password"
-        {...register("checkPassword")}
+        {...register("checkedPassword")}
         placeholder="비밀번호를 한 번 더 입력해주세요."
         className="h-[48px] px-3 rounded-[12px] bg-fillGrayDefault"
       />

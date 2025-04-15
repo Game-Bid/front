@@ -1,7 +1,7 @@
 "use client";
 
 import Dnd from "@/components/common/Dnd";
-import CustomIcon from "@/Icons";
+// import CustomIcon from "@/Icons";
 import React, { useState } from "react";
 
 const Page = () => {

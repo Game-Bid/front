@@ -29,6 +29,8 @@ const SignUpForm = () => {
     console.log("회원가입 제출 데이터:", data);
   };
 
+  console.log(setValue, errors, isGameModalOpen, setFavoriteGame);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
       <EmailSection register={register} watch={watch} />
