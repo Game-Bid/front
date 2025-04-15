@@ -4,6 +4,7 @@ import QueryProvider from "@/components/QueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Header from "@/components/layout/Header";
 import localFont from "next/font/local";
+import { ToastProvider } from "@/context/ToastContext";
 
 export const metadata: Metadata = {
   title: "Game-Bid",
@@ -25,9 +26,11 @@ export default function RootLayout({
     <html lang="ko">
       <body className={`antialiased ${pretendard.className}`}>
         <QueryProvider>
-          <Header />
-          <main className="mt-[82px]">{children}</main>
-          <ReactQueryDevtools />
+          <ToastProvider>
+            <Header />
+            <main className="mt-[82px]">{children}</main>
+            <ReactQueryDevtools />
+          </ToastProvider>
         </QueryProvider>
       </body>
     </html>
