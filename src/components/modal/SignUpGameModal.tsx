@@ -46,21 +46,26 @@ const SignUpGameModal = ({
       className="fixed inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-start gap-4 z-50"
       onClick={handleOverlayClick}
     >
-      <p className="w-[600px] text-left text-[18px] leading-[25.2px] tracking-[-0.36px] text-fgGrayDefault">
+      <p className="w-[600px] text-left text-[18px] leading-[1.4em] tracking-[-0.02em] text-fgGrayDefault">
         게임 선택
       </p>
-      <div className="w-[600px] px-4 py-4 flex flex-col gap-[12px] rounded-[12px] border border-fgPrimaryAccent bg-fillGrayDefault">
-        <div className="flex gap-[10px] items-center">
-          <button type="button">
-            <CustomIcon icon="SEARCH_ICON_SVG" className="w-[24px] h-[24px]" />
-          </button>
-          <input
-            type="text"
-            placeholder="게임 검색"
-            className="w-full py-2 rounded-[8px] h-[48px] flex bg-fillGrayDefault"
-          />
+      <div className="w-[600px] px-8 flex flex-col gap-3 rounded-[12px] border border-fgPrimaryAccent bg-fillGrayDefault">
+        <div className="flex flex-col">
+          <div className="flex gap-[10px] items-center">
+            <button type="button">
+              <CustomIcon
+                icon="SEARCH_ICON_SVG"
+                className="w-[24px] h-[24px] fill-none"
+              />
+            </button>
+            <input
+              type="text"
+              placeholder="게임 검색"
+              className="w-full py-2 rounded-[8px] h-[48px] flex bg-fillGrayDefault"
+            />
+          </div>
+          <hr className="my-[2px]" />
         </div>
-        <hr className="my-[2px]" />
         <div>
           <ul className="flex flex-col items-start">
             {games.map((game) => (

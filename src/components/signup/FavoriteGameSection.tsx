@@ -26,7 +26,7 @@ const FavoriteGameSection = ({
         readOnly
         className={cn("h-[48px] px-3 pr-10 rounded-[12px] bg-fillGrayDefault")}
         value={favoriteGame}
-        {...register("favoriteGame")}
+        {...register("favoriteGame", { required: true })}
       />
       <button
         type="button"

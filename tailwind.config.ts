@@ -49,6 +49,8 @@ export default {
         fillGrayFocused: "var(--gray-400)",
         fillGrayPressed: "var(--gray-600)",
         fillGrayDisabled: "var(--gray-600)",
+
+        systemFailed: "var(--system-failed)",
       },
       spacing: {
         4: "0.25rem",

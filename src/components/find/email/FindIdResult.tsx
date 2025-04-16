@@ -18,10 +18,10 @@ const FindIdResult = ({ userInfo }: FindIdResultProps) => {
     <div className="flex flex-col gap-5">
       {resultInfo.map((item, idx) => (
         <div key={idx} className="flex flex-col gap-1">
-          <h1 className="text-[16px] leading-[22.4px] tracking-[-0.32px] text-fgGrayDefault">
+          <h1 className="text-[16px] leading-[1.4em] tracking-[-0.02em] text-fgGrayDefault">
             {item.label}
           </h1>
-          <p className="text-[18px] leading-[25.2px] tracking-[-0.36px] text-fgPrimaryAccent">
+          <p className="text-[18px] leading-[1.4em] tracking-[-0.02em] text-fgPrimaryAccent">
             {item.value}
           </p>
         </div>

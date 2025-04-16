@@ -17,7 +17,7 @@ interface FindPwdFormData {
 }
 
 const LABEL_STYLES =
-  "text-[18px] leading-[25.2px] tracking-[-0.36px] text-fgGrayDefault";
+  "text-[18px] leading-[1.4em] tracking-[-0.02em] text-fgGrayDefault";
 const INPUT_STYLES =
   "w-full h-[48px] px-3 rounded-[10px] bg-fillGrayDefault focus:border focus:border-borderPrimary";
 const BUTTON_ICON_STYLES = "w-[24px] h-[24px]";
@@ -80,7 +80,7 @@ const FindPwdForm = ({ onSuccess }: FindPwdFormProps) => {
             })}
             className={cn(
               INPUT_STYLES,
-              errors.name ? "border-[#F0424B]" : "border-borderDefault",
+              errors.name ? "border-systemFailed" : "border-borderDefault",
               nameValue && "pr-10"
             )}
             placeholder="이름을 입력해주세요."
@@ -119,7 +119,7 @@ const FindPwdForm = ({ onSuccess }: FindPwdFormProps) => {
                     INPUT_NUMBER_STYLES,
                     "w-full",
                     errors.phoneNum?.[field.id]
-                      ? "border-[#F0424B]"
+                      ? "border-systemFailed"
                       : "border-borderDefault",
                     phoneNumValues?.[field.id] && "pr-10"
                   )}
@@ -163,7 +163,7 @@ const FindPwdForm = ({ onSuccess }: FindPwdFormProps) => {
             })}
             className={cn(
               INPUT_STYLES,
-              errors.email ? "border-[#F0424B]" : "border-borderDefault",
+              errors.email ? "border-systemFailed" : "border-borderDefault",
               emailValue && "pr-10"
             )}
             placeholder="이메일을 입력해주세요."

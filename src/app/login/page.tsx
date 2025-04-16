@@ -5,7 +5,7 @@ import Link from "next/link";
 import React from "react";
 
 const NAV_LINKS = [
-  { href: "/find/email", text: "아이디 찾기" },
+  { href: "/find/email", text: "이메일 찾기" },
   { href: "/find/password", text: "비밀번호 찾기" },
   { href: "/signup", text: "회원가입" },
 ];
@@ -27,7 +27,7 @@ const Page = () => {
 
         <LoginForm />
 
-        <div className="w-full flex-center gap-5 text-[16px] font-normal leading-[22.4px] tracking-[-0.32px] text-fgGrayDefault">
+        <div className="w-full flex-center gap-5 text-[16px] font-normal leading-[1.4em] tracking-[-0.02em] text-fgGrayDefault">
           {NAV_LINKS.map((link) => (
             <Link key={link.href} href={link.href} className="px-3">
               <p>{link.text}</p>
