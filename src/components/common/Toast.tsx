@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 
 import { createRoot } from "react-dom/client";
 import ToastMessage, { ToastType } from "./ToastMessage";
+import { AnimatePresence } from "motion/react";
 
 interface ToastItem {
   id: number;
@@ -47,16 +48,16 @@ const ToastContainer = () => {
 
   return createPortal(
     <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[200]">
-      {/* <AnimatePresence> */}
-      {toasts.map((toast) => (
-        <ToastMessage
-          type={toast.type}
-          title={toast.title}
-          content={toast.content}
-          key={toast.id}
-        />
-      ))}
-      {/* </AnimatePresence> */}
+      <AnimatePresence mode="popLayout">
+        {toasts.map((toast) => (
+          <ToastMessage
+            type={toast.type}
+            title={toast.title}
+            content={toast.content}
+            key={toast.id}
+          />
+        ))}
+      </AnimatePresence>
     </div>,
     document.body
   );

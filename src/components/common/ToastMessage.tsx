@@ -1,7 +1,7 @@
 import React from "react";
 import CustomIcon from "@/Icons";
 import { cn } from "../../_utils/clsx";
-// import { ToastType } from "@/types/toast";
+import { motion } from "motion/react";
 
 export type ToastType = "success" | "warning";
 interface ToastMessageProps {
@@ -12,7 +12,16 @@ interface ToastMessageProps {
 
 const ToastMessage = ({ type, title, content }: ToastMessageProps) => {
   return (
-    <div
+    <motion.div
+      layout
+      initial={{ opacity: 0, scale: 0.5, y: 0 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.5, y: 0 }}
+      transition={{
+        layout: { duration: 0.3, ease: "easeOut" },
+        opacity: { duration: 0.2 },
+        scale: { duration: 0.2 },
+      }}
       className={cn(
         "z-[200] flex items-center w-[25rem] p-[0.75rem] gap-[1rem] bg-fillGrayDefault rounded-[0.75rem] shadow-[0px_16px_24px_rgba(0,0,0,0.14),_0px_6px_30px_rgba(0,0,0,0.12),_0px_8px_10px_rgba(0,0,0,0.20)] mb-2"
       )}
@@ -39,7 +48,7 @@ const ToastMessage = ({ type, title, content }: ToastMessageProps) => {
           {content}
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

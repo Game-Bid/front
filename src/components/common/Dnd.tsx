@@ -1,6 +1,7 @@
 "use client";
 import CustomIcon from "@/Icons/Icon";
 import { useState, useRef, useEffect } from "react";
+import { showToast } from "./Toast";
 
 interface Props {
   files: File[];
@@ -61,7 +62,11 @@ const Dnd = ({ files, setFiles }: Props) => {
     });
 
     if (filteredFiles.length < droppedFiles.length) {
-      alert("파일 형식 오류");
+      showToast(
+        "warning",
+        "파일 형식 오류",
+        "타입에 맞는 파일형식을 제출해주세요."
+      );
     }
 
     if (filteredFiles.length > 0) {
@@ -70,13 +75,18 @@ const Dnd = ({ files, setFiles }: Props) => {
   };
 
   const addFiles = (newFiles: File[]) => {
-    console.log(newFiles);
+    // console.log(newFiles);
     const existingFileNames = files.map((file) => file.name);
     // let duplicateFileName: string | null = null;
 
     const filteredFiles = newFiles.filter((file) => {
       if (existingFileNames.includes(file.name)) {
         // duplicateFileName = file.name;
+        showToast(
+          "warning",
+          "중복 파일 제출",
+          "똑같은 파일이 업로드 되었습니다."
+        );
         return false;
       }
       return true;
@@ -85,7 +95,11 @@ const Dnd = ({ files, setFiles }: Props) => {
     const totalFiles = files.length + filteredFiles.length;
 
     if (totalFiles > 10) {
-      alert("파일 업로드는 10개까지 가능합니다.");
+      showToast(
+        "warning",
+        "파일 갯수 초과",
+        "파일업로드는 10개까지 가능합니다."
+      );
     } else {
       setFiles((prev) => [...prev, ...filteredFiles]);
     }
