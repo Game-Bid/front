@@ -19,7 +19,7 @@ const Page = () => {
           className="bg-black text-white rounded-2xl px-2 py-1 m-2"
         >
           Success
-        </button>{" "}
+        </button>
         <button
           onClick={() => showToast("warning", "Warning 제목", "Warning 메세지")}
           className="bg-black text-white rounded-2xl px-2 py-1 m-2"
