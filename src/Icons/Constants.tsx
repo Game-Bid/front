@@ -177,8 +177,7 @@ const ICONS = {
       />
     ),
   },
-
-  CHECK_ICON_SVG: {
+  Check_Icon: {
     svgOptions: {
       viewBox: "0 0 24 24",
     },
