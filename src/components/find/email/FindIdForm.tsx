@@ -3,8 +3,11 @@
 import { cn } from "@/_utils/clsx";
 import CustomIcon from "@/Icons";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, UseFormRegister } from "react-hook-form";
 import NextFind from "../NextFind";
+import MultiInput from "@/components/common/input/MultiInput";
+import { SignUpFormData } from "@/_types/signup/SignUpFormData";
+import TextInput from "@/components/common/input/TextInput";
 
 interface FindIdFormData {
   name: string;
@@ -19,7 +22,7 @@ const FindIdForm = ({ onSuccess }: FindIdFormProps) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { isValid },
     watch,
     setValue,
     getValues,
@@ -31,8 +34,7 @@ const FindIdForm = ({ onSuccess }: FindIdFormProps) => {
     },
   });
 
-  const nameValue = watch("name");
-  const phoneNumValues = watch("phoneNum");
+  const name = watch("name");
 
   const onSubmit = (data: FindIdFormData) => {
     console.log("Input:", data);
@@ -53,16 +55,14 @@ const FindIdForm = ({ onSuccess }: FindIdFormProps) => {
     }
   };
 
-  const phoneFields = [
-    { id: 0, placeholder: "010", maxLength: 3 },
-    { id: 1, placeholder: "0000", maxLength: 4 },
-    { id: 2, placeholder: "0000", maxLength: 4 },
-  ];
+  const phoneInputs = [
+    { placeholder: "010", maxLength: 3, name: "phoneNum.first" },
+    { placeholder: "1234", maxLength: 4, name: "phoneNum.middle" },
+    { placeholder: "5678", maxLength: 4, name: "phoneNum.last" },
+  ] as const;
 
   const LABEL_STYLES =
     "text-[18px] leading-[1.4em] tracking-[-0.02em] text-fgGrayDefault";
-  const INPUT_NUMBER_STYLES =
-    "h-[48px] px-3 rounded-[10px] bg-fillGrayDefault focus:border focus:border-borderPrimary text-center";
 
   return (
     <>
@@ -72,76 +72,34 @@ const FindIdForm = ({ onSuccess }: FindIdFormProps) => {
           <label htmlFor="name" className={LABEL_STYLES}>
             이름
           </label>
-          <div className="relative">
-            <input
-              id="name"
-              type="text"
-              autoFocus
-              {...register("name", {
-                required: "이름을 입력해주세요.",
-              })}
-              className={cn(
-                "w-full h-[48px] px-3 rounded-[10px] bg-fillGrayDefault focus:border focus:border-borderPrimary",
-                errors.name ? "border-systemFailed" : "border-borderDefault",
-                nameValue && "pr-10"
-              )}
-              placeholder="이름을 입력해주세요."
-            />
-            {nameValue && (
-              <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+          <TextInput<SignUpFormData>
+            id="name"
+            name="name"
+            type="name"
+            placeholder="이름을 입력해주세요."
+            register={register as unknown as UseFormRegister<SignUpFormData>}
+            className="w-full h-[48px] px-3 rounded-[12px] bg-fillGrayDefault focus:border focus:border-borderPrimary"
+            required={true}
+            rightElement={
+              name && (
                 <button type="button" onClick={() => clearField("name")}>
-                  <CustomIcon icon="CLOSE_SVG" />
+                  <CustomIcon icon="CLOSE_SVG" className="w-[24px] h-[24px]" />
                 </button>
-              </div>
-            )}
-          </div>
+              )
+            }
+          />
         </div>
 
         {/* 휴대폰 번호 입력 필드 */}
         <div className="flex flex-col gap-2">
-          <label htmlFor="phoneNum[0]" className={LABEL_STYLES}>
-            휴대폰 번호
-          </label>
           <div className="flex items-center">
-            {phoneFields.map((field, index) => (
-              <React.Fragment key={field.id}>
-                {index > 0 && <div className="mx-2 text-xl">-</div>}
-                <div className="relative flex-1">
-                  <input
-                    id={`phoneNum[${field.id}]`}
-                    type="text"
-                    inputMode="numeric"
-                    {...register(`phoneNum.${field.id}` as const, {
-                      required: "휴대폰 번호를 입력해주세요.",
-                      maxLength: field.maxLength,
-                    })}
-                    className={cn(
-                      INPUT_NUMBER_STYLES,
-                      "w-full",
-                      errors.phoneNum?.[field.id]
-                        ? "border-systemFailed"
-                        : "border-borderDefault",
-                      phoneNumValues?.[field.id] && "pr-10"
-                    )}
-                    placeholder={field.placeholder}
-                    maxLength={field.maxLength}
-                  />
-                  {phoneNumValues?.[field.id] && (
-                    <div className="flex gap-[10px] absolute right-2 top-1/2 transform -translate-y-1/2">
-                      <button
-                        type="button"
-                        onClick={() => clearField(field.id)}
-                      >
-                        <CustomIcon
-                          icon="CLOSE_SVG"
-                          className="w-[24px] h-[24px]"
-                        />
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </React.Fragment>
-            ))}
+            <MultiInput
+              label="휴대폰 번호"
+              name="phoneNum"
+              inputConfigs={phoneInputs}
+              register={register as unknown as UseFormRegister<SignUpFormData>}
+              showDash={true}
+            />
           </div>
         </div>
 

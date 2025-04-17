@@ -14,7 +14,7 @@ interface InputProps<T extends FieldValues> {
   placeholder?: string;
   register: UseFormRegister<T>;
   errors?: FieldErrors<T>;
-  className: string; // 원래 필수 prop으로 복원
+  className: string;
   required?: boolean;
   disabled?: boolean;
   autoFocus?: boolean;
@@ -79,7 +79,7 @@ const TextInput = <T extends FieldValues>({
           autoFocus={autoFocus}
           disabled={disabled}
           {...register(name, rules)}
-          className={`${className} ${rightElement ? "pr-16" : ""}`} // 다중 아이콘을 위한 패딩 추가, 기존 스타일 유지
+          className={`${className} ${rightElement ? "pr-16" : ""}`}
         />
         {rightElement && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center">
@@ -87,7 +87,7 @@ const TextInput = <T extends FieldValues>({
           </div>
         )}
       </div>
-      {errors?.[name] && (
+      {errors?.[name]?.message && (
         <p className="text-[12px] text-fgGrayPlaceholder">
           {errors[name]?.message as React.ReactNode}
         </p>
