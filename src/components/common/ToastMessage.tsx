@@ -36,7 +36,9 @@ const ToastMessage = ({ type, title, content }: ToastMessageProps) => {
         />
         <div className="w-[1.5rem] h-[1.5rem]">
           <CustomIcon
-            icon={type === "success" ? "CHECK_ICON_SVG" : "Warning_Icon"}
+            icon={
+              type === "success" ? "TOAST_CHECK_ICON_SVG" : "TOAST_WARNING_ICON"
+            }
           />
         </div>
       </div>

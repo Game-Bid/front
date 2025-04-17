@@ -107,7 +107,7 @@ const AgreementSection = ({
               {watchedValues[item.id] && (
                 <CustomIcon
                   icon="CHECK_ICON_SVG"
-                  className="w-[24px] h-[24px]"
+                  className="w-[24px] h-[24px] bg-transparent"
                 />
               )}
               <input

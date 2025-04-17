@@ -1,17 +1,19 @@
 "use client";
 
-import { UseFormRegister, UseFormWatch } from "react-hook-form";
+import { FieldErrors, UseFormRegister, UseFormWatch } from "react-hook-form";
 import { cn } from "@/_utils/clsx";
 import { SignUpFormData } from "@/_types/signup/SignUpFormData";
 import VerificationSection from "./VerificationSection";
 import { useState } from "react";
+import TextInput from "../common/input/TextInput";
 
 interface EmailSectionProps {
   register: UseFormRegister<SignUpFormData>;
   watch: UseFormWatch<SignUpFormData>;
+  errors: FieldErrors<SignUpFormData>;
 }
 
-const EmailSection = ({ register, watch }: EmailSectionProps) => {
+const EmailSection = ({ register, watch, errors }: EmailSectionProps) => {
   const email = watch("email");
   const emailNumber = watch("checkedEmailNumber");
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email || "");
@@ -32,21 +34,18 @@ const EmailSection = ({ register, watch }: EmailSectionProps) => {
           이메일
         </label>
         <div className="flex gap-2">
-          <input
+          <TextInput
             id="email"
+            name="email"
             type="email"
             autoFocus
             disabled={isInputLocked}
             placeholder="이메일을 입력해주세요."
-            {...register("email", {
-              required: "이메일을 입력해주세요.",
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "유효한 이메일 형식을 입력해주세요.",
-              },
-            })}
+            register={register}
+            errors={errors}
+            required
             className={cn(
-              "h-[48px] px-3 w-full rounded-[12px] focus:border focus:border-borderPrimary",
+              "w-[269px] h-[48px] px-3 rounded-[12px] focus:border focus:border-borderPrimary",
               isInputLocked
                 ? "bg-fillGrayDisabled text-fgGrayDisabled cursor-not-allowed"
                 : "bg-fillGrayDefault text-fgGrayFocused"
@@ -57,7 +56,7 @@ const EmailSection = ({ register, watch }: EmailSectionProps) => {
             onClick={handleVerificationSection}
             disabled={!isValidEmail || isInputLocked}
             className={cn(
-              "h-[48px] px-3 rounded-[12px] whitespace-nowrap",
+              "w-[123px] h-[48px] px-3 rounded-[12px] whitespace-nowrap",
               !isValidEmail || isInputLocked
                 ? "bg-fillGrayDisabled text-fgGrayDisabled"
                 : "bg-fillGrayDefault text-fgGrayDefault"

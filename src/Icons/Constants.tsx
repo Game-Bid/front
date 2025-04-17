@@ -182,6 +182,20 @@ const ICONS = {
       viewBox: "0 0 24 24",
     },
     icon: (
+      <path
+        d="M16.7992 8.40002L9.6397 15.6L7.19922 13.1457"
+        stroke="#EFEFF0"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    ),
+  },
+  TOAST_CHECK_ICON_SVG: {
+    svgOptions: {
+      viewBox: "0 0 24 24",
+    },
+    icon: (
       <>
         <mask
           id="mask0_585_2939"
@@ -203,7 +217,7 @@ const ICONS = {
       </>
     ),
   },
-  Warning_Icon: {
+  TOAST_WARNING_ICON: {
     svgOptions: {
       viewBox: "0 0 24 24",
     },
