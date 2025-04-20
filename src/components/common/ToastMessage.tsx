@@ -23,10 +23,10 @@ const ToastMessage = ({ type, title, content }: ToastMessageProps) => {
         scale: { duration: 0.2 },
       }}
       className={cn(
-        "z-[200] flex items-center w-[25rem] p-[0.75rem] gap-[1rem] bg-fillGrayDefault rounded-[0.75rem] shadow-[0px_16px_24px_rgba(0,0,0,0.14),_0px_6px_30px_rgba(0,0,0,0.12),_0px_8px_10px_rgba(0,0,0,0.20)] mb-2"
+        "z-[200] flex items-center w-[25rem] h-[66px] p-3 gap-4 bg-fillGrayDefault rounded-[0.75rem] shadow-[0px_16px_24px_rgba(0,0,0,0.14),_0px_6px_30px_rgba(0,0,0,0.12),_0px_8px_10px_rgba(0,0,0,0.20)] mb-2 leading-[140%]"
       )}
     >
-      <div className="relative w-[3rem] h-[3rem] flex-center">
+      <div className="relative w-[4rem] h-[342rem] flex-center">
         <div
           className={`absolute inset-0 rounded-full ${
             type === "success"
@@ -42,7 +42,7 @@ const ToastMessage = ({ type, title, content }: ToastMessageProps) => {
           />
         </div>
       </div>
-      <div className="flex flex-col gap-[0.25rem]">
+      <div className="flex flex-col ">
         <p className="text-[1rem] font-bold text-fgGrayFocused tracking-[-0.02rem]">
           {title}
         </p>
