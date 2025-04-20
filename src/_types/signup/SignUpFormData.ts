@@ -4,6 +4,7 @@ export interface SignUpFormData {
   password: string;
   checkedPassword: string;
   name: string;
+  code: string;
   phoneNum: {
     first: number;
     middle: number;

@@ -6,6 +6,7 @@ import { SignUpFormData } from "@/_types/signup/SignUpFormData";
 import VerificationSection from "./VerificationSection";
 import { useState } from "react";
 import TextInput from "../common/input/TextInput";
+import { usePostVerifyRequest } from "@/hooks/fetcher/signup/usePostVerifyRequest";
 
 interface EmailSectionProps {
   register: UseFormRegister<SignUpFormData>;
@@ -15,14 +16,22 @@ interface EmailSectionProps {
 
 const EmailSection = ({ register, watch, errors }: EmailSectionProps) => {
   const email = watch("email");
-  const emailNumber = watch("checkedEmailNumber");
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email || "");
   const [activeVerification, setActiveVerification] = useState(false);
   const [isResent, setIsResent] = useState(false);
   const [isInputLocked, setIsInputLocked] = useState(false);
 
-  const handleVerificationSection = () => {
+  const { mutate: sendEmailVerification } = usePostVerifyRequest();
+
+  // const {
+  //   mutate: sendEmailVerification,
+  //   isPending,
+  //   isError,
+  // } = usePostVerifyRequest();
+
+  const handleSendVerification = () => {
     if (!isValidEmail) return;
+    sendEmailVerification(email, {});
     setActiveVerification(true);
     setIsResent(true);
   };
@@ -53,7 +62,7 @@ const EmailSection = ({ register, watch, errors }: EmailSectionProps) => {
           />
           <button
             type="button"
-            onClick={handleVerificationSection}
+            onClick={handleSendVerification}
             disabled={!isValidEmail || isInputLocked}
             className={cn(
               "w-[123px] h-[48px] px-3 rounded-[12px] whitespace-nowrap",
@@ -69,7 +78,7 @@ const EmailSection = ({ register, watch, errors }: EmailSectionProps) => {
       {activeVerification && (
         <VerificationSection
           active={activeVerification}
-          watch={emailNumber}
+          watch={watch}
           register={register}
           onVerifyStateChange={({ isVerified, timeLeft }) => {
             setIsInputLocked(isVerified || timeLeft === 0);

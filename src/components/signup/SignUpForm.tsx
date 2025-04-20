@@ -15,6 +15,7 @@ import { cn } from "@/_utils/clsx";
 import { useRouter } from "next/navigation";
 import { showToast } from "../common/Toast";
 import LoginButton from "../login/LoginButton";
+// import { useRegister } from "@/hooks/fetcher/signup/usePostRegister";
 
 const SignUpForm = () => {
   const {
@@ -30,6 +31,7 @@ const SignUpForm = () => {
   const router = useRouter();
   const [favoriteGame, setFavoriteGame] = useState("");
   const [isGameModalOpen, setIsGameModalOpen] = useState(false);
+  // const { mutate: signup, isPending, isError } = useRegister(); 회원가입 API 호출
 
   const birth = watch("birth");
 

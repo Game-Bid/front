@@ -2,13 +2,14 @@
 
 import { SignUpFormData } from "@/_types/signup/SignUpFormData";
 import { useEffect, useState } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { UseFormRegister, UseFormWatch } from "react-hook-form";
 import { cn } from "@/_utils/clsx";
+import { usePostVerifyCode } from "@/hooks/fetcher/signup/usePostVerifyCode";
 
 interface VerificationSectionProps {
   register: UseFormRegister<SignUpFormData>;
   active: boolean;
-  watch?: string;
+  watch: UseFormWatch<SignUpFormData>;
   onVerifyStateChange: (state: {
     isVerified: boolean;
     timeLeft: number;
@@ -21,10 +22,13 @@ const VerificationSection = ({
   watch,
   onVerifyStateChange,
 }: VerificationSectionProps) => {
+  const code = watch("checkedEmailNumber");
   const [timeLeft, setTimeLeft] = useState(0);
   const [isVerified, setIsVerified] = useState(false);
   const isReadOnly = isVerified || timeLeft === 0;
-  const disabled = isVerified || timeLeft === 0 || watch?.length !== 6;
+  const disabled = isVerified || timeLeft === 0 || code?.length !== 6;
+
+  const { mutate: emailVerify } = usePostVerifyCode();
 
   useEffect(() => {
     if (active) {
@@ -53,7 +57,8 @@ const VerificationSection = ({
   };
 
   const handleVerifyClick = () => {
-    if (watch?.length !== 6) return;
+    if (code?.length !== 6) return;
+    emailVerify(code, {});
     setIsVerified(true);
   };
 
@@ -61,7 +66,7 @@ const VerificationSection = ({
     <div className="flex flex-col gap-2">
       <div className="flex gap-2 items-center">
         <label htmlFor="verify-code">인증번호</label>
-        {active && timeLeft > 0 && (
+        {active && timeLeft > 0 && !isVerified && (
           <p className="text-[14px] leading-[1.4em] tracking-[-0.02em] text-systemFailed">
             남은 시간: {formatTime(timeLeft)}
           </p>
