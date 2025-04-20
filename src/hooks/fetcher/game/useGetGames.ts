@@ -1,7 +1,7 @@
 import { getGamesData } from "@/services/games/getGamesData";
 import { useQuery } from "@tanstack/react-query";
 
-export const useGames = () => {
+export const useGetGames = () => {
   return useQuery({
     queryKey: ["games"],
     queryFn: getGamesData,

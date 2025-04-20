@@ -2,10 +2,10 @@
 
 import React from "react";
 import WriteContent from "@/components/write/WriteContent";
-import { useGames } from "@/hooks/fetcher/game/getGames";
+import { useGetGames } from "@/hooks/fetcher/game/useGetGames";
 
 const Page = () => {
-  const { data, error } = useGames();
+  const { data, error } = useGetGames();
   const games = data?.result;
 
   if (error) {
