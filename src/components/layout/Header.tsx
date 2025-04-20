@@ -23,10 +23,10 @@ const Header = () => {
           </ul>
         </div>
         <div>
-          <Link href={"/login"}>
+          {/* <Link href={"/login"}>
             <button className={buttonStyle}>로그인</button>
-          </Link>
-          {/* <div className="flex items-center gap-[1.19rem]">
+          </Link> */}
+          <div className="flex items-center gap-[1.19rem]">
             <div className="flex items-center gap-[1rem]">
               <CustomIcon
                 icon="GNB1"
@@ -41,8 +41,10 @@ const Header = () => {
                 className="w-[1.5rem] h-[1.5rem] cursor-pointer"
               />
             </div>
-            <button className={buttonStyle}>경매 생성</button>
-          </div> */}
+            <Link href={"/write"}>
+              <button className={buttonStyle}>경매 생성</button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
