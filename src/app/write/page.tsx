@@ -1,15 +1,16 @@
-// "use client";
+"use client";
 
 import React from "react";
 import WriteContent from "@/components/write/WriteContent";
-import { getGames } from "@/utils/games/getGames";
-const Page = async () => {
-  // const res = await fetch(`http://localhost:3000/api/games`, {
-  //   cache: "force-cache",
-  // });
-  // const { result: games } = await res.json();
+import { useGames } from "@/hooks/fetcher/game/getGames";
 
-  const { result: games } = await getGames();
+const Page = () => {
+  const { data, error } = useGames();
+  const games = data?.result;
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return <WriteContent games={games} />;
 };
