@@ -1,9 +1,10 @@
-export const getGames = async () => {
-  try {
-    const res = await fetch("http://43.200.179.173:8080/api/v1/games");
+"use server";
 
-    console.log("Status:", res.status);
-    console.log("Status Text:", res.statusText);
+const apiUrl = process.env.NEXT_API_URL;
+
+export const getGamesData = async () => {
+  try {
+    const res = await fetch(`${apiUrl}/api/v1/games`);
 
     if (!res.ok) {
       return {
