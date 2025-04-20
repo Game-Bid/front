@@ -8,6 +8,7 @@ import NextFind from "../NextFind";
 import MultiInput from "@/components/common/input/MultiInput";
 import { SignUpFormData } from "@/_types/signup/SignUpFormData";
 import TextInput from "@/components/common/input/TextInput";
+import LoginButton from "@/components/login/LoginButton";
 
 interface FindIdFormData {
   name: string;
@@ -77,6 +78,7 @@ const FindIdForm = ({ onSuccess }: FindIdFormProps) => {
             name="name"
             type="name"
             placeholder="이름을 입력해주세요."
+            autoFocus={true}
             register={register as unknown as UseFormRegister<SignUpFormData>}
             className="w-full h-[48px] px-3 rounded-[12px] bg-fillGrayDefault focus:border focus:border-borderPrimary"
             required={true}
@@ -104,18 +106,16 @@ const FindIdForm = ({ onSuccess }: FindIdFormProps) => {
         </div>
 
         {/* 찾기 버튼 */}
-        <button
-          type="submit"
-          disabled={!isValid}
-          className={cn(
-            "w-full h-[48px] px-3 rounded-[10px] font-semibold transition-colors duration-200",
+        <LoginButton
+          isType="submit"
+          isDisabled={!isValid}
+          isClassName={cn(
             isValid
               ? "bg-fillPrimaryDefault text-white"
               : "bg-fillPrimaryDisabled text-fgPrimaryDisabled cursor-not-allowed"
           )}
-        >
-          이메일 찾기
-        </button>
+          isText="이메일 찾기"
+        />
       </form>
       <NextFind />
     </>

@@ -14,6 +14,7 @@ import SignUpGameModal from "../modal/SignUpGameModal";
 import { cn } from "@/_utils/clsx";
 import { useRouter } from "next/navigation";
 import { showToast } from "../common/Toast";
+import LoginButton from "../login/LoginButton";
 
 const SignUpForm = () => {
   const {
@@ -70,19 +71,17 @@ const SignUpForm = () => {
         />
 
         <div className="flex flex-col gap-5">
-          <button
-            type="submit"
-            disabled={!isFormReady}
-            className={cn(
-              "w-full min-h-[48px] px-3 rounded-[12px]",
+          <LoginButton
+            isType="submit"
+            isDisabled={!isFormReady}
+            isClassName={cn(
               isFormReady
                 ? "bg-fillPrimaryDefault text-fgPrimaryDefault"
                 : "bg-fillPrimaryDisabled text-fgPrimaryDisabled",
               "transition-colors"
             )}
-          >
-            회원가입
-          </button>
+            isText="회원가입"
+          />
           <NextFind />
         </div>
       </form>

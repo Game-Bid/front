@@ -88,7 +88,7 @@ const TextInput = <T extends FieldValues>({
         )}
       </div>
       {errors?.[name]?.message && (
-        <p className="text-[12px] text-fgGrayPlaceholder">
+        <p className="text-[12px] text-systemFailed">
           {errors[name]?.message as React.ReactNode}
         </p>
       )}

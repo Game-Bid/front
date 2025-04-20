@@ -43,7 +43,7 @@ const SignUpGameModal = ({
 
   return createPortal(
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-start gap-4 z-50"
+      className="select-none fixed inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-start gap-4 z-50"
       onClick={handleOverlayClick}
     >
       <p className="w-[600px] text-left text-[18px] leading-[1.4em] tracking-[-0.02em] text-fgGrayDefault">

@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import TextInput from "../common/input/TextInput";
 import { useRouter } from "next/navigation";
 import { showToast } from "../common/Toast";
+import LoginButton from "./LoginButton";
 
 interface LoginFormData {
   email: string;
@@ -172,18 +173,16 @@ const LoginForm = () => {
       </div>
 
       {/* 로그인 버튼 */}
-      <button
-        type="submit"
-        disabled={!isLoginEnabled(emailValue, passwordValue)}
-        className={cn(
-          "w-full h-[48px] px-3 rounded-[10px] font-semibold transition-colors duration-200",
+      <LoginButton
+        isType="submit"
+        isDisabled={!isLoginEnabled(emailValue, passwordValue)}
+        isClassName={cn(
           isLoginEnabled(emailValue, passwordValue)
             ? "bg-fillPrimaryDefault text-white"
             : "bg-fillPrimaryDisabled text-fgPrimaryDisabled cursor-not-allowed"
         )}
-      >
-        로그인
-      </button>
+        isText="로그인"
+      />
     </form>
   );
 };
