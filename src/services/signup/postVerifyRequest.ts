@@ -21,7 +21,6 @@ export const postVerifyRequest = async (email: string) => {
 
     if (contentType && contentType.includes("application/json")) {
       const data = await res.json();
-      console.log("JSON response:", data);
       
       if (!res.ok || data.success === false) {
         throw new Error(data.message || "인증번호 요청 실패");
