@@ -18,20 +18,25 @@ const EmailSection = ({ register, watch, errors }: EmailSectionProps) => {
   const email = watch("email");
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email || "");
   const [activeVerification, setActiveVerification] = useState(false);
-  const [isResent, setIsResent] = useState(false);
+  const [isResending, setIsResending] = useState(false);
   const [isInputLocked, setIsInputLocked] = useState(false);
-  const [verificationKey, setVerificationKey] = useState(0);
 
   const { mutate: sendEmailVerification } = usePostVerifyRequest();
 
   const handleSendVerification = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!isValidEmail) return;
-    sendEmailVerification(email, {});
-    setActiveVerification(true);
-    setIsResent(true);
 
-    setVerificationKey((prev) => prev + 1);
+    setIsResending(true);
+    sendEmailVerification(email, {
+      onSuccess: () => {
+        setActiveVerification(true);
+        setIsResending(false);
+      },
+      onError: () => {
+        setIsResending(false);
+      },
+    });
   };
 
   return (
@@ -55,28 +60,28 @@ const EmailSection = ({ register, watch, errors }: EmailSectionProps) => {
               "w-[269px] h-[48px] px-3 rounded-[12px] focus:border focus:border-borderPrimary",
               isInputLocked
                 ? "bg-fillGrayDisabled text-fgGrayDisabled cursor-not-allowed"
-                : "bg-fillGrayDefault text-fgGrayFocused"
+                : "bg-fillGrayDefault focus:border focus:border-borderPrimary"
             )}
           />
           <button
             type="button"
             onClick={handleSendVerification}
-            disabled={!isValidEmail || (isInputLocked && activeVerification)}
+            disabled={!isValidEmail || isInputLocked || isResending}
             className={cn(
               "w-[123px] h-[48px] px-3 rounded-[12px] whitespace-nowrap",
-              !isValidEmail || (isInputLocked && activeVerification)
+              !isValidEmail || isInputLocked || isResending
                 ? "bg-fillGrayDisabled text-fgGrayDisabled"
                 : "bg-fillGrayDefault text-fgGrayDefault"
             )}
           >
-            {isResent ? "인증번호 재전송" : "인증번호 전송"}
+            {activeVerification ? "인증번호 재전송" : "인증번호 전송"}
           </button>
         </div>
       </div>
       {activeVerification && (
         <VerificationSection
-          key={verificationKey}
           active={activeVerification}
+          isResending={isResending}
           watch={watch}
           email={email}
           register={register}

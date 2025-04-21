@@ -11,6 +11,7 @@ interface VerificationSectionProps {
   active: boolean;
   watch: UseFormWatch<SignUpFormData>;
   email: string;
+  isResending: boolean;
   onVerifyStateChange: (state: {
     isVerified: boolean;
     timeLeft: number;
@@ -22,21 +23,31 @@ const VerificationSection = ({
   active,
   watch,
   email,
+  isResending,
   onVerifyStateChange,
 }: VerificationSectionProps) => {
   const code = watch("checkedEmailNumber");
   const [timeLeft, setTimeLeft] = useState(0);
   const [isVerified, setIsVerified] = useState(false);
   const isReadOnly = isVerified;
-  const isTimerExpired = timeLeft === 0 && !isVerified;
+  const isTimerExpired = timeLeft === 0 && !isVerified && !isResending;
   const disabled = isVerified || isTimerExpired || code?.length !== 6;
   const { mutate: emailVerify, isError } = usePostVerifyCode();
 
   useEffect(() => {
     if (active) {
       setTimeLeft(300);
+    } else {
+      setTimeLeft(0);
     }
   }, [active]);
+
+  useEffect(() => {
+    if (isResending) {
+      setTimeLeft(300);
+      setIsVerified(false);
+    }
+  }, [isResending]);
 
   useEffect(() => {
     if (timeLeft <= 0 || isVerified) return;

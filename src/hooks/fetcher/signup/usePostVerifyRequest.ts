@@ -10,8 +10,5 @@ export const usePostVerifyRequest = () => {
     onSuccess: () => {
       showToast("success", "인증번호가 전송되었습니다.", "");
     },
-    onError: () => {
-      showToast("warning", "인증번호 전송에 실패했습니다.", "");
-    }
   });
 };
