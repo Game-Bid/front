@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import EmailSection from "@/components/signup/EmailSection";
 import PasswordSection from "@/components/signup/PasswordSection";
 import NameSection from "@/components/signup/NameSection";
@@ -13,11 +13,10 @@ import { SignUpFormData } from "@/_types/signup/SignUpFormData";
 import NextFind from "../find/NextFind";
 import SignUpGameModal from "../modal/SignUpGameModal";
 import { cn } from "@/_utils/clsx";
-import { useRouter } from "next/navigation";
 import LoginButton from "../login/LoginButton";
 import { useRegister } from "@/hooks/fetcher/signup/usePostRegister";
 import { PostRegisterProps } from "@/services/signup/postRegister";
-import { generateRandomNickname } from "@/_utils/signup/RandomNick";
+import { generateRandomNickname } from "@/_utils/signup/generateRandomNickname";
 
 const SignUpForm = () => {
   const {
@@ -30,17 +29,16 @@ const SignUpForm = () => {
     mode: "onChange",
   });
 
-  const router = useRouter();
   const [favoriteGame, setFavoriteGame] = useState("");
   const [isGameModalOpen, setIsGameModalOpen] = useState(false);
   const [nickname, setNickname] = useState("");
-  const { mutate: signup, isPending, isError } = useRegister();
+  const { mutate: signup } = useRegister();
+  const randomNickname = useMemo(() => generateRandomNickname(), []);
 
   useEffect(() => {
-    const nick = generateRandomNickname();
-    setNickname(nick);
-    setValue("nickname", nick);
-  }, []);
+    setNickname(randomNickname);
+    setValue("nickname", randomNickname);
+  }, [randomNickname, setValue]);
 
   const birth = watch("birth");
 

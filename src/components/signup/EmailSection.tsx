@@ -85,7 +85,7 @@ const EmailSection = ({ register, watch, errors }: EmailSectionProps) => {
           watch={watch}
           email={email}
           register={register}
-          onVerifyStateChange={({ isVerified, timeLeft }) => {
+          onVerifyStateChange={({ isVerified }) => {
             setIsInputLocked(isVerified);
           }}
         />
