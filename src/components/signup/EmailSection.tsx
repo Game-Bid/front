@@ -6,6 +6,7 @@ import { SignUpFormData } from "@/_types/signup/SignUpFormData";
 import VerificationSection from "./VerificationSection";
 import { useState } from "react";
 import TextInput from "../common/input/TextInput";
+import { usePostVerifyRequest } from "@/hooks/fetcher/signup/usePostVerifyRequest";
 
 interface EmailSectionProps {
   register: UseFormRegister<SignUpFormData>;
@@ -15,16 +16,27 @@ interface EmailSectionProps {
 
 const EmailSection = ({ register, watch, errors }: EmailSectionProps) => {
   const email = watch("email");
-  const emailNumber = watch("checkedEmailNumber");
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email || "");
   const [activeVerification, setActiveVerification] = useState(false);
-  const [isResent, setIsResent] = useState(false);
+  const [isResending, setIsResending] = useState(false);
   const [isInputLocked, setIsInputLocked] = useState(false);
 
-  const handleVerificationSection = () => {
+  const { mutate: sendEmailVerification } = usePostVerifyRequest();
+
+  const handleSendVerification = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     if (!isValidEmail) return;
-    setActiveVerification(true);
-    setIsResent(true);
+
+    setIsResending(true);
+    sendEmailVerification(email, {
+      onSuccess: () => {
+        setActiveVerification(true);
+        setIsResending(false);
+      },
+      onError: () => {
+        setIsResending(false);
+      },
+    });
   };
 
   return (
@@ -48,31 +60,33 @@ const EmailSection = ({ register, watch, errors }: EmailSectionProps) => {
               "w-[269px] h-[48px] px-3 rounded-[12px] focus:border focus:border-borderPrimary",
               isInputLocked
                 ? "bg-fillGrayDisabled text-fgGrayDisabled cursor-not-allowed"
-                : "bg-fillGrayDefault text-fgGrayFocused"
+                : "bg-fillGrayDefault focus:border focus:border-borderPrimary"
             )}
           />
           <button
             type="button"
-            onClick={handleVerificationSection}
-            disabled={!isValidEmail || isInputLocked}
+            onClick={handleSendVerification}
+            disabled={!isValidEmail || isInputLocked || isResending}
             className={cn(
               "w-[123px] h-[48px] px-3 rounded-[12px] whitespace-nowrap",
-              !isValidEmail || isInputLocked
+              !isValidEmail || isInputLocked || isResending
                 ? "bg-fillGrayDisabled text-fgGrayDisabled"
                 : "bg-fillGrayDefault text-fgGrayDefault"
             )}
           >
-            {isResent ? "인증번호 재전송" : "인증번호 전송"}
+            {activeVerification ? "인증번호 재전송" : "인증번호 전송"}
           </button>
         </div>
       </div>
       {activeVerification && (
         <VerificationSection
           active={activeVerification}
-          watch={emailNumber}
+          isResending={isResending}
+          watch={watch}
+          email={email}
           register={register}
-          onVerifyStateChange={({ isVerified, timeLeft }) => {
-            setIsInputLocked(isVerified || timeLeft === 0);
+          onVerifyStateChange={({ isVerified }) => {
+            setIsInputLocked(isVerified);
           }}
         />
       )}

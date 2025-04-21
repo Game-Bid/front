@@ -2,13 +2,16 @@
 
 import { SignUpFormData } from "@/_types/signup/SignUpFormData";
 import { useEffect, useState } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { UseFormRegister, UseFormWatch } from "react-hook-form";
 import { cn } from "@/_utils/clsx";
+import { usePostVerifyCode } from "@/hooks/fetcher/signup/usePostVerifyCode";
 
 interface VerificationSectionProps {
   register: UseFormRegister<SignUpFormData>;
   active: boolean;
-  watch?: string;
+  watch: UseFormWatch<SignUpFormData>;
+  email: string;
+  isResending: boolean;
   onVerifyStateChange: (state: {
     isVerified: boolean;
     timeLeft: number;
@@ -19,28 +22,42 @@ const VerificationSection = ({
   register,
   active,
   watch,
+  email,
+  isResending,
   onVerifyStateChange,
 }: VerificationSectionProps) => {
+  const code = watch("checkedEmailNumber");
   const [timeLeft, setTimeLeft] = useState(0);
   const [isVerified, setIsVerified] = useState(false);
-  const isReadOnly = isVerified || timeLeft === 0;
-  const disabled = isVerified || timeLeft === 0 || watch?.length !== 6;
+  const isReadOnly = isVerified;
+  const isTimerExpired = timeLeft === 0 && !isVerified && !isResending;
+  const disabled = isVerified || isTimerExpired || code?.length !== 6;
+  const { mutate: emailVerify, isError } = usePostVerifyCode();
 
   useEffect(() => {
     if (active) {
       setTimeLeft(300);
+    } else {
+      setTimeLeft(0);
     }
   }, [active]);
 
   useEffect(() => {
-    if (timeLeft <= 0) return;
+    if (isResending) {
+      setTimeLeft(300);
+      setIsVerified(false);
+    }
+  }, [isResending]);
+
+  useEffect(() => {
+    if (timeLeft <= 0 || isVerified) return;
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLeft]);
+  }, [timeLeft, isVerified]);
 
   useEffect(() => {
     onVerifyStateChange({ isVerified, timeLeft });
@@ -52,18 +69,37 @@ const VerificationSection = ({
     return `${min}:${sec}`;
   };
 
-  const handleVerifyClick = () => {
-    if (watch?.length !== 6) return;
-    setIsVerified(true);
+  const handleVerifyClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (code?.length !== 6 || isTimerExpired) return;
+
+    emailVerify(
+      { email, code },
+      {
+        onSuccess: () => {
+          setIsVerified(true);
+        },
+        onError: () => {
+          setIsVerified(false);
+        },
+      }
+    );
   };
 
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-2 items-center">
         <label htmlFor="verify-code">인증번호</label>
-        {active && timeLeft > 0 && (
+        {active && timeLeft > 0 && !isVerified && (
           <p className="text-[14px] leading-[1.4em] tracking-[-0.02em] text-systemFailed">
             남은 시간: {formatTime(timeLeft)}
+          </p>
+        )}
+        {isTimerExpired && (
+          <p className="text-[14px] leading-[1.4em] tracking-[-0.02em] text-systemFailed">
+            인증 시간이 만료되었습니다
           </p>
         )}
       </div>
@@ -76,11 +112,11 @@ const VerificationSection = ({
             required: true,
             validate: (value) => /^\d{6}$/.test(value),
           })}
-          readOnly={isReadOnly}
+          readOnly={isReadOnly || isTimerExpired}
           placeholder="인증번호를 입력해주세요."
           className={cn(
             "h-[48px] px-3 w-full rounded-[12px]",
-            isReadOnly
+            isReadOnly || isTimerExpired
               ? "bg-fillGrayDisabled text-fgGrayDisabled cursor-not-allowed"
               : "bg-fillGrayDefault focus:border focus:border-borderPrimary"
           )}
@@ -88,10 +124,10 @@ const VerificationSection = ({
         <button
           type="button"
           onClick={handleVerifyClick}
-          disabled={disabled}
+          disabled={disabled && !isError}
           className={cn(
             "h-[48px] px-3 rounded-[12px] whitespace-nowrap",
-            !watch || disabled
+            disabled
               ? "bg-fillGrayDisabled text-fgGrayDisabled"
               : "bg-fillGrayDefault text-fgGrayDefault"
           )}
