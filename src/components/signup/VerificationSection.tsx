@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { UseFormRegister, UseFormWatch } from "react-hook-form";
 import { cn } from "@/_utils/clsx";
 import { usePostVerifyCode } from "@/hooks/fetcher/signup/usePostVerifyCode";
+import { useVerificationTimer } from "@/_utils/signup/useVerificationTimer";
 
 interface VerificationSectionProps {
   register: UseFormRegister<SignUpFormData>;
@@ -27,47 +28,19 @@ const VerificationSection = ({
   onVerifyStateChange,
 }: VerificationSectionProps) => {
   const code = watch("checkedEmailNumber");
-  const [timeLeft, setTimeLeft] = useState(0);
   const [isVerified, setIsVerified] = useState(false);
+  const { timeLeft, isTimerExpired, formatTime } = useVerificationTimer({
+    active,
+    isResending,
+    isVerified,
+  });
   const isReadOnly = isVerified;
-  const isTimerExpired = timeLeft === 0 && !isVerified && !isResending;
   const disabled = isVerified || isTimerExpired || code?.length !== 6;
   const { mutate: emailVerify, isError } = usePostVerifyCode();
 
   useEffect(() => {
-    if (active) {
-      setTimeLeft(300);
-    } else {
-      setTimeLeft(0);
-    }
-  }, [active]);
-
-  useEffect(() => {
-    if (isResending) {
-      setTimeLeft(300);
-      setIsVerified(false);
-    }
-  }, [isResending]);
-
-  useEffect(() => {
-    if (timeLeft <= 0 || isVerified) return;
-
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [timeLeft, isVerified]);
-
-  useEffect(() => {
     onVerifyStateChange({ isVerified, timeLeft });
   }, [isVerified, timeLeft, onVerifyStateChange]);
-
-  const formatTime = (seconds: number) => {
-    const min = String(Math.floor(seconds / 60)).padStart(2, "0");
-    const sec = String(seconds % 60).padStart(2, "0");
-    return `${min}:${sec}`;
-  };
 
   const handleVerifyClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
