@@ -5,9 +5,8 @@ import CustomIcon from "@/Icons";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import TextInput from "../common/input/TextInput";
-import { useRouter } from "next/navigation";
-import { showToast } from "../common/Toast";
 import LoginButton from "./LoginButton";
+import { usePostLogin } from "@/hooks/fetcher/login/usePostLogin";
 
 interface LoginFormData {
   email: string;
@@ -29,6 +28,7 @@ const LoginForm = () => {
     formState: { errors, isValid },
     watch,
     setValue,
+    reset,
   } = useForm<LoginFormData>({
     mode: "onChange",
   });
@@ -36,24 +36,22 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const emailValue = watch("email");
   const passwordValue = watch("password");
-  const router = useRouter();
+  const [loginError, setLoginError] = useState(false);
+  const { mutate: login } = usePostLogin();
 
   const onSubmit = (data: LoginFormData) => {
-    if (!isValid) {
-      showToast(
-        "warning",
-        "로그인 정보를 확인해주세요.",
-        "이메일 또는 비밀번호가 올바르지 않습니다."
-      );
-    }
-
+    if (!isValid) return;
     console.log("Login:", data);
-    router.push("/");
-    showToast(
-      "success",
-      "로그인 성공",
-      "환영합니다! 정상적으로 로그인되었어요."
-    );
+
+    login(data, {
+      onSuccess: () => {
+        setLoginError(false);
+      },
+      onError: () => {
+        setLoginError(true);
+        reset({ email: "", password: "" });
+      },
+    });
   };
 
   const clearField = (field: keyof LoginFormData) => {
@@ -88,7 +86,8 @@ const LoginForm = () => {
           className={cn(
             INPUT_STYLES,
             errors.email ? "border-systemFailed" : "border-borderDefault",
-            emailValue && "pr-10"
+            emailValue && "pr-10",
+            loginError && "border-[1px] border-systemFailed"
           )}
           required={true}
           autoFocus={true}
@@ -129,7 +128,8 @@ const LoginForm = () => {
           className={cn(
             INPUT_STYLES,
             errors.password ? "border-systemFailed" : "border-borderDefault",
-            passwordValue && "pr-16"
+            passwordValue && "pr-16",
+            loginError && "border-[1px] border-systemFailed"
           )}
           required={true}
           validationRules={{
