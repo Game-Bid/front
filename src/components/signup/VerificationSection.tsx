@@ -10,6 +10,7 @@ interface VerificationSectionProps {
   register: UseFormRegister<SignUpFormData>;
   active: boolean;
   watch: UseFormWatch<SignUpFormData>;
+  email: string;
   onVerifyStateChange: (state: {
     isVerified: boolean;
     timeLeft: number;
@@ -20,6 +21,7 @@ const VerificationSection = ({
   register,
   active,
   watch,
+  email,
   onVerifyStateChange,
 }: VerificationSectionProps) => {
   const code = watch("checkedEmailNumber");
@@ -28,8 +30,7 @@ const VerificationSection = ({
   const isReadOnly = isVerified;
   const isTimerExpired = timeLeft === 0 && !isVerified;
   const disabled = isVerified || isTimerExpired || code?.length !== 6;
-
-  const { mutate: emailVerify } = usePostVerifyCode();
+  const { mutate: emailVerify, isError } = usePostVerifyCode();
 
   useEffect(() => {
     if (active) {
@@ -57,13 +58,23 @@ const VerificationSection = ({
     return `${min}:${sec}`;
   };
 
-  const handleVerifyClick = () => {
+  const handleVerifyClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     if (code?.length !== 6 || isTimerExpired) return;
-    emailVerify(code, {
-      onSuccess: () => {
-        setIsVerified(true);
-      },
-    });
+
+    emailVerify(
+      { email, code },
+      {
+        onSuccess: () => {
+          setIsVerified(true);
+        },
+        onError: () => {
+          setIsVerified(false);
+        },
+      }
+    );
   };
 
   return (
@@ -102,7 +113,7 @@ const VerificationSection = ({
         <button
           type="button"
           onClick={handleVerifyClick}
-          disabled={disabled}
+          disabled={disabled && !isError}
           className={cn(
             "h-[48px] px-3 rounded-[12px] whitespace-nowrap",
             disabled

@@ -24,7 +24,8 @@ const EmailSection = ({ register, watch, errors }: EmailSectionProps) => {
 
   const { mutate: sendEmailVerification } = usePostVerifyRequest();
 
-  const handleSendVerification = () => {
+  const handleSendVerification = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     if (!isValidEmail) return;
     sendEmailVerification(email, {});
     setActiveVerification(true);
@@ -77,6 +78,7 @@ const EmailSection = ({ register, watch, errors }: EmailSectionProps) => {
           key={verificationKey}
           active={activeVerification}
           watch={watch}
+          email={email}
           register={register}
           onVerifyStateChange={({ isVerified, timeLeft }) => {
             setIsInputLocked(isVerified);

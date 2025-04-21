@@ -1,5 +1,3 @@
-"use server";
-
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const postVerifyRequest = async (email: string) => {
@@ -20,7 +18,7 @@ export const postVerifyRequest = async (email: string) => {
       };
     }
 
-    const result = await res.json();
+    const result = await res.text();
     return { result };
   } catch (err) {
     console.log("Error details:", err);
