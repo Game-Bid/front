@@ -20,20 +20,17 @@ const EmailSection = ({ register, watch, errors }: EmailSectionProps) => {
   const [activeVerification, setActiveVerification] = useState(false);
   const [isResent, setIsResent] = useState(false);
   const [isInputLocked, setIsInputLocked] = useState(false);
+  const [verificationKey, setVerificationKey] = useState(0);
 
   const { mutate: sendEmailVerification } = usePostVerifyRequest();
-
-  // const {
-  //   mutate: sendEmailVerification,
-  //   isPending,
-  //   isError,
-  // } = usePostVerifyRequest();
 
   const handleSendVerification = () => {
     if (!isValidEmail) return;
     sendEmailVerification(email, {});
     setActiveVerification(true);
     setIsResent(true);
+
+    setVerificationKey((prev) => prev + 1);
   };
 
   return (
@@ -63,10 +60,10 @@ const EmailSection = ({ register, watch, errors }: EmailSectionProps) => {
           <button
             type="button"
             onClick={handleSendVerification}
-            disabled={!isValidEmail || isInputLocked}
+            disabled={!isValidEmail || (isInputLocked && activeVerification)}
             className={cn(
               "w-[123px] h-[48px] px-3 rounded-[12px] whitespace-nowrap",
-              !isValidEmail || isInputLocked
+              !isValidEmail || (isInputLocked && activeVerification)
                 ? "bg-fillGrayDisabled text-fgGrayDisabled"
                 : "bg-fillGrayDefault text-fgGrayDefault"
             )}
@@ -77,11 +74,12 @@ const EmailSection = ({ register, watch, errors }: EmailSectionProps) => {
       </div>
       {activeVerification && (
         <VerificationSection
+          key={verificationKey}
           active={activeVerification}
           watch={watch}
           register={register}
           onVerifyStateChange={({ isVerified, timeLeft }) => {
-            setIsInputLocked(isVerified || timeLeft === 0);
+            setIsInputLocked(isVerified);
           }}
         />
       )}

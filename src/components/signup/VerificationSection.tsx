@@ -25,8 +25,9 @@ const VerificationSection = ({
   const code = watch("checkedEmailNumber");
   const [timeLeft, setTimeLeft] = useState(0);
   const [isVerified, setIsVerified] = useState(false);
-  const isReadOnly = isVerified || timeLeft === 0;
-  const disabled = isVerified || timeLeft === 0 || code?.length !== 6;
+  const isReadOnly = isVerified;
+  const isTimerExpired = timeLeft === 0 && !isVerified;
+  const disabled = isVerified || isTimerExpired || code?.length !== 6;
 
   const { mutate: emailVerify } = usePostVerifyCode();
 
@@ -37,14 +38,14 @@ const VerificationSection = ({
   }, [active]);
 
   useEffect(() => {
-    if (timeLeft <= 0) return;
+    if (timeLeft <= 0 || isVerified) return;
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLeft]);
+  }, [timeLeft, isVerified]);
 
   useEffect(() => {
     onVerifyStateChange({ isVerified, timeLeft });
@@ -57,9 +58,12 @@ const VerificationSection = ({
   };
 
   const handleVerifyClick = () => {
-    if (code?.length !== 6) return;
-    emailVerify(code, {});
-    setIsVerified(true);
+    if (code?.length !== 6 || isTimerExpired) return;
+    emailVerify(code, {
+      onSuccess: () => {
+        setIsVerified(true);
+      },
+    });
   };
 
   return (
@@ -69,6 +73,11 @@ const VerificationSection = ({
         {active && timeLeft > 0 && !isVerified && (
           <p className="text-[14px] leading-[1.4em] tracking-[-0.02em] text-systemFailed">
             남은 시간: {formatTime(timeLeft)}
+          </p>
+        )}
+        {isTimerExpired && (
+          <p className="text-[14px] leading-[1.4em] tracking-[-0.02em] text-systemFailed">
+            인증 시간이 만료되었습니다
           </p>
         )}
       </div>
@@ -81,11 +90,11 @@ const VerificationSection = ({
             required: true,
             validate: (value) => /^\d{6}$/.test(value),
           })}
-          readOnly={isReadOnly}
+          readOnly={isReadOnly || isTimerExpired}
           placeholder="인증번호를 입력해주세요."
           className={cn(
             "h-[48px] px-3 w-full rounded-[12px]",
-            isReadOnly
+            isReadOnly || isTimerExpired
               ? "bg-fillGrayDisabled text-fgGrayDisabled cursor-not-allowed"
               : "bg-fillGrayDefault focus:border focus:border-borderPrimary"
           )}
@@ -96,7 +105,7 @@ const VerificationSection = ({
           disabled={disabled}
           className={cn(
             "h-[48px] px-3 rounded-[12px] whitespace-nowrap",
-            !watch || disabled
+            disabled
               ? "bg-fillGrayDisabled text-fgGrayDisabled"
               : "bg-fillGrayDefault text-fgGrayDefault"
           )}

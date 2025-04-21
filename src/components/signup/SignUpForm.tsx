@@ -1,6 +1,7 @@
 "use client";
+
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EmailSection from "@/components/signup/EmailSection";
 import PasswordSection from "@/components/signup/PasswordSection";
 import NameSection from "@/components/signup/NameSection";
@@ -13,9 +14,10 @@ import NextFind from "../find/NextFind";
 import SignUpGameModal from "../modal/SignUpGameModal";
 import { cn } from "@/_utils/clsx";
 import { useRouter } from "next/navigation";
-import { showToast } from "../common/Toast";
 import LoginButton from "../login/LoginButton";
-// import { useRegister } from "@/hooks/fetcher/signup/usePostRegister";
+import { useRegister } from "@/hooks/fetcher/signup/usePostRegister";
+import { PostRegisterProps } from "@/services/signup/postRegister";
+import { generateRandomNickname } from "@/_utils/signup/RandomNick";
 
 const SignUpForm = () => {
   const {
@@ -31,7 +33,14 @@ const SignUpForm = () => {
   const router = useRouter();
   const [favoriteGame, setFavoriteGame] = useState("");
   const [isGameModalOpen, setIsGameModalOpen] = useState(false);
-  // const { mutate: signup, isPending, isError } = useRegister(); 회원가입 API 호출
+  const [nickname, setNickname] = useState("");
+  const { mutate: signup, isPending, isError } = useRegister();
+
+  useEffect(() => {
+    const nick = generateRandomNickname();
+    setNickname(nick);
+    setValue("nickname", nick);
+  }, []);
 
   const birth = watch("birth");
 
@@ -43,9 +52,21 @@ const SignUpForm = () => {
   const isFormReady = isBirthComplete && isValid;
 
   const onSubmit = (data: SignUpFormData) => {
-    console.log("회원가입 제출 데이터:", data);
-    router.push("/");
-    showToast("success", "회원가입이 완료되었습니다.", "");
+    const { email, password, name, birth, favoriteGame, phoneNum } = data;
+    const birthDate = `${birth.year}-${birth.month}-${birth.day}`;
+    const phoneNumber = `${phoneNum.first}${phoneNum.middle}${phoneNum.last}`;
+
+    const formData: PostRegisterProps = {
+      email,
+      password,
+      name,
+      birthDate,
+      phoneNumber,
+      favoriteGame,
+      nickname,
+    };
+
+    signup(formData);
   };
 
   return (
