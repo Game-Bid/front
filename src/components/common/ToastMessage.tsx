@@ -26,7 +26,7 @@ const ToastMessage = ({ type, title, content }: ToastMessageProps) => {
         "z-[200] flex items-center w-[25rem] h-[66px] p-3 gap-4 bg-fillGrayDefault rounded-[0.75rem] shadow-[0px_16px_24px_rgba(0,0,0,0.14),_0px_6px_30px_rgba(0,0,0,0.12),_0px_8px_10px_rgba(0,0,0,0.20)] mb-2 leading-[140%]"
       )}
     >
-      <div className="relative w-[4rem] h-[342rem] flex-center">
+      <div className="relative w-[4rem] h-[4rem] flex-center">
         <div
           className={`absolute inset-0 rounded-full ${
             type === "success"
