@@ -62,7 +62,7 @@ const LoginForm = () => {
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const isValidPassword = (password: string) =>
-    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#^?&])[A-Za-z\d@$!%^*#?&]{8,}$/.test(
       password
     );
 
@@ -141,7 +141,7 @@ const LoginForm = () => {
             },
             pattern: {
               value:
-                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#^?&])[A-Za-z\d@$!%*#^?&]{8,}$/,
               message: "",
               // message: "영문, 숫자, 특수문자를 포함하여 8자 이상 입력해주세요.",
             },
