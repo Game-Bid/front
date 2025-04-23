@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get('accessToken')?.value;
+  const token = req.cookies.get('jwt')?.value;
+  console.log('Token:', token);
   const { pathname } = req.nextUrl;
-  console.log('전역 미들웨어 실행');
 
   const protectedPaths = ['/my-page', '/write'];
   const isProtectedPath = protectedPaths.some((path) => pathname.startsWith(path));
@@ -23,5 +23,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/my-page', '/my-page/:path*', '/write', '/write/:path*', '/login', '/signup', '/find/:path*'],
+  matcher: ['/my-page/:path*', '/write/:path*', '/login', '/signup', '/find/:path*'],
 };
