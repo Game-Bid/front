@@ -44,6 +44,9 @@ const Header = () => {
             <Link href={"/write"}>
               <button className={buttonStyle}>경매 생성</button>
             </Link>
+            <Link href={"/login"}>
+              <button className={buttonStyle}>로그인</button>
+            </Link>
           </div>
         </div>
       </div>
