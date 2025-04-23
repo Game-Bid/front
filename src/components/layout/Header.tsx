@@ -28,10 +28,18 @@ const Header = () => {
           </Link> */}
           <div className="flex items-center gap-[1.19rem]">
             <div className="flex items-center gap-[1rem]">
-              <CustomIcon
-                icon="GNB1"
-                className="w-[1.5rem] h-[1.5rem] cursor-pointer"
-              />
+              <Link href={"/my-page"}>
+                {/* 테스트코드 */}
+                <CustomIcon
+                  icon="GNB1"
+                  className="w-[1.5rem] h-[1.5rem] cursor-pointer"
+                />{" "}
+              </Link>
+              {/* <CustomIcon
+                  icon="GNB1"
+                  className="w-[1.5rem] h-[1.5rem] cursor-pointer"
+                /> */}
+
               <CustomIcon
                 icon="GNB2"
                 className="w-[1.5rem] h-[1.5rem] cursor-pointer"
