@@ -6,8 +6,8 @@ export const useGetGames = () => {
     queryKey: ["games"],
     queryFn: getGamesData,
     retry: 1,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 30,
+    staleTime: 1000 * 60 * 5 * 20,
+    gcTime: 1000 * 60 * 30 * 20,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });
