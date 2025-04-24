@@ -40,7 +40,7 @@ const getValidationRules = <T extends FieldValues>(
     };
   } else if (type === "password") {
     rules.pattern = {
-      value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#^?&])[A-Za-z\d@$!%*#^?&]{8,}$/,
       message: "",
     };
   } else if (type === "name") {
