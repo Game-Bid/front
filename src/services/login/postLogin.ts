@@ -1,4 +1,6 @@
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+"use server";
+
+const apiUrl = process.env.NEXT_API_URL;
 
 export interface PostLoginData {
   email: string;
@@ -27,4 +29,4 @@ export const postLogin = async (formData: PostLoginData) => {
     console.log("Error details:", err);
     throw err instanceof Error ? err : new Error("알 수 없는 에러");
   }
-}
+};
