@@ -79,7 +79,7 @@ const SearchGames = ({ games }: { games: GameList }) => {
 
   return (
     <div
-      className={`relative flex flex-col w-[564px] h-full px-16 rounded-md bg-fillGrayDefault transition-height duration-300 ${
+      className={`relative flex flex-col w-full h-full px-16 rounded-md bg-fillGrayDefault transition-height duration-300 ${
         focused ? "border border-borderPrimary" : ""
       } ${focused && ""}`}
       onClick={() => setFocused(true)}
