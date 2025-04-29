@@ -61,10 +61,13 @@ const LoginForm = () => {
   const isValidEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
+  // const isValidPassword = (password: string) =>
+  //   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#^?&])[A-Za-z\d@$!%^*#?&]{8,}$/.test(
+  //     password
+  //   );
+
   const isValidPassword = (password: string) =>
-    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#^?&])[A-Za-z\d@$!%^*#?&]{8,}$/.test(
-      password
-    );
+    /^[\x21-\x7E]{8,}$/.test(password);
 
   const isLoginEnabled = (email: string, password: string) =>
     !!email && !!password && isValidEmail(email) && isValidPassword(password);
