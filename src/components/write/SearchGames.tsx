@@ -3,8 +3,11 @@
 import CustomIcon from "@/Icons/Icon";
 import { Game, GameList, GameServer, GameServerNum } from "@/_types/game/game";
 import React, { useEffect, useRef, useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { WriteFormType } from "./WriteContent";
 
 const SearchGames = ({ games }: { games: GameList }) => {
+  const { setValue } = useFormContext<WriteFormType>();
   const [focused, setFocused] = useState(false);
   const [search, setSearch] = useState("");
   const searchGamesRef = useRef<HTMLDivElement>(null);
@@ -13,8 +16,6 @@ const SearchGames = ({ games }: { games: GameList }) => {
   const [selectedServer, setSelectedServer] = useState<GameServer | null>(null);
   const [selectedServerNum, setSelectedServerNum] =
     useState<GameServerNum | null>(null);
-
-  console.log(filteredGames);
 
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
@@ -48,6 +49,7 @@ const SearchGames = ({ games }: { games: GameList }) => {
     );
 
     setFilteredGames(filteredGames);
+    /* eslint-disable */
   }, [search]);
 
   useEffect(() => {
@@ -55,6 +57,8 @@ const SearchGames = ({ games }: { games: GameList }) => {
       setSearch(`${selectedGame.name} `);
       setFilteredGames([selectedGame]);
       setFocused(false);
+
+      setValue("game.gameName", selectedGame.name);
     }
 
     if (
@@ -65,6 +69,9 @@ const SearchGames = ({ games }: { games: GameList }) => {
       setSearch(`${selectedGame.name} > ${selectedServer.name}`);
       setFilteredGames([selectedGame]);
       setFocused(false);
+
+      setValue("game.gameName", selectedGame.name);
+      setValue("game.server", selectedServer.name);
     }
 
     if (selectedGame && selectedServer && selectedServerNum) {
@@ -72,8 +79,11 @@ const SearchGames = ({ games }: { games: GameList }) => {
         `${selectedGame.name} > ${selectedServer.name} > ${selectedServerNum.name}`
       );
       setFilteredGames([selectedGame]);
-
       setFocused(false);
+
+      setValue("game.gameName", selectedGame.name);
+      setValue("game.server", selectedServer.name);
+      setValue("game.serverNum", selectedServerNum.name);
     }
   }, [selectedGame, selectedServer, selectedServerNum]);
 
@@ -102,14 +112,14 @@ const SearchGames = ({ games }: { games: GameList }) => {
       {focused && (
         <>
           <div className="h-[1px] bg-borderDefault w-full my-[2px]"></div>
-          {search === "" && filteredGames.length === 0 && (
+          {(search === "" || filteredGames.length === 0) && !selectedGame && (
             <div className="h-[170px] p-3 text-fgGrayPlaceholder text-normal ">
               검색결과가 없습니다.
             </div>
           )}
           <div className="h-fit text-fgGrayPlaceholder text-normal flex ">
             <div
-              className={`w-full text-[18px] text-fgGrayDefault flex flex-col items-start leading-[140%] ${
+              className={` text-[18px] text-fgGrayDefault flex flex-col items-start leading-[140%] ${
                 selectedGame ? "w-1/2" : "w-full"
               }`}
             >
