@@ -15,7 +15,7 @@ const FavoriteGameSection = ({
   register,
 }: Props) => {
   return (
-    <div className="flex flex-col gap-2 relative">
+    <div className="flex flex-col gap-2 relative ">
       <label htmlFor="favoriteGame" className="text-[18px] text-fgGrayDefault">
         관심 게임
       </label>
@@ -26,7 +26,7 @@ const FavoriteGameSection = ({
           placeholder="게임을 선택해주세요."
           readOnly
           className={cn(
-            "w-full h-[48px] px-3 pr-10 rounded-[12px] bg-fillGrayDefault"
+            "w-full h-[48px] px-3 pr-10 rounded-[12px] bg-fillGrayDefault cursor-pointer"
           )}
           value={favoriteGame}
           {...register("favoriteGame", { required: true })}
