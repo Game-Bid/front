@@ -1,7 +1,9 @@
 "use client";
 
 import CustomIcon from "@/Icons";
-import React, { useEffect } from "react";
+import { simpleGameType } from "@/_types/game/gamesSimple";
+import { useGetGamesSimple } from "@/hooks/fetcher/game/useGetGamesSimple";
+import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 interface SignUpGameModalProps {
@@ -15,6 +17,11 @@ const SignUpGameModal = ({
   activeModal,
   onClose,
 }: SignUpGameModalProps) => {
+  const [search, setSerach] = useState("");
+  const [filteredGames, setFilteredGames] = useState<simpleGameType[] | []>();
+  const { data, isLoading } = useGetGamesSimple();
+  const games = data?.result;
+
   useEffect(() => {
     if (activeModal) {
       document.body.style.overflow = "hidden";
@@ -31,13 +38,28 @@ const SignUpGameModal = ({
     }
   };
 
-  const games = [
-    "메이플스토리",
-    "메이플스토리월드",
-    "메이플스토리M",
-    "메이플스토리DS",
-    "메이플스토리빌리지",
-  ];
+  // const games = [
+  //   "메이플스토리",
+  //   "메이플스토리월드",
+  //   "메이플스토리M",
+  //   "메이플스토리DS",
+  //   "메이플스토리빌리지",
+  // ];
+
+  useEffect(() => {
+    if (search === "") {
+      setFilteredGames(games);
+      return;
+    }
+
+    const filteredData = games.filter((item: simpleGameType) =>
+      item.name.includes(search)
+    );
+
+    setFilteredGames(filteredData);
+  }, [search, data, games]);
+
+  if (isLoading) return null;
 
   if (!activeModal) return null;
 
@@ -62,22 +84,24 @@ const SignUpGameModal = ({
               type="text"
               placeholder="게임 검색"
               className="w-full py-2 rounded-[8px] h-[48px] flex bg-fillGrayDefault"
+              value={search}
+              onChange={(e) => setSerach(e.target.value)}
             />
           </div>
           <hr className="my-[2px]" />
         </div>
         <div>
           <ul className="flex flex-col items-start">
-            {games.map((game) => (
+            {filteredGames?.map((game: simpleGameType) => (
               <li
-                key={game}
+                key={game.id}
                 onClick={() => {
-                  onSelectGame?.(game);
+                  onSelectGame?.(game.name);
                   onClose();
                 }}
                 className="flex items-center cursor-pointer w-full h-[48px] px-3 hover:w-full hover:bg-fillGrayHovered hover:rounded-[12px] rounded-[8px]"
               >
-                {game}
+                {game.name}
               </li>
             ))}
           </ul>
