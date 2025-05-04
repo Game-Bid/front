@@ -143,12 +143,29 @@ const Dnd = ({ files, setFiles }: Props) => {
           ) : (
             <div className="flex flex-wrap gap-[1rem]">
               {imageUrls.map((url, idx) => (
-                <img
-                  key={idx}
-                  src={url}
-                  alt={`파일 ${idx + 1}`}
-                  className="w-[6.25rem] h-[5rem] object-cover rounded-[0.75rem]"
-                />
+                <div key={idx} className="w-fit h-fit relative group">
+                  <img
+                    src={url}
+                    alt={`파일 ${idx + 1}`}
+                    className="w-[6.25rem] h-[5rem] object-cover rounded-[0.75rem] group-hover:opacity-90 group-hover:blur-[2px] transition-all"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const newFiles = [...files];
+                        newFiles.splice(idx, 1);
+                        setFiles(newFiles);
+                      }}
+                      className="p-1.5 rounded-md bg-systemFailed"
+                    >
+                      <CustomIcon
+                        icon="TRASH"
+                        className="w-[1.25rem] h-[1.25rem]"
+                      />
+                    </button>
+                  </div>
+                </div>
               ))}
               {files.length < 10 && (
                 <label
