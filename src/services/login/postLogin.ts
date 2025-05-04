@@ -1,4 +1,9 @@
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+"use server";
+
+import { ResponseCookies } from "next/dist/compiled/@edge-runtime/cookies";
+import { cookies } from "next/headers";
+
+const apiUrl = process.env.NEXT_API_URL;
 
 export interface PostLoginData {
   email: string;
@@ -21,10 +26,25 @@ export const postLogin = async (formData: PostLoginData) => {
       throw new Error(errorData || "로그인 응답 에러");
     }
 
+    const responseCookies = new ResponseCookies(res.headers);
+    const accessToken = responseCookies.get("jwt");
+
+    const cookieStore = await cookies();
+
+    if (accessToken) {
+      cookieStore.set("accessToken", accessToken.value, {
+        httpOnly: accessToken.httpOnly,
+        sameSite: accessToken.sameSite,
+        path: accessToken.path,
+        secure: accessToken.secure,
+        maxAge: accessToken.maxAge,
+      });
+    }
+
     const result = await res.text();
     return result;
   } catch (err) {
     console.log("Error details:", err);
-    throw err instanceof Error ? err : new Error("알 수 없는 에러");
+    throw err instanceof Error ? err : new Error("로그인 실패");
   }
 };
