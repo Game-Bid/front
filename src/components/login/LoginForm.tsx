@@ -39,7 +39,7 @@ const LoginForm = () => {
   const [loginError, setLoginError] = useState(false);
   const { mutate: login } = usePostLogin();
 
-  const onSubmit = (data: LoginFormData) => {
+  const onSubmit = async (data: LoginFormData) => {
     if (!isValid) return;
     console.log("Login:", data);
 
@@ -60,11 +60,6 @@ const LoginForm = () => {
 
   const isValidEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-  // const isValidPassword = (password: string) =>
-  //   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#^?&])[A-Za-z\d@$!%^*#?&]{8,}$/.test(
-  //     password
-  //   );
 
   const isValidPassword = (password: string) =>
     /^[\x21-\x7E]{8,}$/.test(password);
