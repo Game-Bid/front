@@ -3,9 +3,8 @@ import React from "react";
 import CustomIcon from "@/Icons";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary";
-  size?: "sm" | "md" | "lg";
-  isArrowButton?: boolean;
+  variant?: "primary" | "secondary" | "tertiary";
+  size?: "sm" | "md";
   arrowDirection?: "left" | "right";
   title: string;
   width?: string;
@@ -14,7 +13,6 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const Button = ({
   variant = "primary",
   size = "md",
-  isArrowButton = false,
   arrowDirection,
   title,
   width,
@@ -23,50 +21,42 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const baseStyles =
-    "flex items-center justify-center gap-2 rounded-lg transition-all text-nowrap";
+    "flex-center transition-all text-nowrap font-semibold border border-transparent text-[1rem] gap-1 duration-3";
 
   const variants = {
-    primary: cn(
-      isArrowButton
-        ? ""
-        : "bg-fillPrimaryDefault hover:bg-fillPrimaryHovered focus:bg-fillPrimaryFocused",
-      "active:bg-fillPrimaryPressed disabled:bg-fillPrimaryDisabled",
-      "text-fgPrimaryDefault disabled:text-fgPrimaryDisabled"
-    ),
-    secondary: cn(
-      isArrowButton
-        ? ""
-        : "bg-fillGrayDefault hover:bg-fillGrayHovered focus:bg-fillGrayFocused",
-      "active:bg-fillGrayPressed disabled:bg-fillGrayDisabled",
-      "text-fgGrayDefault disabled:text-fgGrayDisabled"
+    primary: disabled
+      ? "rounded-md bg-fillPrimaryDisabled text-fgPrimaryDisabled cursor-not-allowed"
+      : "rounded-md bg-fillPrimaryDefault text-fgPrimaryDefault shadow-button-primary-shadow hover:bg-fillPrimaryHovered hover:text-fgPrimaryHovered focus:border-borderFocused focus:bg-fillPrimaryFocused focus:text-fgPrimaryFocused active:bg-fillPrimaryPressed active:text-fgPrimaryPressed ",
+
+    secondary: disabled
+      ? "rounded-md text-fgGrayDisabled bg-fillGrayDisabled"
+      : "rounded-md bg-fillGrayDefault text-fgGrayDefault hover:bg-fillGrayHovered hover:text-fgPrimaryHovered focus:bg-fillGrayFocused focus:border-borderFocused focus:text-fgPrimaryFocused active:bg-fillGrayPressed active:text-fgPrimaryPressed ",
+
+    tertiary: cn(
+      disabled
+        ? "rounded-sm"
+        : "rounded-sm bg-transparent text-fgGrayDefault hover:bg-fillGrayHovered hover:text-fgPrimaryHovered active:bg-fillGrayFocused active:text-fgPrimaryPressed"
     ),
   };
 
   const sizes = {
-    sm: "px-3 py-2 text-sm",
-    md: "px-4 py-2.5 text-base",
-    lg: "px-5 py-3 text-lg",
+    sm: "px-8 h-[40px]",
+    md: "px-12 h-[48px]",
   };
 
   return (
     <button
       style={width ? { width } : undefined}
-      className={cn(
-        baseStyles,
-        variants[variant],
-        !isArrowButton && sizes[size],
-        isArrowButton && "px-4 py-2",
-        className
-      )}
+      className={cn(baseStyles, variants[variant], sizes[size], className)}
       disabled={disabled}
       {...props}
     >
-      {isArrowButton && arrowDirection === "left" && (
-        <CustomIcon icon="LEFT_ARROW" fill="fillGrayDefault" />
+      {arrowDirection === "left" && (
+        <CustomIcon icon="LEFT_ARROW" className="w-[24px] h-[24px]" />
       )}
       {title}
-      {isArrowButton && arrowDirection === "right" && (
-        <CustomIcon icon="RIGHT_ARROW" fill="fillGrayDefault" />
+      {arrowDirection === "right" && (
+        <CustomIcon icon="RIGHT_ARROW" className="w-[24px] h-[24px]" />
       )}
     </button>
   );
