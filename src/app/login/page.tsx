@@ -1,6 +1,5 @@
 import LoginForm from "@/components/login/LoginForm";
-import CustomIcon from "@/Icons";
-import Image from "next/image";
+import CustomIcon, { IconList } from "@/Icons";
 import Link from "next/link";
 import React from "react";
 
@@ -11,9 +10,15 @@ const NAV_LINKS = [
 ];
 
 const SOCIAL_LINKS = [
-  { href: "/kakao", link: "/KAKAO.png" },
-  { href: "/naver", link: "/NAVER.png" },
-  { href: "/google", link: "/GOOGLE.png" },
+  { href: "/kakao", link: "KAKAO" },
+  {
+    href: "http://ec2-43-200-179-173.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/naver",
+    link: "NAVER",
+  },
+  {
+    href: "http://ec2-43-200-179-173.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google",
+    link: "GOOGLE",
+  },
 ];
 
 const Page = () => {
@@ -42,7 +47,11 @@ const Page = () => {
             <Link key={social.href} href={social.href}>
               <div className="w-[48px] h-[48px] flex-center rounded-full bg-fillGrayDefault">
                 {/* 이미지 > SVG 변환 예정 */}
-                <Image src={social.link} alt="social" width={24} height={24} />
+                {/* <Image src={social.link} alt="social" width={24} height={24} /> */}
+                <CustomIcon
+                  icon={social.link as IconList}
+                  className="w-[24px] h-[24px]"
+                />
               </div>
             </Link>
           ))}
