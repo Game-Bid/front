@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        "button-primary-shadow": "0px 2px 100px 0px rgba(88, 101, 242, 0.4)",
+      },
       animation: {
         fadeOut: "fadeOut 0.5s ease-in-out 2.5s forwards",
         spin: "spin 0.5s cubic-bezier(0.42, 0, 0.58, 1)",
