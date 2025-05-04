@@ -3,7 +3,7 @@ import React from "react";
 import CustomIcon from "@/Icons";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "tertiary";
+  variant?: "primary" | "secondary";
   size?: "sm" | "md" | "lg";
   isArrowButton?: boolean;
   arrowDirection?: "left" | "right";
