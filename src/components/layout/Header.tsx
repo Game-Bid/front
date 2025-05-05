@@ -6,7 +6,7 @@ const Header = () => {
   const buttonStyle =
     "flex-center py-[0.5rem] px-[1.25rem] rounded-[1.25rem] border border-borderPrimary";
   return (
-    <div className="w-screen fixed top-0 left-0 z-[100] bg-bgGrayDepth1 border-b border-borderDivider ">
+    <div className="w-screen fixed top-0 left-0 z-[50] bg-bgGrayDepth1 border-b border-borderDivider ">
       <div className="max-w-[90rem] flex items-center justify-between py-[1.25rem] px-[2.5rem] mx-auto">
         <div className="flex items-center gap-[3.125rem]">
           <Link
