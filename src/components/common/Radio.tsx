@@ -23,7 +23,7 @@ const Radio = ({ groupName, keyId, listData, setValue, now }: Props) => {
         onChange={() => setValue(listData.value)}
       />
       <label
-        className={`w-[292px] h-64 px-16 rounded-md bg-fillGrayDefault flex items-center gap-12 cursor-pointer border hover:border-fillGrayHovered hover:text-fgGrayHovered group select-none duration-100 ${
+        className={`w-[280px] h-64 px-16 rounded-md bg-fillGrayDefault flex items-center gap-12 cursor-pointer border hover:border-fillGrayHovered hover:text-fgGrayHovered group select-none duration-100 ${
           now === listData.value
             ? "text-fgGrayEntered border-borderPrimary"
             : "text-fgGrayPlaceholder border-transparent"

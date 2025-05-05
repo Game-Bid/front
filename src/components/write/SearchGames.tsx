@@ -2,16 +2,17 @@
 
 import CustomIcon from "@/Icons/Icon";
 import { Game, GameList, GameServer, GameServerNum } from "@/_types/game/game";
+import { WriteFormData } from "@/_types/write/WriteFormData";
 import React, { useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { WriteFormType } from "./WriteContent";
 
 const SearchGames = ({ games }: { games: GameList }) => {
-  const { setValue } = useFormContext<WriteFormType>();
+  const { setValue } = useFormContext<WriteFormData>();
   const [focused, setFocused] = useState(false);
   const [search, setSearch] = useState("");
   const searchGamesRef = useRef<HTMLDivElement>(null);
   const [filteredGames, setFilteredGames] = useState<GameList>([]);
+
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [selectedServer, setSelectedServer] = useState<GameServer | null>(null);
   const [selectedServerNum, setSelectedServerNum] =
@@ -40,7 +41,7 @@ const SearchGames = ({ games }: { games: GameList }) => {
   useEffect(() => {
     if (search === "") {
       setFilteredGames([]);
-      setSelectedGame(null);
+      // setSelectedGame(null);
       return;
     }
 
@@ -54,7 +55,9 @@ const SearchGames = ({ games }: { games: GameList }) => {
 
   useEffect(() => {
     if (selectedGame && selectedGame.gameServers?.length === 0) {
-      setSearch(`${selectedGame.name} `);
+      // setSearch(`${selectedGame.name} `);
+      setSearch("");
+
       setFilteredGames([selectedGame]);
       setFocused(false);
 
@@ -66,7 +69,7 @@ const SearchGames = ({ games }: { games: GameList }) => {
       selectedServer &&
       selectedServer.gameServerNums?.length === 0
     ) {
-      setSearch(`${selectedGame.name} > ${selectedServer.name}`);
+      // setSearch(`${selectedGame.name} > ${selectedServer.name}`);
       setFilteredGames([selectedGame]);
       setFocused(false);
 
@@ -75,9 +78,10 @@ const SearchGames = ({ games }: { games: GameList }) => {
     }
 
     if (selectedGame && selectedServer && selectedServerNum) {
-      setSearch(
-        `${selectedGame.name} > ${selectedServer.name} > ${selectedServerNum.name}`
-      );
+      // setSearch(
+      //   `${selectedGame.name} > ${selectedServer.name} > ${selectedServerNum.name}`
+      // );
+      setSearch("");
       setFilteredGames([selectedGame]);
       setFocused(false);
 
@@ -89,24 +93,73 @@ const SearchGames = ({ games }: { games: GameList }) => {
 
   return (
     <div
-      className={`relative flex flex-col w-full h-full px-16 rounded-md bg-fillGrayDefault transition-height duration-300 ${
-        focused ? "border border-borderPrimary" : ""
-      } ${focused && ""}`}
+      className={`relative flex flex-col w-full h-full px-16 rounded-md bg-fillGrayDefault transition-height duration-300 border  ${
+        focused ? " border-borderPrimary" : "border-transparent"
+      } `}
       onClick={() => setFocused(true)}
       ref={searchGamesRef}
     >
-      <div className="h-64 flex items-center gap-[10px]">
-        <CustomIcon
-          icon="SEARCH"
-          // className="absolute w-[1.5rem] h-[1.5rem] left-16"
-          className="w-[1.5rem] h-[1.5rem]"
-        />
+      {/* <div className="h-64 flex items-center gap-[10px] relative ">
+        <CustomIcon icon="SEARCH" className="w-[1.5rem] h-[1.5rem]" />
         <input
-          className="w-full bg-transparent placeholder:text-fgGrayPlaceholder "
+          className="w-full bg-transparent placeholder:text-fgGrayPlaceholder text-[18px] "
           placeholder="게임 이름을 입력하세요."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        {selectedGame && (
+          <div className="absolute left-10 border border-borderPrimary">
+            {selectedGame.name}
+            {selectedServer &&
+              `> ${selectedServer?.name} > ${selectedServerNum?.name}`}
+          </div>
+        )}
+      </div> */}
+
+      <div className="h-64 flex items-center gap-[10px] relative ">
+        <CustomIcon icon="SEARCH" className="w-[1.5rem] h-[1.5rem]" />
+        {!selectedGame ? (
+          <input
+            className="w-full bg-transparent placeholder:text-fgGrayPlaceholder text-[18px] "
+            placeholder="게임 이름을 입력하세요."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        ) : (
+          <div className="flex items-center w-full">
+            <div className="flex items-center px-2 py-1 rounded-md bg-fillPrimaryLight border border-borderPrimary mr-2">
+              <span className="text-fgPrimary text-[16px]">
+                {selectedGame.name}
+                {selectedServer && ` > ${selectedServer.name}`}
+                {selectedServerNum && ` > ${selectedServerNum.name}`}
+              </span>
+              <button
+                className="ml-2 text-fgGrayDefault hover:text-fgError"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedGame(null);
+                  setSelectedServer(null);
+                  setSelectedServerNum(null);
+                  setFilteredGames([]);
+                  setSearch("");
+                  setValue("game.gameName", "");
+                  setValue("game.server", "");
+                  setValue("game.serverNum", "");
+                }}
+              >
+                X
+                {/* <CustomIcon icon="CLOSE" className="w-[1rem] h-[1rem]" /> */}
+              </button>
+            </div>
+            <input
+              className="flex-1 bg-transparent placeholder:text-fgGrayPlaceholder text-[18px]"
+              placeholder="다른 게임을 검색하시려면 삭제하고 선택해주세요."
+              disabled
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+        )}
       </div>
 
       {focused && (
