@@ -17,7 +17,7 @@ export const useVerificationTimer = ({
   isResending,
   isVerified,
 }: VerificationTimerProps): VerificationTimerReturn => {
-  const [timeLeft, setTimeLeft] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(300);
 
   useEffect(() => {
     if (active) {

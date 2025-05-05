@@ -6,6 +6,7 @@ import { UseFormRegister, UseFormWatch } from "react-hook-form";
 import { cn } from "@/_utils/clsx";
 import { usePostVerifyCode } from "@/hooks/fetcher/signup/usePostVerifyCode";
 import { useVerificationTimer } from "@/_utils/signup/useVerificationTimer";
+import { showToast } from "../common/Toast";
 
 interface VerificationSectionProps {
   register: UseFormRegister<SignUpFormData>;
@@ -42,6 +43,15 @@ const VerificationSection = ({
     onVerifyStateChange({ isVerified, timeLeft });
   }, [isVerified, timeLeft, onVerifyStateChange]);
 
+  useEffect(() => {
+    if (timeLeft === 0 && isTimerExpired)
+      showToast(
+        "warning",
+        "인증시간이 초과했습니다.",
+        "이메일 인증을 다시 진행해주세요."
+      );
+  }, [timeLeft, isTimerExpired]);
+
   const handleVerifyClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -67,7 +77,7 @@ const VerificationSection = ({
         <label htmlFor="verify-code">인증번호</label>
         {active && timeLeft > 0 && !isVerified && (
           <p className="text-[14px] leading-[1.4em] tracking-[-0.02em] text-systemFailed">
-            남은 시간: {formatTime(timeLeft)}
+            {formatTime(timeLeft)}
           </p>
         )}
         {isTimerExpired && (
