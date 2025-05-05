@@ -8,19 +8,25 @@ export default {
   ],
   theme: {
     extend: {
+      keyframes: {
+        expandWidth: {
+          "0%": { width: "0%" },
+          "100%": { width: "100%" },
+        },
+      },
       boxShadow: {
         "button-primary-shadow": "0px 2px 100px 0px rgba(88, 101, 242, 0.4)",
       },
       animation: {
         fadeOut: "fadeOut 0.5s ease-in-out 2.5s forwards",
         spin: "spin 0.5s cubic-bezier(0.42, 0, 0.58, 1)",
-        toastSlideDown: "toastSlideDown 0.5s ease-out forwards",
+        expandWidth: "expandWidth 1s ease-in-out forwards",
       },
       colors: {
-        fgPrimaryDefault: "var(--gray-0)",
+        fgPrimaryDefault: "var(--gray-50)",
         fgPrimaryHovered: "var(--gray-0)",
-        fgPrimaryFocused: "var(--gray-200)",
-        fgPrimaryPressed: "var(--gray-200)",
+        fgPrimaryFocused: "var(--gray-0)",
+        fgPrimaryPressed: "var(--gray-0)",
         fgPrimaryDisabled: "var(--gray-200)",
         fgPrimaryAccent: "var(--primary-100)",
 
@@ -36,10 +42,10 @@ export default {
         bgGrayDepth2: "var(--gray-700)",
         bgGrayDepth3: "var(--gray-600)",
 
-        borderPrimary: "var(--primary-300)",
+        borderPrimary: "var(--primary-100)",
         borderDefault: "var(--gray-300)",
         borderFocused: "var(--gray-200)",
-        borderDivider: "var(--gray-600)",
+        borderDivider: "var(--gray-500)",
 
         fillPrimaryDefault: "var(--primary-300)",
         fillPrimaryHovered: "var(--primary-400)",
