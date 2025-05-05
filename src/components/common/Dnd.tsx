@@ -127,7 +127,7 @@ const Dnd = ({ files, setFiles }: Props) => {
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          className="w-[600px] relative border border-dashed border-borderDefault bg-fillGrayDefault p-[1rem] text-center rounded-[1rem] flex-center flex-col "
+          className="w-[590px] relative border border-dashed border-borderDefault bg-fillGrayDefault p-[1rem] text-center rounded-[1rem] flex-center flex-col "
         >
           {files.length === 0 ? (
             <>
@@ -141,7 +141,7 @@ const Dnd = ({ files, setFiles }: Props) => {
               </p>
             </>
           ) : (
-            <div className="flex flex-wrap gap-[1rem]">
+            <div className="flex flex-wrap gap-[1rem] items-center justify-center">
               {imageUrls.map((url, idx) => (
                 <div key={idx} className="w-fit h-fit relative group">
                   <img

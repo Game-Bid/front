@@ -12,10 +12,19 @@ import Dnd from "../common/Dnd";
 import WriteFormContent from "./WriteFormContent";
 import Switch from "../common/Switch";
 import { AnimatePresence, motion } from "motion/react";
+import Dropdown from "../common/Dropdown";
+import { WriteFormData } from "@/_types/write/WriteFormData";
+import { usePostAuctions } from "@/hooks/fetcher/write/usePostAuctions";
 
 const radioArr = [
   { label: "아이템", value: "item" },
   { label: "계정", value: "account" },
+];
+
+const accountTypeArr = [
+  { label: "구글", value: "google" },
+  { label: "게스트", value: "guest" },
+  { label: "기타", value: "etc" },
 ];
 
 const chipArr = [
@@ -27,24 +36,7 @@ const chipArr = [
   { label: "일주일", value: "7d" },
 ];
 
-export interface WriteFormType {
-  game: {
-    gameName: string;
-    server: string;
-    serverNum: string;
-  };
-  itemType: string;
-  accountType: string;
-  auctionPeriod: string;
-  startingPrice: number;
-  allowBuyNow: boolean;
-  buyNowPrice: number;
-  image: File[];
-  title: string;
-  description: string;
-}
-
-const writeForm: WriteFormType = {
+const writeForm: WriteFormData = {
   game: {
     gameName: "",
     server: "",
@@ -53,9 +45,9 @@ const writeForm: WriteFormType = {
   itemType: "", // item or account
   accountType: "", // 구글 / 게스트 / 기타 (item 선택 시 비어 있음)
   auctionPeriod: "", // 예: "3일", "5일", "7일" 등
-  startingPrice: 0, // 숫자
+  startingPrice: null, // 숫자
   allowBuyNow: false, // 즉시 구매 허용 여부
-  buyNowPrice: 0, // allowBuyNow가 true일 경우에만 입력
+  buyNowPrice: null, // allowBuyNow가 true일 경우에만 입력
   image: [], // 파일 또는 URL
   title: "",
   description: "",
@@ -67,9 +59,11 @@ const WriteContent = ({ games }: { games: GameList }) => {
   });
 
   const formData = form.watch();
+  const { mutate: write } = usePostAuctions();
 
-  const onSubmit = (data: typeof writeForm) => {
-    console.log(data);
+  const onSubmit = (data: WriteFormData) => {
+    // console.log(data);
+    write(data);
   };
 
   const formatWithComma = (val: string) => {
@@ -94,7 +88,7 @@ const WriteContent = ({ games }: { games: GameList }) => {
   return (
     <FormProvider {...form}>
       <div className="w-full min-h-[calc(100vh-82px)] flex items-center flex-col">
-        <div className="flex flex-col gap-[3rem] w-[600px]">
+        <div className="flex flex-col gap-[3rem] w-[590px]">
           <h1 className="text-[2.25rem] font-semibold leading-[130%] tracking-[-0.045rem] mt-[140px]">
             경매 등록
           </h1>
@@ -112,7 +106,7 @@ const WriteContent = ({ games }: { games: GameList }) => {
                     className="flex flex-col gap-2"
                   >
                     <p className={titleTextStyle}>종류선택</p>
-                    <div className="flex gap-2">
+                    <div className="flex justify-between">
                       {radioArr.map((item, idx) => (
                         <Radio
                           groupName="certificate"
@@ -130,10 +124,24 @@ const WriteContent = ({ games }: { games: GameList }) => {
                   {formData.itemType === "account" && (
                     <motion.div
                       {...animationProps}
-                      className="flex flex-col gap-2"
+                      className="flex flex-col gap-2 w-full"
                     >
                       <p className={titleTextStyle}>계정 종류</p>
-                      <div className="flex gap-2"></div>
+                      <div className="flex gap-2 w-full">
+                        <Dropdown
+                          width="588px"
+                          listData={accountTypeArr}
+                          placeholder="계정종류를 선택해주세요."
+                          select={
+                            accountTypeArr.find(
+                              (item) => item.value === formData.accountType
+                            ) || null
+                          }
+                          setSelect={(item) =>
+                            form.setValue("accountType", item?.value || "")
+                          }
+                        />
+                      </div>
                     </motion.div>
                   )}
 
@@ -168,12 +176,6 @@ const WriteContent = ({ games }: { games: GameList }) => {
                             {...animationProps}
                           >
                             <p className={titleTextStyle}>경매시작가</p>
-                            {/* <CommonInput
-                              {...form.register("startingPrice", {
-                                required: "경매시작가를 입력해주세요.",
-                              })}
-                              placeholder="경매시작가를 입력해 주세요."
-                            /> */}
                             <div className="flex items-center gap-12">
                               <Controller
                                 name="startingPrice"
@@ -294,7 +296,19 @@ const WriteContent = ({ games }: { games: GameList }) => {
             </AnimatePresence>
           </div>
           <div className="self-end w-[200px]">
-            <Button title="경매등록" onClick={form.handleSubmit(onSubmit)} />
+            <Button
+              width="200px"
+              title="경매등록"
+              onClick={form.handleSubmit(onSubmit)}
+              disabled={
+                formData.game.gameName === "" ||
+                formData.itemType === "" ||
+                formData.auctionPeriod === "" ||
+                formData.startingPrice === null ||
+                formData.title === "" ||
+                formData.description === ""
+              }
+            />
           </div>
           <div className="flex flex-col gap-2"></div>
         </div>

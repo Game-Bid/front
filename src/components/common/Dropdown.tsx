@@ -43,7 +43,7 @@ const Dropdown = ({
   };
   return (
     <div
-      className={`relative border rounded-md flex flex-col w-fit cursor-pointer  ${
+      className={`relative border rounded-md flex flex-col w-full cursor-pointer  ${
         active
           ? "border-borderPrimary bg-fillGrayDefault"
           : "border-transparent"
