@@ -211,7 +211,7 @@ const SearchGames = ({ games }: { games: GameList }) => {
             )}
             {selectedGame && selectedGame.gameServers?.length && (
               <div className="w-1/2 max-h-[480px] flex">
-                <div className="w-full text-fgGrayPlaceholder text-normal overflow-y-auto scrollbar-none ">
+                <div className="w-full text-fgGrayPlaceholder text-normal overflow-y-auto scrollbar-dropdown ">
                   {selectedGame.gameServers?.map((server) => {
                     return (
                       <div key={server.id}>

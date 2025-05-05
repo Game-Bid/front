@@ -54,6 +54,24 @@ body {
   scrollbar-width: none;
 }
 
+.scrollbar-dropdown::-webkit-scrollbar {
+  width: 8px;
+  height: 6px;
+}
+
+.scrollbar-dropdown::-webkit-scrollbar-track {
+  background: #393c43;
+  border-radius: 100px;
+}
+
+.scrollbar-dropdown::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  background-color: #94949c;
+  border-radius: 100px;
+  outline: none;
+  background-clip: content-box;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
