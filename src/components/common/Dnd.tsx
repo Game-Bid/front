@@ -13,12 +13,9 @@ const Dnd = ({ files, setFiles }: Props) => {
     null
   );
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [newImageIndex, setNewImageIndex] = useState<number[]>([]);
   const dropRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    console.log(files);
-  }, [files]);
 
   useEffect(() => {
     if (duplicationMessage) {
@@ -30,12 +27,31 @@ const Dnd = ({ files, setFiles }: Props) => {
   useEffect(() => {
     imageUrls.forEach((url) => URL.revokeObjectURL(url));
 
+    const prevCount = imageUrls.length;
     const newUrls = files.map((file) => URL.createObjectURL(file));
     setImageUrls(newUrls);
+
+    if (newUrls.length > prevCount) {
+      const newIndices = Array.from(
+        { length: newUrls.length - prevCount },
+        (_, i) => prevCount + i
+      );
+      setNewImageIndex(newIndices);
+
+      const timer = setTimeout(() => {
+        setNewImageIndex([]);
+      }, 1000);
+
+      return () => {
+        clearTimeout(timer);
+        newUrls.forEach((url) => URL.revokeObjectURL(url));
+      };
+    }
 
     return () => {
       newUrls.forEach((url) => URL.revokeObjectURL(url));
     };
+    /* eslint-disable */
   }, [files]);
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -143,13 +159,31 @@ const Dnd = ({ files, setFiles }: Props) => {
           ) : (
             <div className="flex flex-wrap gap-[1rem] items-center justify-center">
               {imageUrls.map((url, idx) => (
-                <div key={idx} className="w-fit h-fit relative group">
+                <div key={url + idx} className="w-fit h-fit relative group">
                   <img
                     src={url}
                     alt={`파일 ${idx + 1}`}
-                    className="w-[6.25rem] h-[5rem] object-cover rounded-[0.75rem] group-hover:opacity-90 group-hover:blur-[2px] transition-all"
+                    className={`w-[6.25rem] h-[5rem] object-cover rounded-[0.75rem] transition-all ${
+                      newImageIndex.includes(idx)
+                        ? "opacity-90 blur-[2px]"
+                        : "group-hover:opacity-90 group-hover:blur-[2px]"
+                    }`}
                   />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div
+                    className={`absolute inset-0 items-center justify-center flex-col gap-8  ${
+                      newImageIndex.includes(idx) ? "flex" : "hidden"
+                    }`}
+                  >
+                    <p className="text-fgPrimaryFocused text-[0.75rem] font-medium">
+                      업로딩...
+                    </p>
+                    <div className=" w-[80px] bg-fgPrimaryFocused h-1 rounded-max overflow-hidden">
+                      <div className="animate-expandWidth h-full bg-[#00DF80]"></div>
+                    </div>
+                  </div>
+                  <div
+                    className={`absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity `}
+                  >
                     <button
                       onClick={(e) => {
                         e.preventDefault();
