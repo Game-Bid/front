@@ -21,11 +21,11 @@ html {
   font-size: 100%;
 }
 
-@media (max-width: 1080px) {
+/* @media (max-width: 1080px) {
   html {
-    font-size: 87.5%; /* 14px = 1rem */
+    font-size: 87.5%; 14px = 1rem
   }
-}
+} */
 
 body {
   font-family: "Pretendard-Regular";
@@ -114,4 +114,7 @@ input[type="number"] {
 
   --system-success: #00df80;
   --system-failed: #f0424b;
+
+  --type-account: #f04aff;
+  --type-item: #ff6767;
 }
