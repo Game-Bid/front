@@ -11,7 +11,7 @@ const Page = () => {
 
   return (
     <div className="flex-center h-screen">
-      <div className=" flex flex-col gap-6">
+      <div className=" flex flex-col gap-1 w-[600px]">
         {/* <CustomIcon icon="LOGO_SVG" className="w-[32px] h-[32px]" />{" "} */}
         {/* 예시 */}
         <Dnd files={files} setFiles={setFiles} />

@@ -63,13 +63,16 @@ const FindIdForm = ({ onSuccess }: FindIdFormProps) => {
   ] as const;
 
   const LABEL_STYLES =
-    "text-[18px] leading-[1.4em] tracking-[-0.02em] text-fgGrayDefault";
+    "text-1.125 leading-[1.4] tracking-[-0.36px] text-fgGrayDefault";
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-[20px]"
+      >
         {/* 이름 입력 필드 */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-[8px]">
           <label htmlFor="name" className={LABEL_STYLES}>
             이름
           </label>
@@ -80,7 +83,7 @@ const FindIdForm = ({ onSuccess }: FindIdFormProps) => {
             placeholder="이름을 입력해주세요."
             autoFocus={true}
             register={register as unknown as UseFormRegister<SignUpFormData>}
-            className="w-full h-[48px] px-3 rounded-[12px] bg-fillGrayDefault focus:border focus:border-borderPrimary"
+            className="w-full h-[48px] px-0.75 rounded-md bg-fillGrayDefault focus:border focus:border-borderPrimary"
             required={true}
             rightElement={
               name && (
@@ -93,7 +96,7 @@ const FindIdForm = ({ onSuccess }: FindIdFormProps) => {
         </div>
 
         {/* 휴대폰 번호 입력 필드 */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-[8px]">
           <div className="flex items-center">
             <MultiInput
               label="휴대폰 번호"

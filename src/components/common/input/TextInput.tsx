@@ -79,10 +79,10 @@ const TextInput = <T extends FieldValues>({
           autoFocus={autoFocus}
           disabled={disabled}
           {...register(name, rules)}
-          className={`${className} ${rightElement ? "pr-16" : ""}`}
+          className={`${className}`}
         />
         {rightElement && (
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center">
+          <div className="absolute right-0.5 top-1/2 -translate-y-1/2 flex items-center">
             {rightElement}
           </div>
         )}

@@ -36,8 +36,8 @@ const PasswordSection = ({
 
   return (
     <>
-      <div className="flex flex-col gap-2">
-        <label htmlFor="password" className="text-[18px] text-fgGrayDefault">
+      <div className="flex flex-col gap-[8px]">
+        <label htmlFor="password" className="text-1.125 text-fgGrayDefault">
           비밀번호
         </label>
         <div className="relative">
@@ -48,11 +48,11 @@ const PasswordSection = ({
             placeholder="비밀번호를 입력해주세요."
             register={register}
             errors={errors}
-            className="h-[48px] px-3 rounded-[12px] bg-fillGrayDefault focus:border focus:border-borderPrimary w-full"
+            className="h-[48px] px-0.75 rounded-md bg-fillGrayDefault focus:border focus:border-borderPrimary w-full"
             required={true}
           />
           {password && (
-            <div className="flex gap-[10px] absolute right-2 top-1/2 transform -translate-y-1/2">
+            <div className="flex gap-0.5 absolute right-0.5 top-1/2 transform -translate-y-1/2">
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
@@ -68,7 +68,7 @@ const PasswordSection = ({
             </div>
           )}
         </div>
-        <p className="text-[12px] text-fgGrayPlaceholder">
+        <p className="text-0.75 font-medium text-fgGrayPlaceholder">
           영문, 숫자, 특수문자를 조합하여 길이를 최소 8~10자리 이상
         </p>
       </div>

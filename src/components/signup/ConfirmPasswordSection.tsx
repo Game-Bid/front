@@ -60,8 +60,8 @@ const ConfirmPasswordSection = ({
   ) : null;
 
   return (
-    <div className="flex flex-col gap-2">
-      <label htmlFor="checkPassword" className="text-[18px] text-fgGrayDefault">
+    <div className="flex flex-col gap-[8px]">
+      <label htmlFor="checkPassword" className="text-1.125 text-fgGrayDefault">
         비밀번호 확인
       </label>
       <TextInput<SignUpFormData>
@@ -71,7 +71,7 @@ const ConfirmPasswordSection = ({
         placeholder="비밀번호를 한 번 더 입력해주세요."
         register={register}
         errors={errors}
-        className="h-[48px] px-3 rounded-[12px] bg-fillGrayDefault w-full focus:border focus:border-borderPrimary"
+        className="h-[48px] px-0.75 rounded-md bg-fillGrayDefault w-full focus:border focus:border-borderPrimary"
         validationRules={confirmPasswordValidationRules}
         rightElement={buttonElements}
       />
