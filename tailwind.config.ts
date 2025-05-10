@@ -10,9 +10,9 @@ export default {
   theme: {
     extend: {
       screens: {
-        mobile: { max: "480px" },
-        tablet: { max: "768px" },
         laptop: { max: "1280px" },
+        tablet: { max: "768px" },
+        mobile: { max: "480px" },
       },
       keyframes: {
         expandWidth: {

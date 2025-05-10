@@ -143,41 +143,41 @@ const Dnd = ({ files, setFiles }: Props) => {
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          className="w-[590px] relative border border-dashed border-borderDefault bg-fillGrayDefault p-[1rem] text-center rounded-[1rem] flex-center flex-col "
+          className="w-full relative border border-dashed border-borderDefault bg-fillGrayDefault p-1 text-center rounded-lg flex-center flex-col "
         >
           {files.length === 0 ? (
             <>
               <CustomIcon icon="Image_Icon" className="w-[2rem] h-[2rem]" />
-              <div className="flex justify-center items-center gap-2 mt-[0.75rem] text-[0.875rem]">
+              <div className="flex-center gap-[6px] text-0.875 mt-[12px]">
                 <p className="text-fgPrimaryAccent ">클릭</p>
                 <p>혹은 드래그</p>
               </div>
-              <p className="text-gray-500 text-[0.75rem] font-[#A3A3A3]">
+              <p className="text-[#A3A3A3] text-0.75 mt-[2px]">
                 JPG, JPEG, PNG 포맷 5MB 이하, 최대 10장
               </p>
             </>
           ) : (
-            <div className="flex flex-wrap gap-[1rem] items-center justify-center">
+            <div className="flex-center flex-wrap gap-1">
               {imageUrls.map((url, idx) => (
                 <div key={url + idx} className="w-fit h-fit relative group">
                   <img
                     src={url}
                     alt={`파일 ${idx + 1}`}
-                    className={`w-[6.25rem] h-[5rem] object-cover rounded-[0.75rem] transition-all ${
+                    className={`w-[100px] h-[80px] tablet:w-[64px] tablet:h-[64px] object-cover rounded-md transition-all ${
                       newImageIndex.includes(idx)
                         ? "opacity-90 blur-[2px]"
                         : "group-hover:opacity-90 group-hover:blur-[2px]"
                     }`}
                   />
                   <div
-                    className={`absolute inset-0 items-center justify-center flex-col gap-8  ${
+                    className={`absolute inset-0 items-center justify-center flex-col gap-[8px]  ${
                       newImageIndex.includes(idx) ? "flex" : "hidden"
                     }`}
                   >
-                    <p className="text-fgPrimaryFocused text-[0.75rem] font-medium">
+                    <p className="text-fgPrimaryFocused text-0.75 font-medium">
                       업로딩...
                     </p>
-                    <div className=" w-[80px] bg-fgPrimaryFocused h-1 rounded-max overflow-hidden">
+                    <div className=" w-[80px] h-[4px] tablet:w-[34px] tablet:h-[4px] bg-fgPrimaryFocused rounded-max overflow-hidden">
                       <div className="animate-expandWidth h-full bg-[#00DF80]"></div>
                     </div>
                   </div>
@@ -191,7 +191,7 @@ const Dnd = ({ files, setFiles }: Props) => {
                         newFiles.splice(idx, 1);
                         setFiles(newFiles);
                       }}
-                      className="p-1.5 rounded-md bg-systemFailed"
+                      className="p-0.25 rounded-md bg-systemFailed"
                     >
                       <CustomIcon
                         icon="TRASH"

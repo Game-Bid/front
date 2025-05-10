@@ -15,13 +15,13 @@ const WriteFormContent = ({
 
   return (
     <div
-      className={`px-[16px] py-[24px] w-full bg-fillGrayDefault flex flex-col gap-[20px] rounded-lg transition-all ${
+      className={`px-1 py-1.5 w-full bg-fillGrayDefault flex flex-col gap-1.25 rounded-lg transition-all ${
         isFocused && "border border-fgPrimaryAccent"
       }`}
     >
       <input
         type="text"
-        className="bg-transparent text-fgGrayFocused font-semibold text-[20px] placeholder:text-fgGrayPlaceholder leading-[1.4] tracking-[-0.4px]"
+        className="bg-transparent text-fgGrayFocused font-semibold text-1.125 placeholder:text-fgGrayPlaceholder leading-[1.4] tracking-[-0.4px]"
         placeholder="제목을 입력하세요."
         value={title}
         onChange={(e) => {
@@ -38,7 +38,7 @@ const WriteFormContent = ({
       <textarea
         name=""
         id=""
-        className="bg-transparent resize-none min-h-[400px] text-[16px] text-fgGrayFocused placeholder:text-fgGrayPlaceholder leading-[1.4] tracking-[-0.32px]"
+        className="bg-transparent resize-none min-h-[160px] text-1 text-fgGrayFocused placeholder:text-fgGrayPlaceholder leading-[1.4] tracking-[-0.32px]"
         placeholder="제목을 입력하세요."
         value={description}
         onChange={(e) => {
