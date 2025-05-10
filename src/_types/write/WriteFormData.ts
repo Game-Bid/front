@@ -1,12 +1,12 @@
 export interface WriteFormData {
   game: {
-    gameName: string;
-    server: string;
-    serverNum: string;
+    gameName: number | null;
+    server: number | null;
+    serverNum: number | null;
   };
   itemType: string;
   accountType: string;
-  auctionPeriod: string;
+  endTime: string;
   startingPrice: number | null;
   allowBuyNow: boolean;
   buyNowPrice: number | null;

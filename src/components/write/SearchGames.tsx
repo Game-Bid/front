@@ -61,7 +61,7 @@ const SearchGames = ({ games }: { games: GameList }) => {
       setFilteredGames([selectedGame]);
       setFocused(false);
 
-      setValue("game.gameName", selectedGame.name);
+      setValue("game.gameName", selectedGame.id);
     }
 
     if (
@@ -73,8 +73,8 @@ const SearchGames = ({ games }: { games: GameList }) => {
       setFilteredGames([selectedGame]);
       setFocused(false);
 
-      setValue("game.gameName", selectedGame.name);
-      setValue("game.server", selectedServer.name);
+      setValue("game.gameName", selectedGame.id);
+      setValue("game.server", selectedServer.id);
     }
 
     if (selectedGame && selectedServer && selectedServerNum) {
@@ -82,9 +82,9 @@ const SearchGames = ({ games }: { games: GameList }) => {
       setFilteredGames([selectedGame]);
       setFocused(false);
 
-      setValue("game.gameName", selectedGame.name);
-      setValue("game.server", selectedServer.name);
-      setValue("game.serverNum", selectedServerNum.name);
+      setValue("game.gameName", selectedGame.id);
+      setValue("game.server", selectedServer.id);
+      setValue("game.serverNum", selectedServerNum.id);
     }
   }, [selectedGame, selectedServer, selectedServerNum]);
 
@@ -112,7 +112,7 @@ const SearchGames = ({ games }: { games: GameList }) => {
         ) : (
           <div className="flex items-center gap-0.75 w-full">
             <div className="flex items-center gap-0.25 h-[40px] px-1 rounded-max bg-bgGrayDepth3  ">
-              <span className="text-fgPrimary text-0.875 font-semibold cursor-pointer leading-[1.4] tracking-[-0.28px]">
+              <span className="text-fgPrimary text-0.875 font-semibold cursor-pointer leading-[1.4] tracking-[-0.28px] text-nowarp">
                 {selectedGame.name}
                 {selectedServer && ` > ${selectedServer.name}`}
                 {selectedServerNum && ` > ${selectedServerNum.name}`}
@@ -126,9 +126,9 @@ const SearchGames = ({ games }: { games: GameList }) => {
                   setSelectedServerNum(null);
                   setFilteredGames([]);
                   setSearch("");
-                  setValue("game.gameName", "");
-                  setValue("game.server", "");
-                  setValue("game.serverNum", "");
+                  setValue("game.gameName", null);
+                  setValue("game.server", null);
+                  setValue("game.serverNum", null);
                 }}
               >
                 <CustomIcon

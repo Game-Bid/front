@@ -38,13 +38,13 @@ const chipArr = [
 
 const writeForm: WriteFormData = {
   game: {
-    gameName: "dd",
-    server: "",
-    serverNum: "",
+    gameName: null,
+    server: null,
+    serverNum: null,
   },
   itemType: "", // item or account
   accountType: "", // 구글 / 게스트 / 기타 (item 선택 시 비어 있음)
-  auctionPeriod: "", // 예: "3일", "5일", "7일" 등
+  endTime: "", // 예: "3일", "5일", "7일" 등
   startingPrice: null, // 숫자
   allowBuyNow: false, // 즉시 구매 허용 여부
   buyNowPrice: null, // allowBuyNow가 true일 경우에만 입력
@@ -59,11 +59,14 @@ const WriteContent = ({ games }: { games: GameList }) => {
   });
 
   const formData = form.watch();
-  const { mutate: write } = usePostAuctions();
+  const { mutate: postAuction } = usePostAuctions();
 
   const onSubmit = (data: WriteFormData) => {
     // console.log(data);
-    write(data);
+    // write(data);
+
+    console.log(data);
+    postAuction(data);
   };
 
   const formatWithComma = (val: string) => {
@@ -88,8 +91,8 @@ const WriteContent = ({ games }: { games: GameList }) => {
   return (
     <FormProvider {...form}>
       <div className="w-full min-h-[calc(100vh-82px)] flex items-center flex-col">
-        <div className="flex flex-col gap-l-3 w-[530px] laptop:w-[422px] tablet:w-screen    tablet:px-[24px]">
-          <h1 className="text-[2.25rem] font-semibold leading-[130%] tracking-[-0.045rem] mt-[140px]">
+        <div className="flex flex-col gap-l-3 w-[530px] laptop:w-[422px] tablet:w-screen tablet:px-[24px]">
+          <h1 className="text-2.25 font-semibold leading-[1.3] tracking-[-0.045rem] mt-[32px]">
             경매 등록
           </h1>
           <div className="flex flex-col gap-l-3">
@@ -163,15 +166,15 @@ const WriteContent = ({ games }: { games: GameList }) => {
                             <Chip
                               key={item.value + idx}
                               listData={item}
-                              selected={formData.auctionPeriod === item.value}
+                              selected={formData.endTime === item.value}
                               onClick={(value) =>
-                                form.setValue("auctionPeriod", value)
+                                form.setValue("endTime", value)
                               }
                             />
                           ))}
                         </div>
                       </motion.div>
-                      {formData.auctionPeriod && (
+                      {formData.endTime && (
                         <>
                           {/* 경매시작가 */}
                           <motion.div
@@ -304,9 +307,9 @@ const WriteContent = ({ games }: { games: GameList }) => {
               title="경매등록"
               onClick={form.handleSubmit(onSubmit)}
               disabled={
-                formData.game.gameName === "" ||
+                formData.game.gameName === null ||
                 formData.itemType === "" ||
-                formData.auctionPeriod === "" ||
+                formData.endTime === "" ||
                 formData.startingPrice === null ||
                 formData.title === "" ||
                 formData.description === ""
