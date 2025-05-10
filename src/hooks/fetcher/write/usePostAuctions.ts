@@ -1,9 +1,7 @@
 import { WriteFormData } from "@/_types/write/WriteFormData";
 import { showToast } from "@/components/common/Toast";
 import { postAuctions } from "@/services/auctions/postAuctions";
-
 import { useMutation } from "@tanstack/react-query";
-// import { useRouter } from "next/navigation";
 
 export const usePostAuctions = () => {
   // const router = useRouter();

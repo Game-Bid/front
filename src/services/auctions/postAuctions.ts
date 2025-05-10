@@ -6,6 +6,30 @@ import { cookies } from "next/headers";
 const apiUrl = process.env.NEXT_API_URL;
 
 export const postAuctions = async (formData: WriteFormData) => {
+  console.log(formData);
+
+  const {
+    title,
+    description,
+    startingPrice,
+    buyNowPrice,
+    endTime,
+    accountType,
+    game,
+  } = formData;
+
+  const postData = {
+    title,
+    description,
+    startingPrice,
+    buyNowPrice,
+    endTime,
+    accountType,
+    gmaeId: game.gameName,
+    serverId: game.server,
+    serverNumId: game.serverNum,
+  };
+
   try {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("accessToken")?.value;
@@ -16,8 +40,7 @@ export const postAuctions = async (formData: WriteFormData) => {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
-      // api 필드 수정 후 body 수정
+      body: JSON.stringify(postData),
     });
 
     if (!res.ok) {
@@ -29,6 +52,8 @@ export const postAuctions = async (formData: WriteFormData) => {
     }
 
     const result = await res.json();
+
+    console.log(result);
 
     return { result };
   } catch (err) {
