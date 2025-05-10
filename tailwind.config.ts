@@ -129,7 +129,7 @@ export default {
   },
   plugins: [
     function ({ addComponents }: PluginAPI) {
-      const mediaQuery = "@media (max-width: 1079px)";
+      const mediaQuery = "@media (max-width: 768px)";
       const responsiveUtilities: Record<
         string,
         Record<string, Record<string, string>>
