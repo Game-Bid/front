@@ -12,7 +12,7 @@ interface Props {
 const Chip = ({ listData, selected, onClick }: Props) => {
   return (
     <div
-      className={`px-20 h-40 text-fgGrayDefault w-fit flex-center rounded-max duration-300 cursor-pointer border line-clamp-1 ${
+      className={`px-1 h-[40px] text-0.875 tablet:h-[34px] text-fgGrayDefault w-fit flex-center rounded-max duration-300 cursor-pointer border text-nowrap leading-[1.4] ${
         selected
           ? "border-transparent bg-fillPrimaryFocused"
           : "bg-fillGrayDefault  border-transparent hover:border-fgGrayFocused hover:bg-fillGrayHovered "

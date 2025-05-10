@@ -23,7 +23,7 @@ const Radio = ({ groupName, keyId, listData, setValue, now }: Props) => {
         onChange={() => setValue(listData.value)}
       />
       <label
-        className={`w-[280px] h-64 px-16 rounded-md bg-fillGrayDefault flex items-center gap-12 cursor-pointer border hover:border-fillGrayHovered hover:text-fgGrayHovered group select-none duration-100 ${
+        className={`w-full  h-[64px] tablet:h-[52px] px-1 rounded-md bg-fillGrayDefault flex items-center gap-0.75 cursor-pointer border hover:border-fillGrayHovered hover:text-fgGrayHovered group select-none duration-100 ${
           now === listData.value
             ? "text-fgGrayEntered border-borderPrimary"
             : "text-fgGrayPlaceholder border-transparent"
@@ -31,13 +31,13 @@ const Radio = ({ groupName, keyId, listData, setValue, now }: Props) => {
         htmlFor={keyId}
       >
         <div
-          className={`w-18 h-18 rounded-full before:content-[''] before:w-[6px] before:h-[6px] before:rounded-full  peer-checked:bg-borderPrimary flex-center group-hover:before:bg-fillGrayHovered ${
+          className={`w-[18px] h-[18px] rounded-full before:content-[''] before:w-[6px] before:h-[6px] before:rounded-full  peer-checked:bg-borderPrimary flex-center group-hover:before:bg-fillGrayHovered ${
             now === listData.value
               ? "before:bg-fillGrayDefault bg-borderPrimary"
               : "before:bg-transparent bg-fillGrayHovered "
           }`}
         ></div>
-        <p className="text-[1.125rem] peer-checked:text-fgGrayEntered">
+        <p className="text-1.125 peer-checked:text-fgGrayEntered">
           {listData.label}
         </p>
       </label>

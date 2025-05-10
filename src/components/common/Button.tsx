@@ -4,7 +4,6 @@ import CustomIcon from "@/Icons";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "tertiary";
-  size?: "sm" | "md";
   arrowDirection?: "left" | "right";
   title: string;
   width?: string;
@@ -12,7 +11,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = ({
   variant = "primary",
-  size = "md",
+  // size = "md",
   arrowDirection,
   title,
   width,
@@ -21,7 +20,7 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const baseStyles =
-    "flex-center transition-all text-nowrap font-semibold border border-transparent text-[1rem] gap-1 duration-3";
+    "flex-center transition-all text-nowrap font-semibold border border-transparent text-10 gap-0.25 duration-3 h-[48px] tablet:h-[40px] px-0.75 ";
 
   const variants = {
     primary: disabled
@@ -39,22 +38,17 @@ const Button = ({
     ),
   };
 
-  const sizes = {
-    sm: "px-8 h-[40px]",
-    md: "px-12 h-[48px]",
-  };
-
   return (
     <button
       style={width ? { width } : undefined}
-      className={cn(baseStyles, variants[variant], sizes[size], className)}
+      className={cn(baseStyles, variants[variant], className)}
       disabled={disabled}
       {...props}
     >
       {arrowDirection === "left" && (
         <CustomIcon icon="LEFT_ARROW" className="w-[24px] h-[24px]" />
       )}
-      {title}
+      <p className="text-1">{title}</p>
       {arrowDirection === "right" && (
         <CustomIcon icon="RIGHT_ARROW" className="w-[24px] h-[24px]" />
       )}
