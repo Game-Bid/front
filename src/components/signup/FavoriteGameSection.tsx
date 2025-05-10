@@ -15,8 +15,8 @@ const FavoriteGameSection = ({
   register,
 }: Props) => {
   return (
-    <div className="flex flex-col gap-2 relative ">
-      <label htmlFor="favoriteGame" className="text-[18px] text-fgGrayDefault">
+    <div className="flex flex-col gap-[8px] relative ">
+      <label htmlFor="favoriteGame" className="text-1.125 text-fgGrayDefault">
         관심 게임
       </label>
       <div onClick={() => setIsGameModalOpen(true)}>
@@ -26,14 +26,14 @@ const FavoriteGameSection = ({
           placeholder="게임을 선택해주세요."
           readOnly
           className={cn(
-            "w-full h-[48px] px-3 pr-10 rounded-[12px] bg-fillGrayDefault cursor-pointer"
+            "w-full h-[48px] px-0.75 pr-0.75 rounded-md bg-fillGrayDefault cursor-pointer"
           )}
           value={favoriteGame}
           {...register("favoriteGame", { required: true })}
         />
         <button
           type="button"
-          className="absolute right-2 bottom-[0.8px] -translate-y-1/2 transform"
+          className="absolute right-0.5 bottom-[0.8px] -translate-y-1/2 transform"
         >
           <CustomIcon icon="DROPDOWN_ARROW_SVG" className="w-[24px] h-[24px]" />
         </button>

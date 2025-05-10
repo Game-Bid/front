@@ -38,14 +38,6 @@ const SignUpGameModal = ({
     }
   };
 
-  // const games = [
-  //   "메이플스토리",
-  //   "메이플스토리월드",
-  //   "메이플스토리M",
-  //   "메이플스토리DS",
-  //   "메이플스토리빌리지",
-  // ];
-
   useEffect(() => {
     if (search === "") {
       setFilteredGames(games);
@@ -65,13 +57,13 @@ const SignUpGameModal = ({
 
   return createPortal(
     <div
-      className="select-none fixed inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-start gap-4 z-50"
+      className="select-none fixed inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center text-start gap-[3px] z-50"
       onClick={handleOverlayClick}
     >
-      <p className="w-[600px] text-left text-[18px] leading-[1.4em] tracking-[-0.02em] text-fgGrayDefault">
+      <p className="w-[600px] text-left text-1.125 leading-[1.4em] tracking-[-0.02em] text-fgGrayDefault">
         게임 선택
       </p>
-      <div className="w-[600px] px-8 flex flex-col gap-3 rounded-[12px] border border-fgPrimaryAccent bg-fillGrayDefault">
+      <div className="w-[600px] px-8 flex flex-col gap- rounded-md border border-fgPrimaryAccent bg-fillGrayDefault">
         <div className="flex flex-col">
           <div className="flex gap-[10px] items-center">
             <button type="button">
@@ -88,10 +80,10 @@ const SignUpGameModal = ({
               onChange={(e) => setSerach(e.target.value)}
             />
           </div>
-          <hr className="my-[2px]" />
+          <hr className="my-0.25 border-borderDefault" />
         </div>
         <div>
-          <ul className="flex flex-col items-start">
+          <ul className="flex flex-col items-start h-[247px] overflow-y-auto scrollbar-dropdown">
             {filteredGames?.map((game: simpleGameType) => (
               <li
                 key={game.id}
@@ -99,7 +91,7 @@ const SignUpGameModal = ({
                   onSelectGame?.(game.name);
                   onClose();
                 }}
-                className="flex items-center cursor-pointer w-full h-[48px] px-3 hover:w-full hover:bg-fillGrayHovered hover:rounded-[12px] rounded-[8px]"
+                className="flex items-center cursor-pointer w-full min-h-[48px] px-0.75 hover:w-full hover:bg-fillGrayHovered hover:rounded-[12px] rounded-[8px]"
               >
                 {game.name}
               </li>

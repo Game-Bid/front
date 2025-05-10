@@ -10,13 +10,14 @@ import BirthSection from "@/components/signup/BirthSection";
 import FavoriteGameSection from "@/components/signup/FavoriteGameSection";
 import AgreementSection from "@/components/signup/AgreementSection";
 import { SignUpFormData } from "@/_types/signup/SignUpFormData";
-import NextFind from "../find/NextFind";
 import SignUpGameModal from "../modal/SignUpGameModal";
 import { cn } from "@/_utils/clsx";
 import LoginButton from "../login/LoginButton";
 import { useRegister } from "@/hooks/fetcher/signup/usePostRegister";
 import { PostRegisterProps } from "@/services/signup/postRegister";
 import { generateRandomNickname } from "@/_utils/signup/generateRandomNickname";
+import Link from "next/link";
+import Button from "../common/Button";
 
 const SignUpForm = () => {
   const {
@@ -69,7 +70,10 @@ const SignUpForm = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-[20px] w-full tablet:mx-[24px]"
+      >
         <EmailSection register={register} watch={watch} errors={errors} />
         <PasswordSection
           register={register}
@@ -91,7 +95,7 @@ const SignUpForm = () => {
           watch={watch}
         />
 
-        <div className="flex flex-col gap-5">
+        <div className="flex-center flex-col gap-[20px]">
           <LoginButton
             isType="submit"
             isDisabled={!isFormReady}
@@ -103,7 +107,9 @@ const SignUpForm = () => {
             )}
             isText="회원가입"
           />
-          <NextFind />
+          <Link href={"/"}>
+            <Button title="다음에 가입" variant="tertiary" />
+          </Link>
         </div>
       </form>
       {isGameModalOpen && (

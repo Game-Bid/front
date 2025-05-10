@@ -58,9 +58,12 @@ const FindPwdForm = ({ onSuccess }: FindPwdFormProps) => {
   ] as const;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-[20px]"
+    >
       {/* 이름 입력 필드 */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-[8px]">
         <label htmlFor="name" className={LABEL_STYLES}>
           이름
         </label>
@@ -71,7 +74,7 @@ const FindPwdForm = ({ onSuccess }: FindPwdFormProps) => {
           placeholder="이름을 입력해주세요."
           autoFocus={true}
           register={register as unknown as UseFormRegister<SignUpFormData>}
-          className="w-full h-[48px] px-3 rounded-[12px] bg-fillGrayDefault focus:border focus:border-borderPrimary"
+          className="w-full h-[48px] px-0.75 rounded-md bg-fillGrayDefault focus:border focus:border-borderPrimary"
           required={true}
           rightElement={
             nameValue && (
@@ -93,7 +96,7 @@ const FindPwdForm = ({ onSuccess }: FindPwdFormProps) => {
       />
 
       {/* 이메일 입력 필드 */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-[8px]">
         <label htmlFor="email" className={LABEL_STYLES}>
           이메일
         </label>
@@ -103,7 +106,7 @@ const FindPwdForm = ({ onSuccess }: FindPwdFormProps) => {
           type="email"
           placeholder="이메일을 입력해주세요."
           register={register as unknown as UseFormRegister<SignUpFormData>}
-          className="w-full h-[48px] px-3 rounded-[12px] bg-fillGrayDefault focus:border focus:border-borderPrimary"
+          className="w-full h-[48px] px-0.75 rounded-[12px] bg-fillGrayDefault focus:border focus:border-borderPrimary"
           required={true}
           rightElement={
             emailValue && (

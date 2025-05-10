@@ -41,11 +41,11 @@ const EmailSection = ({ register, watch, errors }: EmailSectionProps) => {
 
   return (
     <>
-      <div className="flex flex-col gap-2">
-        <label htmlFor="email" className="text-[18px] text-fgGrayDefault">
+      <div className="flex flex-col gap-[8px]">
+        <label htmlFor="email" className="text-1.125 text-fgGrayDefault">
           이메일
         </label>
-        <div className="flex gap-2">
+        <div className="flex gap-[8px] justify-between w-full">
           <TextInput
             id="email"
             name="email"
@@ -57,7 +57,7 @@ const EmailSection = ({ register, watch, errors }: EmailSectionProps) => {
             errors={errors}
             required
             className={cn(
-              "w-[269px] h-[48px] px-3 rounded-[12px] focus:border focus:border-borderPrimary",
+              "h-[48px] min-w-[283px] w-full px-0.75 rounded-md focus:border focus:border-borderPrimary",
               isInputLocked
                 ? "bg-fillGrayDisabled text-fgGrayDisabled cursor-not-allowed"
                 : "bg-fillGrayDefault focus:border focus:border-borderPrimary"
@@ -68,7 +68,7 @@ const EmailSection = ({ register, watch, errors }: EmailSectionProps) => {
             onClick={handleSendVerification}
             disabled={!isValidEmail || isInputLocked || isResending}
             className={cn(
-              "w-[123px] h-[48px] px-3 rounded-[12px] whitespace-nowrap",
+              "w-[123px] h-[48px] rounded-md whitespace-nowrap",
               !isValidEmail || isInputLocked || isResending
                 ? "bg-fillGrayDisabled text-fgGrayDisabled"
                 : "bg-fillGrayDefault text-fgGrayDefault"

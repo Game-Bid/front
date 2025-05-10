@@ -23,7 +23,7 @@ const ToastMessage = ({ type, title, content }: ToastMessageProps) => {
         scale: { duration: 0.2 },
       }}
       className={cn(
-        "z-[200] flex items-center w-[25rem] h-[66px] p-3 gap-4 bg-fillGrayDefault rounded-[0.75rem] shadow-[0px_16px_24px_rgba(0,0,0,0.14),_0px_6px_30px_rgba(0,0,0,0.12),_0px_8px_10px_rgba(0,0,0,0.20)] mb-2 leading-[140%]"
+        " flex items-center w-[400px] h-[70px] px-1 py-0.75 gap-1 bg-fillGrayDefault rounded-md shadow-[0px_16px_24px_rgba(0,0,0,0.14),_0px_6px_30px_rgba(0,0,0,0.12),_0px_8px_10px_rgba(0,0,0,0.20)] mb-0.5 leading-[140%]"
       )}
     >
       <div className="relative w-[4rem] h-[4rem] flex-center">
@@ -42,11 +42,11 @@ const ToastMessage = ({ type, title, content }: ToastMessageProps) => {
           />
         </div>
       </div>
-      <div className="flex flex-col ">
-        <p className="text-[1rem] font-bold text-fgGrayFocused tracking-[-0.02rem]">
+      <div className="flex flex-col">
+        <p className="text-1 font-bold text-fgGrayFocused tracking-[-0.02rem]">
           {title}
         </p>
-        <p className="text-[0.875rem] text-fgGrayPlaceholder tracking-[-0.0175rem] ">
+        <p className="text-0.875 text-fgGrayPlaceholder tracking-[-0.0175rem] ">
           {content}
         </p>
       </div>
