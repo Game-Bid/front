@@ -20,7 +20,7 @@ const MyPageSideMenu = () => {
                 <Divider/>
                 <MyPageSideMenuItem name={'구매 내역'}
                                     path={'purchase-history'}
-                                    icon={'SERVER-02'}/>ㅁ
+                                    icon={'SERVER-02'}/>
                 <MyPageSideMenuItem name={'판매 내역'}
                                     path={'sales-history'}
                                     icon={'TICKET-02'}/>

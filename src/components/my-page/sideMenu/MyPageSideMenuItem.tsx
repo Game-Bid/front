@@ -14,7 +14,7 @@ interface MyPageSideMenuItemProps {
 
 const MyPageSideMenuItem = ({name, path, icon, count = 0}: MyPageSideMenuItemProps) => {
     const segment = useSelectedLayoutSegment()
-    const BACKGROUND_STYLE = `flex  px-0.75 h-[48px] rounded-sm hover:bg-fillGrayHovered hover:font-bold ${segment === path && 'bg-fillGrayFocused font-bold'}`;
+    const BACKGROUND_STYLE = `flex  px-0.75 h-[48px] rounded-md hover:bg-fillGrayHovered hover:font-bold ${segment === path && 'bg-fillGrayFocused font-bold'}`;
 
     return (
         <li>
