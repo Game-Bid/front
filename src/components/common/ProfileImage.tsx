@@ -27,12 +27,20 @@ const ProfileImage = ({
       className={`${sizeStyle} flex-center rounded-max bg-[rgba(0,0,0,0.1)] relative group overflow-hidden`}
     >
       {hover && size === "lg" && (
-        <div
-          className="absolute-center p-[6px] bg-fillGrayHovered shadow-sm rounded-[6px] z-10 hidden group-hover:block"
-          onClick={setFile}
-        >
-          <CustomIcon icon="ARROW-REFRESH" className="w-[24px] h-[24px]" />
-        </div>
+        <>
+          <label htmlFor="profileImage">
+            <div className="absolute-center p-[6px] bg-fillGrayHovered shadow-sm rounded-[6px] z-10 hidden group-hover:block">
+              <CustomIcon icon="ARROW-REFRESH" className="w-[24px] h-[24px]" />
+            </div>
+          </label>
+          <input
+            type="file"
+            name="profileImage"
+            id="profileImage"
+            className="hidden"
+            onClick={setFile}
+          />
+        </>
       )}
       {src ? (
         <Image
