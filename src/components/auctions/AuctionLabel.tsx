@@ -8,15 +8,18 @@ interface Props {
 const AuctionLabel = ({ type }: Props) => {
   return (
     <div
-      className={`rounded-max flex-center gap-4 px-8 h-[28px] w-fit bg-fillGrayDefault ${
+      className={`rounded-max flex-center gap-0.25 px-0.5 h-[28px] w-fit bg-fillGrayDefault ${
         type === "item"
           ? "shadow-[0_0_20px_rgba(255,103,103,0.4)]"
           : "shadow-[0px 0px_20px_0px_rgba(240,74,255,0.40)]"
       }`}
     >
-      <CustomIcon icon={type === "item" ? "PACKAGE-ITEM" : "USER-PROFILE"} />
+      <CustomIcon
+        className="w-[18px] h-[18px]"
+        icon={type === "item" ? "PACKAGE-ITEM" : "USER-PROFILE"}
+      />
       <p
-        className={`text-[0.75rem] text-nowrap ${
+        className={`text-0.75 text-nowrap ${
           type === "item" ? "text-[#FF6767]" : "text-[#F04AFF] "
         }`}
       >
