@@ -21,8 +21,8 @@ const NameSection = ({ register, watch, setValue }: NameSectionProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-2">
-      <label htmlFor="name" className="text-[18px] text-fgGrayDefault">
+    <div className="flex flex-col gap-[8px]">
+      <label htmlFor="name" className="text-1.125 text-fgGrayDefault">
         이름
       </label>
       <TextInput<SignUpFormData>
@@ -31,7 +31,7 @@ const NameSection = ({ register, watch, setValue }: NameSectionProps) => {
         type="name"
         placeholder="본인의 이름을 입력해주세요."
         register={register}
-        className="w-full h-[48px] px-3 rounded-[12px] bg-fillGrayDefault focus:border focus:border-borderPrimary"
+        className="w-full h-[48px] px-0.75 rounded-md bg-fillGrayDefault focus:border focus:border-borderPrimary"
         required={true}
         rightElement={
           name && (

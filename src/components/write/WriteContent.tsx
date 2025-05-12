@@ -38,13 +38,13 @@ const chipArr = [
 
 const writeForm: WriteFormData = {
   game: {
-    gameName: "",
-    server: "",
-    serverNum: "",
+    gameName: null,
+    server: null,
+    serverNum: null,
   },
   itemType: "", // item or account
   accountType: "", // 구글 / 게스트 / 기타 (item 선택 시 비어 있음)
-  auctionPeriod: "", // 예: "3일", "5일", "7일" 등
+  endTime: "", // 예: "3일", "5일", "7일" 등
   startingPrice: null, // 숫자
   allowBuyNow: false, // 즉시 구매 허용 여부
   buyNowPrice: null, // allowBuyNow가 true일 경우에만 입력
@@ -59,11 +59,14 @@ const WriteContent = ({ games }: { games: GameList }) => {
   });
 
   const formData = form.watch();
-  const { mutate: write } = usePostAuctions();
+  const { mutate: postAuction } = usePostAuctions();
 
   const onSubmit = (data: WriteFormData) => {
     // console.log(data);
-    write(data);
+    // write(data);
+
+    console.log(data);
+    postAuction(data);
   };
 
   const formatWithComma = (val: string) => {
@@ -76,7 +79,7 @@ const WriteContent = ({ games }: { games: GameList }) => {
     return val.replace(/,/g, "").replace(/\D/g, "");
   };
 
-  const titleTextStyle = "tracking-[-0.0225rem] text-[1.125rem] text-[18px] ";
+  const titleTextStyle = "tracking-[-0.0225rem] text-1.125 text-[18px] ";
 
   const animationProps = {
     initial: { height: 0, opacity: 0, overflow: "hidden" },
@@ -88,12 +91,12 @@ const WriteContent = ({ games }: { games: GameList }) => {
   return (
     <FormProvider {...form}>
       <div className="w-full min-h-[calc(100vh-82px)] flex items-center flex-col">
-        <div className="flex flex-col gap-[3rem] w-[590px]">
-          <h1 className="text-[2.25rem] font-semibold leading-[130%] tracking-[-0.045rem] mt-[140px]">
+        <div className="flex flex-col gap-l-3 w-[530px] laptop:w-[422px] tablet:w-screen tablet:px-[24px]">
+          <h1 className="text-2.25 font-semibold leading-[1.3] tracking-[-0.045rem] mt-[32px]">
             경매 등록
           </h1>
-          <div className="flex flex-col gap-48">
-            <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-l-3">
+            <div className="flex flex-col gap-[4px]">
               <p className={titleTextStyle}>게임선택</p>
               <SearchGames games={games} />
             </div>
@@ -103,19 +106,22 @@ const WriteContent = ({ games }: { games: GameList }) => {
                 <>
                   <motion.div
                     {...animationProps}
-                    className="flex flex-col gap-2"
+                    className="flex flex-col gap-[4px]"
                   >
                     <p className={titleTextStyle}>종류선택</p>
-                    <div className="flex justify-between">
+                    <div className="flex gap-[16px] tablet:flex-col w-full">
                       {radioArr.map((item, idx) => (
-                        <Radio
-                          groupName="certificate"
-                          listData={item}
-                          keyId={item.value + idx}
-                          setValue={(value) => form.setValue("itemType", value)}
-                          key={item.value + idx}
-                          now={formData.itemType}
-                        />
+                        <div className="w-full" key={item.value + idx}>
+                          <Radio
+                            groupName="certificate"
+                            listData={item}
+                            keyId={item.value + idx}
+                            setValue={(value) =>
+                              form.setValue("itemType", value)
+                            }
+                            now={formData.itemType}
+                          />
+                        </div>
                       ))}
                     </div>
                   </motion.div>
@@ -124,10 +130,10 @@ const WriteContent = ({ games }: { games: GameList }) => {
                   {formData.itemType === "account" && (
                     <motion.div
                       {...animationProps}
-                      className="flex flex-col gap-2 w-full"
+                      className="flex flex-col gap-[4px] w-full"
                     >
                       <p className={titleTextStyle}>계정 종류</p>
-                      <div className="flex gap-2 w-full">
+                      <div className="flex gap-[16px] w-full">
                         <Dropdown
                           width="588px"
                           listData={accountTypeArr}
@@ -151,32 +157,32 @@ const WriteContent = ({ games }: { games: GameList }) => {
                     <>
                       {/* 경매기간 */}
                       <motion.div
-                        className="flex flex-col gap-2"
+                        className="flex flex-col gap-[4px]"
                         {...animationProps}
                       >
                         <p className={titleTextStyle}>경매기간</p>
-                        <div className="flex gap-5">
+                        <div className="flex gap-[8px]">
                           {chipArr.map((item, idx) => (
                             <Chip
                               key={item.value + idx}
                               listData={item}
-                              selected={formData.auctionPeriod === item.value}
+                              selected={formData.endTime === item.value}
                               onClick={(value) =>
-                                form.setValue("auctionPeriod", value)
+                                form.setValue("endTime", value)
                               }
                             />
                           ))}
                         </div>
                       </motion.div>
-                      {formData.auctionPeriod && (
+                      {formData.endTime && (
                         <>
                           {/* 경매시작가 */}
                           <motion.div
-                            className="flex flex-col gap-2"
+                            className="flex flex-col gap-[4px]"
                             {...animationProps}
                           >
                             <p className={titleTextStyle}>경매시작가</p>
-                            <div className="flex items-center gap-12">
+                            <div className="flex items-center gap-0.75">
                               <Controller
                                 name="startingPrice"
                                 control={form.control}
@@ -191,7 +197,7 @@ const WriteContent = ({ games }: { games: GameList }) => {
                                       e: React.ChangeEvent<HTMLInputElement>
                                     ) => {
                                       const raw = e.target.value;
-                                      field.onChange(parseToNumber(raw)); // 폼 값은 숫자만 유지
+                                      field.onChange(parseToNumber(raw));
                                     }}
                                     placeholder="경매시작가를 입력해 주세요."
                                   />
@@ -205,11 +211,11 @@ const WriteContent = ({ games }: { games: GameList }) => {
                           <AnimatePresence>
                             {formData.allowBuyNow && (
                               <motion.div
-                                className="flex flex-col gap-12"
+                                className="flex flex-col gap-[4px]"
                                 {...animationProps}
                               >
                                 <p className={titleTextStyle}>즉시 구매가</p>
-                                <div className="flex items-center gap-12">
+                                <div className="flex items-center gap-0.75">
                                   <Controller
                                     name="buyNowPrice"
                                     control={form.control}
@@ -239,7 +245,7 @@ const WriteContent = ({ games }: { games: GameList }) => {
                               </motion.div>
                             )}
                           </AnimatePresence>
-                          <div className="flex items-center gap-12">
+                          <div className="flex items-center gap-[10px]">
                             <Switch
                               on={formData.allowBuyNow}
                               setOn={(value) =>
@@ -252,7 +258,7 @@ const WriteContent = ({ games }: { games: GameList }) => {
                             <>
                               {/* 상품이미지 */}
                               <motion.div
-                                className="flex flex-col gap-2"
+                                className="flex flex-col gap-[4px]"
                                 {...animationProps}
                               >
                                 <p className={titleTextStyle}>
@@ -273,7 +279,7 @@ const WriteContent = ({ games }: { games: GameList }) => {
                                 />
                               </motion.div>
                               {/* 작성폼 */}
-                              <div className="">
+                              <div>
                                 <WriteFormContent
                                   title={formData.title}
                                   description={formData.description}
@@ -301,9 +307,9 @@ const WriteContent = ({ games }: { games: GameList }) => {
               title="경매등록"
               onClick={form.handleSubmit(onSubmit)}
               disabled={
-                formData.game.gameName === "" ||
+                formData.game.gameName === null ||
                 formData.itemType === "" ||
-                formData.auctionPeriod === "" ||
+                formData.endTime === "" ||
                 formData.startingPrice === null ||
                 formData.title === "" ||
                 formData.description === ""

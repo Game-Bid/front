@@ -14,12 +14,12 @@ interface LoginFormData {
 }
 
 const LABEL_STYLES =
-  "text-[18px] leading-[1.4em] tracking-[-0.02em] text-fgGrayDefault";
+  "text-1.125 leading-[1.4em] tracking-[-0.02em] text-fgGrayDefault";
 const INPUT_STYLES =
-  "w-full h-[48px] px-3 rounded-[10px] bg-fillGrayDefault focus:border focus:border-borderPrimary";
+  "w-full h-[48px] px-0.75 rounded-md bg-fillGrayDefault focus:border focus:border-borderPrimary text-1";
 const BUTTON_ICON_STYLES = "w-[24px] h-[24px]";
 const CLEAR_BUTTON_STYLES =
-  "absolute right-2 top-1/2 transform -translate-y-1/2";
+  "absolute right-0 top-1/2 transform -translate-y-1/2";
 
 const LoginForm = () => {
   const {
@@ -41,7 +41,7 @@ const LoginForm = () => {
 
   const onSubmit = async (data: LoginFormData) => {
     if (!isValid) return;
-    console.log("Login:", data);
+    // console.log("Login:", data);
 
     login(data, {
       onSuccess: () => {
@@ -68,9 +68,12 @@ const LoginForm = () => {
     !!email && !!password && isValidEmail(email) && isValidPassword(password);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-[20px]"
+    >
       {/* 이메일 입력 필드 */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-[8px]">
         <label htmlFor="email" className={LABEL_STYLES}>
           이메일
         </label>
@@ -84,7 +87,7 @@ const LoginForm = () => {
           className={cn(
             INPUT_STYLES,
             errors.email ? "border-systemFailed" : "border-borderDefault",
-            emailValue && "pr-10",
+            // emailValue && "",
             loginError && "border-[1px] border-systemFailed"
           )}
           required={true}
@@ -112,7 +115,7 @@ const LoginForm = () => {
       </div>
 
       {/* 비밀번호 입력 필드 */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-[8px]">
         <label htmlFor="password" className={LABEL_STYLES}>
           비밀번호
         </label>
@@ -126,8 +129,8 @@ const LoginForm = () => {
           className={cn(
             INPUT_STYLES,
             errors.password ? "border-systemFailed" : "border-borderDefault",
-            passwordValue && "pr-16",
-            loginError && "border-[1px] border-systemFailed"
+            // passwordValue && "pr-0",
+            loginError && "border border-systemFailed"
           )}
           required={true}
           validationRules={{
@@ -146,11 +149,11 @@ const LoginForm = () => {
           }}
           rightElement={
             passwordValue && (
-              <div className="flex gap-[10px] absolute right-3">
+              <div className={`${CLEAR_BUTTON_STYLES} flex-center gap-0.5`}>
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="flex items-center"
+                  className="flex-center"
                 >
                   <CustomIcon
                     icon={showPassword ? "CLOSE_EYE_SVG" : "EYE_SVG"}
@@ -160,7 +163,7 @@ const LoginForm = () => {
                 <button
                   type="button"
                   onClick={() => clearField("password")}
-                  className="flex items-center"
+                  className="flex-center"
                 >
                   <CustomIcon icon="CLOSE_SVG" className={BUTTON_ICON_STYLES} />
                 </button>

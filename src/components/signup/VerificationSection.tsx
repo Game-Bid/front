@@ -72,21 +72,21 @@ const VerificationSection = ({
   };
 
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex gap-2 items-center">
+    <div className="flex flex-col gap-[8px]">
+      <div className="flex gap-[8px] items-center">
         <label htmlFor="verify-code">인증번호</label>
         {active && timeLeft > 0 && !isVerified && (
-          <p className="text-[14px] leading-[1.4em] tracking-[-0.02em] text-systemFailed">
+          <p className="text-0.875 leading-[1.4em] tracking-[-0.02em] text-systemFailed">
             {formatTime(timeLeft)}
           </p>
         )}
         {isTimerExpired && (
-          <p className="text-[14px] leading-[1.4em] tracking-[-0.02em] text-systemFailed">
+          <p className="text-0.875 leading-[1.4em] tracking-[-0.02em] text-systemFailed">
             인증 시간이 만료되었습니다
           </p>
         )}
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-[8px]">
         <input
           type="text"
           inputMode="numeric"

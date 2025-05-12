@@ -47,7 +47,7 @@ const ToastContainer = () => {
   if (typeof window === "undefined") return null;
 
   return createPortal(
-    <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[200]">
+    <div className="fixed top-[90px] left-1/2 -translate-x-1/2 z-[200]">
       <AnimatePresence mode="popLayout">
         {toasts.map((toast) => (
           <ToastMessage

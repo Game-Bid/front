@@ -51,7 +51,7 @@ const Dropdown = ({
     >
       <div className="flex flex-col ">
         {active && position === "up" && (
-          <>
+          <div className="flex flex-col gap-0.25 p-[8px]">
             {listData.map((item) => (
               <div
                 className="h-[48px] px-12 flex items-center hover:bg-fillGrayHovered rounded-md"
@@ -61,13 +61,13 @@ const Dropdown = ({
                 {item.label}
               </div>
             ))}
-          </>
+          </div>
         )}
       </div>
       <div
         style={width ? { width } : undefined}
         className={cn(
-          "h-[48px] px-12 rounded-md flex items-center justify-between text-[1rem] transition-all duration-300",
+          "h-[48px] tablet:h-[40px] px-0.75 rounded-md flex items-center justify-between text-1 transition-all duration-300",
           disabled
             ? "bg-fillGrayDefault text-fgGrayDisabled cursor-not-allowed"
             : active
@@ -89,17 +89,17 @@ const Dropdown = ({
       </div>
       <div className="flex flex-col ">
         {active && position === "down" && (
-          <>
+          <div className="flex flex-col gap-0.25 p-[8px]">
             {listData.map((item) => (
               <div
-                className="h-[48px] px-12 flex items-center hover:bg-fillGrayHovered rounded-md"
+                className="h-[48px] tablet:h-[40px] text-1 px-0.75 flex items-center hover:bg-fillGrayHovered rounded-md"
                 key={item.label}
                 onClick={() => handleSelect(item)}
               >
                 {item.label}
               </div>
             ))}
-          </>
+          </div>
         )}
       </div>
     </div>

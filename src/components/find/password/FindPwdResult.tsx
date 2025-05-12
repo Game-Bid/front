@@ -6,8 +6,8 @@ const buttonStyle =
 
 const FindPwdResult = () => {
   return (
-    <div className="flex flex-col gap-5">
-      <p className="text-[18px] leading-[25.2px] tracking-[-0.02em] text-fgPrimaryAccent">
+    <div className="flex flex-col gap-[20px]">
+      <p className="text-1.125 leading-[1.4] tracking-[-0.36px] text-fgPrimaryAccent">
         임시 비밀번호가 이메일로 발송되었습니다.
       </p>
       <Link href="/login">

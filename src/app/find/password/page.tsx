@@ -9,7 +9,7 @@ const Page = () => {
 
   return (
     <div>
-      {!showResult ? (
+      {showResult ? (
         <FindPwdForm onSuccess={() => setShowResult(true)} />
       ) : (
         <FindPwdResult />

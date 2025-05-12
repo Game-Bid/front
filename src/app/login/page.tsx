@@ -24,7 +24,7 @@ const SOCIAL_LINKS = [
 const Page = () => {
   return (
     <div className="w-full h-[calc(100vh-82px)] flex-center flex-col">
-      <div className="min-w-[400px] flex flex-col gap-5">
+      <div className="min-w-[400px] flex flex-col gap-[20px]">
         <div className="flex items-center gap-[10px]">
           <CustomIcon icon="LOGO_SVG" className="w-[24px] h-[23px]" />
           <h1 className="text-2xl font-semibold">GAME BID</h1>
@@ -32,9 +32,9 @@ const Page = () => {
 
         <LoginForm />
 
-        <div className="w-full flex-center gap-5 text-[16px] font-normal leading-[1.4em] tracking-[-0.02em] text-fgGrayDefault">
+        <div className="w-full flex-center gap-[20px] text-1 font-normal leading-[1.4em] tracking-[-0.02em] text-nowrap text-fgGrayDefault">
           {NAV_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className="px-3">
+            <Link key={link.href} href={link.href} className="px-0.75">
               <p>{link.text}</p>
             </Link>
           ))}
@@ -42,7 +42,7 @@ const Page = () => {
 
         <hr className="border-fillGrayDefault" />
 
-        <div className="flex-center gap-5">
+        <div className="flex-center gap-[20px]">
           {SOCIAL_LINKS.map((social) => (
             <Link key={social.href} href={social.href}>
               <div className="w-[48px] h-[48px] flex-center rounded-full bg-fillGrayDefault">

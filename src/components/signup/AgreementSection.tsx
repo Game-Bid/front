@@ -69,11 +69,11 @@ const AgreementSection = ({
   };
 
   return (
-    <div className="flex flex-col gap-3 my-[60px]">
+    <div className="flex flex-col gap-[12px] my-[60px] text-0.875">
       {/* 전체 동의 */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-0.75">
         <div
-          className="relative w-[24px] h-[24px] rounded-[8px] bg-fillGrayDefault flex items-center justify-center cursor-pointer"
+          className="relative w-[24px] h-[24px] rounded-md bg-fillGrayDefault flex items-center justify-center cursor-pointer"
           onClick={() => handleCheckboxClick("agreeAll")}
         >
           {watchedValues.agreeAll && (
@@ -87,7 +87,7 @@ const AgreementSection = ({
           />
         </div>
         <span
-          className="cursor-pointer"
+          className="cursor-pointer text-0.875"
           onClick={() => handleCheckboxClick("agreeAll")}
         >
           모두 동의합니다.
@@ -97,9 +97,9 @@ const AgreementSection = ({
       <hr className="border-borderGrayDefault" />
 
       {/* 개별 체크박스 */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-[12px]">
         {checkboxItems.map((item) => (
-          <div key={item.id} className="flex gap-3 items-center">
+          <div key={item.id} className="flex gap-0.75 items-center">
             <div
               className="relative w-[24px] h-[24px] rounded-[8px] bg-fillGrayDefault flex items-center justify-center cursor-pointer"
               onClick={() => handleCheckboxClick(item.id)}
@@ -118,12 +118,12 @@ const AgreementSection = ({
               />
             </div>
             <span
-              className="flex gap-1 items-center cursor-pointer"
+              className="flex gap-0.25 items-center cursor-pointer"
               onClick={() => handleCheckboxClick(item.id)}
             >
               {item.label}
               {item.required && (
-                <span className="text-[14px] text-fgPrimaryAccent">(필수)</span>
+                <span className="text-0.875 text-fgPrimaryAccent">(필수)</span>
               )}
             </span>
           </div>

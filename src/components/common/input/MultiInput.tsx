@@ -32,7 +32,7 @@ const MultiInput = React.forwardRef<HTMLInputElement, MultiInputProps>(
       inputConfigs,
       register,
       showDash = false,
-      gapBetweenInputs = "gap-3",
+      gapBetweenInputs = "gap-[12px]",
     }: MultiInputProps,
     ref
   ) => {
@@ -56,10 +56,10 @@ const MultiInput = React.forwardRef<HTMLInputElement, MultiInputProps>(
       };
 
     return (
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-[8px]">
         <label
           htmlFor={inputConfigs[0].name}
-          className="text-[18px] text-fgGrayDefault"
+          className="text-1.125 leading-[1.4] tracking-[-0.36px] text-fgGrayDefault"
         >
           {label}
         </label>
@@ -86,7 +86,7 @@ const MultiInput = React.forwardRef<HTMLInputElement, MultiInputProps>(
                 <input
                   id={name}
                   type="text"
-                  className="w-1/3 h-[48px] px-3 text-center rounded-[12px] bg-fillGrayDefault focus:border focus:border-borderPrimary"
+                  className="w-1/3 h-[48px] px-0.75 text-center rounded-md bg-fillGrayDefault focus:border focus:border-borderPrimary"
                   placeholder={placeholder}
                   maxLength={maxLength}
                   inputMode="numeric"

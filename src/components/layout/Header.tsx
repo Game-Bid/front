@@ -1,45 +1,64 @@
+"use client";
+
 import CustomIcon from "@/Icons/Icon";
+import useDeviceSize from "@/hooks/responsive/useDeviceSize";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import ResponsiverSidebar from "./ResponsiverSidebar";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { isTablet } = useDeviceSize();
+  const pathname = usePathname();
   const buttonStyle =
-    "flex-center py-[0.5rem] px-[1.25rem] rounded-[1.25rem] border border-borderPrimary";
+    "flex-center h-[40px] px-1.125 rounded-[20px] border border-borderPrimary text-1 leading-[1.4] tracking-[-0.32px] font-semibold text-fgGrayDefault";
+
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
+
+  if (isLoading) return;
+
   return (
     <div className="w-screen fixed top-0 left-0 z-[50] bg-bgGrayDepth1 border-b border-borderDivider ">
-      <div className="max-w-[90rem] flex items-center justify-between py-[1.25rem] px-[2.5rem] mx-auto">
-        <div className="flex items-center gap-[3.125rem]">
+      <div className="w-full flex items-center justify-between py-1.25 px-1.5 mx-auto">
+        <div className="flex items-center gap-2.5">
           <Link
             href={"/"}
-            className="flex items-center gap-[0.5rem] cursor-pointer"
+            className="flex items-center gap-[8px] cursor-pointer"
           >
-            <CustomIcon icon="LOGO_SVG" className="w-[1.5rem] h-[1.5rem]" />
-            <p className="text-[1.25rem] font-bold uppercase">GameBid</p>
+            <CustomIcon icon="LOGO_SVG" className="w-[20px] h-[20px]" />
+            <p className="text-1.25 leading-[1.4] tracking-[-0.4px] font-bold uppercase">
+              GameBid
+            </p>
           </Link>
-          <ul className="flex items-center gap-[2.75rem]">
-            <li className="cursor-pointer">계정 경매</li>
-            <li className="cursor-pointer">아이템 경매</li>
-            <li className="cursor-pointer">고객 지원</li>
-          </ul>
+          {!isTablet && (
+            <ul className="flex items-center gap-1.25 text-1">
+              <li className="cursor-pointer">계정 경매</li>
+              <li className="cursor-pointer">아이템 경매</li>
+              <li className="cursor-pointer">고객 지원</li>
+            </ul>
+          )}
         </div>
-        <div>
-          {/* <Link href={"/login"}>
-            <button className={buttonStyle}>로그인</button>
-          </Link> */}
-          <div className="flex items-center gap-[1.19rem]">
-            <div className="flex items-center gap-[1rem]">
+        {isTablet ? (
+          <div onClick={() => setSidebarOpen(true)} className="cursor-pointer">
+            <CustomIcon icon="MENU" className="w-[24px] h-[24px]" />
+          </div>
+        ) : (
+          <div className="flex items-center gap-1.25">
+            <div className="flex items-center gap-[15px]">
               <Link href={"/my-page"}>
-                {/* 테스트코드 */}
                 <CustomIcon
                   icon="GNB1"
                   className="w-[1.5rem] h-[1.5rem] cursor-pointer"
-                />{" "}
+                />
               </Link>
-              {/* <CustomIcon
-                  icon="GNB1"
-                  className="w-[1.5rem] h-[1.5rem] cursor-pointer"
-                /> */}
-
               <CustomIcon
                 icon="GNB2"
                 className="w-[1.5rem] h-[1.5rem] cursor-pointer"
@@ -56,8 +75,12 @@ const Header = () => {
               <button className={buttonStyle}>로그인</button>
             </Link>
           </div>
-        </div>
+        )}
       </div>
+      <ResponsiverSidebar
+        isOpen={sidebarOpen}
+        close={() => setSidebarOpen(false)}
+      />
     </div>
   );
 };
