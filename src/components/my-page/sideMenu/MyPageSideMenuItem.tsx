@@ -14,10 +14,10 @@ interface MyPageSideMenuItemProps {
 
 const MyPageSideMenuItem = ({name, path, icon, count = 0}: MyPageSideMenuItemProps) => {
     const segment = useSelectedLayoutSegment()
-    const BACKGROUND_STYLE = `flex  px-0.75 h-[48px] rounded-md hover:bg-fillGrayHovered hover:font-bold ${segment === path && 'bg-fillGrayFocused font-bold'}`;
+    const BACKGROUND_STYLE = `flex px-0.75 h-[48px] rounded-md hover:bg-fillGrayHovered hover:font-bold ${segment === path && 'bg-fillGrayFocused font-bold'}`;
 
     return (
-        <li>
+        <div className={'w-full leading-[1.4]'}>
             <Link href={path ? `/my-page/${path}` : '/my-page'} className={BACKGROUND_STYLE}>
                 <div className={'flex flex-1 items-center gap-0.5'}>
                     <Icon icon={icon} className={'w-[24px] h-[24px]'}/>
@@ -25,7 +25,7 @@ const MyPageSideMenuItem = ({name, path, icon, count = 0}: MyPageSideMenuItemPro
                 </div>
                 { count > 0 && <Badge count={count}></Badge>}
             </Link>
-        </li>
+        </div>
     );
 };
 
