@@ -13,6 +13,7 @@ const CustomIcon = ({ icon, className, fill, stroke }: IconProps) => {
   const iconData = ICONS[icon];
   const svgOptions = iconData.svgOptions || {};
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { fill: _, stroke: __, ...restSvgOptions } = svgOptions;
 
   return (
