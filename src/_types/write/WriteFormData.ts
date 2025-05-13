@@ -4,7 +4,7 @@ export interface WriteFormData {
     server: number | null;
     serverNum: number | null;
   };
-  itemType: string;
+  itemType: "ITEM" | "ACCOUNT" | string;
   accountType: string;
   endTime: string;
   startingPrice: number | null;
