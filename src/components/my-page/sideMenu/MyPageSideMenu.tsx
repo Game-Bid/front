@@ -5,8 +5,8 @@ import LogoutButton from "@/components/my-page/sideMenu/LogoutButton";
 const MyPageSideMenu = () => {
 
     return (
-        <div className={'md:w-[285px] w-[200px] h-[864px] bg-bgGrayDepth2 rounded-md py-1.5 px-1 mx-1.5'}>
-            <ul className={'flex flex-col gap-[8px]'}>
+        <div className={'flex items-center w-[285px] leading-[1.4]'}>
+            <div className={'h-[864px] flex flex-col  items-start py-1.5 px-1 flex-[1-0-0] rounded-md bg-bgGrayDepth2 gap-0.5'}>
                 <MyPageSideMenuItem name={'마이페이지'}
                                     path={null}
                                     icon={'GNB3'}/>
@@ -39,10 +39,8 @@ const MyPageSideMenu = () => {
                                     path={'penalty'}
                                     icon={'ALERT-TRIANGLE'}/>
                 <Divider/>
-                <li>
-                    <LogoutButton/>
-                </li>
-            </ul>
+                <LogoutButton/>
+            </div>
         </div>
     );
 };

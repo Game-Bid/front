@@ -1,7 +1,36 @@
-import React from "react";
+import MyPageProfile from "@/components/my-page/myPage/MyPageProfile";
 
+const SUB_TITLE_STYLE = 'text-1.25 mb-l-0.5';
 const page = () => {
-  return <div>마이페이지입니다</div>;
+
+
+    return <div className={'w-[793px] flex flex-col flex-start self-stretch font-semibold text-fgGrayDefault'}>
+        <h3 className={'text-2 mb-l-2'}>마이페이지</h3>
+        <div className={'flex flex-col gap-l-4 pt-l-2'}>
+            <div>
+                <p className={SUB_TITLE_STYLE}>프로필</p>
+                <MyPageProfile
+                    nickname={'tnehddl'}
+                    email={'ehdtn18@gmail.com'}
+                    profileUrl={null}
+                    penaltyCount={0}
+                    idCertified={false}
+                    accountCertified={true}
+                    phoneCertified={true}
+                />
+            </div>
+            <div>
+                <p className={SUB_TITLE_STYLE}>포인트</p>
+            </div>
+            <div>
+                <p className={SUB_TITLE_STYLE}>거래 현황</p>
+            </div>
+            <div>
+                <p className={SUB_TITLE_STYLE}>경매 레벨</p>
+            </div>
+        </div>
+    </div>;
 };
 
 export default page;
+
