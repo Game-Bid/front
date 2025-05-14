@@ -14,11 +14,11 @@ import Switch from "../common/Switch";
 import { AnimatePresence, motion } from "motion/react";
 import Dropdown from "../common/Dropdown";
 import { WriteFormData } from "@/_types/write/WriteFormData";
-import { usePostAuctions } from "@/hooks/fetcher/write/usePostAuctions";
+import { usePostAuctions } from "@/hooks/fetcher/auctions/usePostAuctions";
 
 const radioArr = [
-  { label: "아이템", value: "item" },
-  { label: "계정", value: "account" },
+  { label: "아이템", value: "ITEM" },
+  { label: "계정", value: "ACCOUNT" },
 ];
 
 const accountTypeArr = [
