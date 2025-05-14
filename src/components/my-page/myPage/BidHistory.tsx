@@ -20,8 +20,6 @@ const bidHistoryList = [
 
 const BidHistory = ({bidCount, successBidCount, postCount, dealCount}: DealStatusProps) => {
     const [currentMod, setCurrentMode] = useState('all');
-    const COUNT_STYLE = '';
-    const LABEL_STYLE = '';
     return (
         <>
             <div className={'flex gap-0.5 items-start pb-l-0.5'}>
