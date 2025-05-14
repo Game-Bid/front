@@ -66,6 +66,7 @@ export default {
         fillGrayDisabled: "var(--gray-600)",
 
         systemFailed: "var(--system-failed)",
+        systemSuccess: "var(--system-success)",
       },
       spacing: {
         "0.25": "4px",

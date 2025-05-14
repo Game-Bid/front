@@ -1,14 +1,17 @@
 import React from 'react';
 import MyPageSideMenu from "@/components/my-page/sideMenu/MyPageSideMenu";
+import MyPageBanner from "@/components/my-page/MyPageBanner";
 
-const MyPageLayout = ({ children }: { children: React.ReactNode }) => {
+const MyPageLayout = ({children}: { children: React.ReactNode }) => {
     return (
-        <div className={'flex w-[1200px] m-auto pt-4 gap-[122px]'}>
-            <MyPageSideMenu/>
-            <div className={'flex-1'}>
+        <main>
+            <MyPageBanner/>
+            <div className={'w-[1200px] m-auto pt-4 flex justify-between'}>
+                <MyPageSideMenu/>
                 {children}
             </div>
-        </div>
+
+        </main>
     );
 };
 
