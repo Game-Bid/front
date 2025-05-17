@@ -1,7 +1,10 @@
+'use client'
+
 import ProfileImage from "@/components/common/ProfileImage";
 import StateChip from "@/components/common/StateChip";
 import CustomButton from "@/components/common/CustomButton";
 import CustomIcon from "@/Icons";
+import {useRouter} from "next/navigation";
 
 export interface MyPageProfileData {
     nickname: string;
@@ -13,6 +16,7 @@ export interface MyPageProfileData {
     phoneCertified: boolean;
 }
 
+
 const MyPageProfile = ({
                            nickname,
                            email,
@@ -22,6 +26,12 @@ const MyPageProfile = ({
                            accountCertified,
                            phoneCertified
                        }: MyPageProfileData) => {
+
+    const router = useRouter();
+    const onClickEditMyPage = () => {
+        router.push('/my-page/edit');
+    }
+
     return (
         <div
             className={'bg-bgGrayDepth2 rounded-lg p-l-2 flex justify-between items-center self-stretch leading-[1.4]'}>
@@ -42,7 +52,9 @@ const MyPageProfile = ({
                     </div>
                 </div>
             </div>
-            <CustomButton variant={'secondary'} className={'flex text-fgGrayDefault leading-[1.4] gap-0.25'}>
+            <CustomButton variant={'secondary'}
+                          onClick={onClickEditMyPage}
+                          className={'flex text-fgGrayDefault leading-[1.4] gap-0.25'}>
                 <CustomIcon icon={'EDIT-04'} className={'w-[24px] h-[24px]'} fill={'#EFEFF0'}/>
                 <div>회원 정보 수정</div>
             </CustomButton>
