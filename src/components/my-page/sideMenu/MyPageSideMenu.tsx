@@ -5,7 +5,7 @@ import LogoutButton from "@/components/my-page/sideMenu/LogoutButton";
 const MyPageSideMenu = () => {
 
     return (
-        <div className={'flex items-center w-[285px] leading-[1.4]'}>
+        <div className={'flex items-center w-[285px] pt-l-4 leading-[1.4]'}>
             <div className={'h-[864px] flex flex-col  items-start py-1.5 px-1 flex-[1-0-0] rounded-md bg-bgGrayDepth2 gap-0.5'}>
                 <MyPageSideMenuItem name={'마이페이지'}
                                     path={null}

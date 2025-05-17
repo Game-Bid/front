@@ -6,7 +6,7 @@ const MyPageLayout = ({children}: { children: React.ReactNode }) => {
     return (
         <main>
             <MyPageBanner/>
-            <div className={'w-[1200px] m-auto pt-4 flex justify-between'}>
+            <div className={'w-full max-w-[1200px] pb-20 flex items-start gap-[122px] m-auto'}>
                 <MyPageSideMenu/>
                 {children}
             </div>
