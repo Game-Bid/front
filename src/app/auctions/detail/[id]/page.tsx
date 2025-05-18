@@ -16,7 +16,7 @@ const Page = () => {
   if (!data?.result) return null;
 
   return (
-    <div className="py-l-4 max-w-[1080px] w-full tablet:w-full flex flex-col gap-l-7.5 mx-auto tablet:px-[20px]">
+    <div className="py-l-4 max-w-[1080px] w-full tablet:w-full flex flex-col gap-l-7.5 mx-auto laptop:px-[20px]">
       <AuctionContent data={data?.result} />
 
       <div className="flex flex-col gap-l-1.5">
