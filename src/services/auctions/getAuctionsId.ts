@@ -5,7 +5,7 @@ const apiUrl = process.env.NEXT_API_URL;
 export const getAuctionsId = async (id: string) => {
   console.log(`${apiUrl}/api/v1/auctions/${id}?increment=false`);
   try {
-    const res = await fetch(`${apiUrl}/api/v1/auctions/${id}?increment=false`);
+    const res = await fetch(`${apiUrl}/api/v1/auctions/${id}?increment=true`);
 
     if (!res.ok) {
       return {

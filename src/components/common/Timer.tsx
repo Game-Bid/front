@@ -2,42 +2,33 @@ import CustomIcon from "@/Icons/Icon";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import React, { useEffect, useState } from "react";
+import { TimerStatus } from "../auctions/detail/AuctionContent";
 
 dayjs.extend(duration);
 
 interface TimerProps {
   startTime: string;
   endTime: string;
+  status: TimerStatus;
 }
 
-type TimerStatus = "beforeStart" | "progress" | "disabled";
-
-const Timer = ({ startTime, endTime }: TimerProps) => {
-  // const now = dayjs();
-  const [now, setNow] = useState(dayjs());
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setNow(dayjs());
-    }, 1000); // 1초마다 now 갱신
-
-    return () => clearInterval(interval); // 컴포넌트 언마운트 시 clear
-  }, []);
-
+const Timer = ({ startTime, endTime, status }: TimerProps) => {
   const start = dayjs(startTime);
   const end = dayjs(endTime);
 
-  let status: TimerStatus;
+  const [now, setNow] = useState(dayjs());
 
-  if (now.isBefore(start)) {
-    status = "beforeStart";
-  } else if (now.isBefore(end)) {
-    status = "progress";
-  } else {
-    status = "disabled";
-  }
+  useEffect(() => {
+    if (status === "disabled") return;
 
-  // 상태별 Tailwind 클래스
+    const interval = setInterval(() => {
+      const currentTime = dayjs();
+      setNow(currentTime);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [status, start, end]);
+
   const statusClassMap: Record<TimerStatus, string> = {
     beforeStart: "border-systemSuccess text-systemSuccess",
     progress: "border-fgPrimaryAccent text-fgPrimaryAccent",
@@ -46,10 +37,16 @@ const Timer = ({ startTime, endTime }: TimerProps) => {
 
   const getFormattedDuration = (ms: number) => {
     const d = dayjs.duration(ms);
-    const h = String(Math.floor(d.asHours())).padStart(2, "0");
+    const days = Math.floor(d.asDays());
+    const h = String(Math.floor(d.asHours()) % 24).padStart(2, "0");
     const m = String(d.minutes()).padStart(2, "0");
     const s = String(d.seconds()).padStart(2, "0");
-    return `${h}시간 ${m}분 ${s}초`;
+
+    if (days > 0) {
+      return `${days}일 ${h}시간 ${m}분 ${s}초`;
+    } else {
+      return `${h}시간 ${m}분 ${s}초`;
+    }
   };
 
   const content =

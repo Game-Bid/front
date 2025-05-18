@@ -15,7 +15,7 @@ const CommonInput = ({
   return (
     <div className="w-full">
       <input
-        className={`min-w-[400px] w-full h-[48px] px-[12px] pr-[40px] border rounded-md text-[16px] duration-100  ${
+        className={`w-full h-[48px] px-[12px] pr-[40px] border rounded-md text-[16px] duration-100  ${
           disabled
             ? ""
             : warning

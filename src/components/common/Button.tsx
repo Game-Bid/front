@@ -1,26 +1,27 @@
 import { cn } from "@/_utils/clsx";
 import React from "react";
-import CustomIcon from "@/Icons";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "tertiary";
-  arrowDirection?: "left" | "right";
+  icon?: "left" | "right";
   title: string;
   width?: string;
+  customIcon?: React.ReactNode;
 }
 
 const Button = ({
   variant = "primary",
   // size = "md",
-  arrowDirection,
+  icon,
   title,
   width,
   className,
   disabled,
+  customIcon,
   ...props
 }: ButtonProps) => {
   const baseStyles =
-    "flex-center transition-all text-nowrap font-semibold border border-transparent text-10 gap-0.25 duration-3 h-[48px] tablet:h-[40px] px-0.75 ";
+    "flex-center transition-all text-nowrap font-semibold border border-transparent gap-0.25 duration-3 h-[48px] tablet:h-[40px] px-0.75 ";
 
   const variants = {
     primary: disabled
@@ -45,13 +46,9 @@ const Button = ({
       disabled={disabled}
       {...props}
     >
-      {arrowDirection === "left" && (
-        <CustomIcon icon="LEFT_ARROW" className="w-[24px] h-[24px]" />
-      )}
+      {icon === "left" && customIcon}
       <p className="text-1">{title}</p>
-      {arrowDirection === "right" && (
-        <CustomIcon icon="RIGHT_ARROW" className="w-[24px] h-[24px]" />
-      )}
+      {icon === "right" && customIcon}
     </button>
   );
 };
