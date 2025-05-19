@@ -1,5 +1,5 @@
 import CustomIcon from "@/Icons/Icon";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import duration from "dayjs/plugin/duration";
 import React, { useEffect, useState } from "react";
 import { TimerStatus } from "../auctions/detail/AuctionContent";
@@ -7,8 +7,8 @@ import { TimerStatus } from "../auctions/detail/AuctionContent";
 dayjs.extend(duration);
 
 interface TimerProps {
-  startTime: string;
-  endTime: string;
+  startTime: Dayjs;
+  endTime: Dayjs;
   status: TimerStatus;
 }
 

@@ -17,9 +17,9 @@ const CommonInput = ({
       <input
         className={`w-full h-[48px] px-[12px] pr-[40px] border rounded-md text-[16px] duration-100  ${
           disabled
-            ? ""
+            ? "bg-fillGrayDisabled border-transparent cursor-not-allowed text-fgGrayDisabled"
             : warning
-            ? ""
+            ? "border-systemFailed bg-fillGrayDisabled text-fgGrayDisabled"
             : "border-transparent bg-fillGrayDefault text-fgGrayDefault hover:placeholder:bg-fillGrayHovered hover:text-fgGrayHovered hover:bg-fillGrayHovered placeholder:text-fgGrayPlaceholder focus:bg-fillGrayFocused focus:border-borderPrimary "
         }`}
         {...props}
