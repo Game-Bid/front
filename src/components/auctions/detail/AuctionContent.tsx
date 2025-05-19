@@ -137,7 +137,7 @@ const AuctionContent = ({ data }: AuctionContentProps) => {
             <p className="w-[56px] text-fgGrayPressed">게임</p>
             <p className="text-fgGrayDefault">
               {data.gameName} {data.serverName && ` > ${data.serverName}`}{" "}
-              {data.serverNumId && ` > ${data.serverNumId}`}
+              {data.serverNumName && ` > ${data.serverNumName}`}
             </p>
           </div>
           <div className="flex items-center text-0.875 leading-[1.4] tracking-[-0.28px]">

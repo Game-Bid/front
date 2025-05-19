@@ -1,63 +1,32 @@
-"use server";
+"use client";
 
 import { WriteFormData } from "@/_types/write/WriteFormData";
-import { cookies } from "next/headers";
-
-const apiUrl = process.env.NEXT_API_URL;
+import { postAuctionsServer } from "./postAuctionsServer";
 
 export const postAuctions = async (formData: WriteFormData) => {
-  console.log(formData);
+  const form = new FormData();
+  form.append("title", formData.title);
+  form.append("description", formData.description);
+  form.append("startingPrice", formData.startingPrice?.toString() || "");
+  form.append("buyNowPrice", formData.buyNowPrice?.toString() || "");
+  form.append("auctionType", formData.itemType);
+  form.append("gameId", formData.game?.gameName?.toString() || "");
+  form.append("serverId", formData.game.server?.toString() || "");
+  form.append("serverNumId", formData.game.serverNum?.toString() || "");
+  form.append("duration", formData.endTime);
 
-  const {
-    title,
-    description,
-    startingPrice,
-    buyNowPrice,
-    endTime,
-    accountType,
-    game,
-  } = formData;
-
-  const postData = {
-    title,
-    description,
-    startingPrice,
-    buyNowPrice,
-    endTime,
-    accountType,
-    gmaeId: game.gameName,
-    serverId: game.server,
-    serverNumId: game.serverNum,
-  };
-
-  try {
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("accessToken")?.value;
-
-    const res = await fetch(`${apiUrl}/api/v1/auctions`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(postData),
+  // 이미지 처리
+  if (formData.image.length > 0) {
+    formData.image.forEach((img: File) => {
+      form.append("images", img, img.name); // img.name 제거
     });
-
-    if (!res.ok) {
-      return {
-        error: "write post Api 응답 에러",
-        status: res.status,
-        statusText: res.statusText,
-      };
-    }
-
-    const result = await res.json();
-
-    console.log(result);
-
-    return { result };
-  } catch (err) {
-    console.log("Error details:", err);
-    return { error: "game API 요청 실패", errorMessage: err };
   }
+
+  console.log("이미지 확인:", formData.image);
+  console.log("FormData 전체 확인:");
+  for (const [key, value] of form.entries()) {
+    console.log(key, value);
+  }
+
+  return postAuctionsServer(form);
 };
