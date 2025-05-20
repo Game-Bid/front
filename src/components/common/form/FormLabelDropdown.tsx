@@ -15,8 +15,6 @@ const FormLabelDropdown = ({
                                label,
                                name,
                                rules,
-                               disabled = false,
-                               warning = false,
                                listData
                            }: FormLabelDropdownProps) => {
     const {control} = useFormContext();

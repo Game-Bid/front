@@ -29,11 +29,11 @@ const BidHistory = ({bidCount, successBidCount, postCount, dealCount}: DealStatu
             </div>
             <div className={'flex w-[793px] h-[133px] p-l-2 justify-between items-center rounded-lg bg-bgGrayDepth2'}>
                 <BidHistoryCount count={bidCount} label={'입찰 내역'}/>
-                <VerticalDivider/>
+                <VerticalDivider className={'h-[65px]'}/>
                 <BidHistoryCount count={successBidCount} label={'낙찰 내역'}/>
-                <VerticalDivider/>
+                <VerticalDivider className={'h-[65px]'}/>
                 <BidHistoryCount count={postCount} label={'내 경매글'}/>
-                <VerticalDivider/>
+                <VerticalDivider className={'h-[65px]'}/>
                 <BidHistoryCount count={dealCount} label={'거래 내역'}/>
             </div>
         </>

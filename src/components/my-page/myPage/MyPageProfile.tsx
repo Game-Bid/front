@@ -1,7 +1,6 @@
 'use client'
 
 import ProfileImage from "@/components/common/ProfileImage";
-import StateChip from "@/components/common/StateChip";
 import CustomButton from "@/components/common/CustomButton";
 import CustomIcon from "@/Icons";
 import {useRouter} from "next/navigation";
@@ -21,10 +20,10 @@ const MyPageProfile = ({
                            nickname,
                            email,
                            profileUrl,
-                           penaltyCount,
-                           idCertified,
-                           accountCertified,
-                           phoneCertified
+                           // penaltyCount,
+                           // idCertified,
+                           // accountCertified,
+                           // phoneCertified
                        }: MyPageProfileData) => {
 
     const router = useRouter();

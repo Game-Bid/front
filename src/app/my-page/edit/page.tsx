@@ -5,7 +5,6 @@ import Button from "@/components/common/Button";
 import {FormProvider, useForm} from "react-hook-form";
 import FormLabelTextInput from "@/components/common/form/FormLabelTextInput";
 import FormLabelPasswordInput from "@/components/common/form/FormLabelPasswordInput";
-import FormLabelProfileInput from "@/components/common/form/FormLabelProfileInput";
 import FormLabelMultiInput from "@/components/common/form/FormLabelMultiInput";
 import FormLabelDropdown from "@/components/common/form/FormLabelDropdown";
 import CustomIcon from "@/Icons";
