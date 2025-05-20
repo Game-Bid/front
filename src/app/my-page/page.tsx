@@ -1,6 +1,7 @@
 import MyPageProfile from "@/components/my-page/myPage/MyPageProfile";
 import MyPagePoint from "@/components/my-page/myPage/MyPagePoint";
 import BidHistory from "@/components/my-page/myPage/BidHistory";
+import MyPageBidLevel from "@/components/my-page/myPage/MyPageBidLevel";
 
 const SUB_TITLE_STYLE = 'text-1.25 mb-l-0.5';
 const page = () => {
@@ -29,9 +30,9 @@ const page = () => {
                 <p className={SUB_TITLE_STYLE}>거래 현황</p>
                 <BidHistory bidCount={14} successBidCount={2} postCount={3} dealCount={1}/>
             </div>
-            <div className={SECTION_STYLE}>
-                <p className={SUB_TITLE_STYLE}>경매 레벨</p>
-            </div>
+            {/*<div className={SECTION_STYLE}>*/}
+            {/*    <p className={SUB_TITLE_STYLE}>경매 레벨</p>*/}
+            {/*</div>*/}
         </div>
     </div>;
 };
