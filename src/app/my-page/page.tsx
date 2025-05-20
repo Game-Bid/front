@@ -6,7 +6,7 @@ const SUB_TITLE_STYLE = 'text-1.25 mb-l-0.5';
 const page = () => {
     const SECTION_STYLE = 'flex flex-col items-start gap-l-0.5 self-stretch';
 
-    return <div className={'w-[793px] flex flex-col flex-start self-stretch font-semibold text-fgGrayDefault'}>
+    return <div className={'w-[793px] pt-l-4 flex flex-col flex-start self-stretch font-semibold text-fgGrayDefault'}>
         <h3 className={'text-2 mb-l-2'}>마이페이지</h3>
         <div className={'flex flex-col gap-l-4 pt-l-2'}>
             <div className={SECTION_STYLE}>

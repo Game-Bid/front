@@ -118,3 +118,12 @@ input[type="number"] {
   --type-account: #f04aff;
   --type-item: #ff6767;
 }
+
+/* 스타일 변수지정 */
+.input-base {
+  @apply w-full h-[48px] px-[12px] pr-[12px] border rounded-md text-[16px] duration-100;
+}
+
+.input-default {
+  @apply border-transparent bg-fillGrayDefault text-fgGrayDefault hover:placeholder:bg-fillGrayHovered hover:text-fgGrayHovered hover:bg-fillGrayHovered placeholder:text-fgGrayPlaceholder focus:bg-fillGrayFocused focus:border-borderPrimary;
+}

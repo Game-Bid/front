@@ -14,6 +14,9 @@ export default {
         tablet: { max: "768px" },
         mobile: { max: "480px" },
       },
+      gridTemplateColumns: {
+        "16": "repeat(16, minmax(0, 1fr))",
+      },
       keyframes: {
         expandWidth: {
           "0%": { width: "0%" },

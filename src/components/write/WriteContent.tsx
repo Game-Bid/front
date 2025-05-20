@@ -61,11 +61,17 @@ const WriteContent = ({ games }: { games: GameList }) => {
   const formData = form.watch();
   const { mutate: postAuction } = usePostAuctions();
 
-  const onSubmit = (data: WriteFormData) => {
-    // console.log(data);
+  const onSubmit = async (data: WriteFormData) => {
+    console.log("전체 폼 데이터:", data);
+    console.log("이미지 파일들:", data.image);
+    console.log(
+      "이미지 타입:",
+      data.image.map((img) => img.constructor.name)
+    );
+
     // write(data);
 
-    console.log(data);
+    // console.log(data);
     postAuction(data);
   };
 
@@ -127,7 +133,7 @@ const WriteContent = ({ games }: { games: GameList }) => {
                   </motion.div>
 
                   {/* 계정 종류 */}
-                  {formData.itemType === "account" && (
+                  {formData.itemType === "ACCOUNT" && (
                     <motion.div
                       {...animationProps}
                       className="flex flex-col gap-[4px] w-full"
@@ -135,7 +141,7 @@ const WriteContent = ({ games }: { games: GameList }) => {
                       <p className={titleTextStyle}>계정 종류</p>
                       <div className="flex gap-[16px] w-full">
                         <Dropdown
-                          width="588px"
+                          width="100%"
                           listData={accountTypeArr}
                           placeholder="계정종류를 선택해주세요."
                           select={
@@ -151,8 +157,8 @@ const WriteContent = ({ games }: { games: GameList }) => {
                     </motion.div>
                   )}
 
-                  {(formData.itemType === "item" ||
-                    (formData.itemType === "account" &&
+                  {(formData.itemType === "ITEM" ||
+                    (formData.itemType === "ACCOUNT" &&
                       formData.accountType !== "")) && (
                     <>
                       {/* 경매기간 */}

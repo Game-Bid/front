@@ -54,7 +54,7 @@ const Dropdown = ({
           <div className="flex flex-col gap-0.25 p-[8px]">
             {listData.map((item) => (
               <div
-                className="h-[48px] px-12 flex items-center hover:bg-fillGrayHovered rounded-md"
+                className="h-[48px] px-0.75 flex items-center hover:bg-fillGrayHovered rounded-md"
                 key={item.label}
                 onClick={() => handleSelect(item)}
               >
