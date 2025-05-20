@@ -1,7 +1,6 @@
 'use client'
 
 import ProfileImage from "@/components/common/ProfileImage";
-import StateChip from "@/components/common/StateChip";
 import CustomButton from "@/components/common/CustomButton";
 import CustomIcon from "@/Icons";
 import {useRouter} from "next/navigation";
@@ -21,10 +20,10 @@ const MyPageProfile = ({
                            nickname,
                            email,
                            profileUrl,
-                           penaltyCount,
-                           idCertified,
-                           accountCertified,
-                           phoneCertified
+                           // penaltyCount,
+                           // idCertified,
+                           // accountCertified,
+                           // phoneCertified
                        }: MyPageProfileData) => {
 
     const router = useRouter();
@@ -40,16 +39,16 @@ const MyPageProfile = ({
                 <div className={'flex flex-col gap-l-0.25'}>
                     <div className={'flex items-center gap-l-0.5'}>
                         <div className={'text-2.25 leading-[1.3]'}>{nickname}</div>
-                        <div
-                            className={'text-0.75 text-fgGrayDisabled font-normal flex p-l-0.25 justify-center items-center gap-[10px] rounded-max border border-fgGrayDisabled py-l-0.25 px-l-0.5'}>패널티 {penaltyCount}회
-                        </div>
+                        {/*<div*/}
+                        {/*    className={'text-0.75 text-fgGrayDisabled font-normal flex p-l-0.25 justify-center items-center gap-[10px] rounded-max border border-fgGrayDisabled py-l-0.25 px-l-0.5'}>패널티 {penaltyCount}회*/}
+                        {/*</div>*/}
                     </div>
                     <span className={'text-1.125 text-fgGrayDisabled font-normal'}>{email}</span>
-                    <div className={'flex pt-l-0.5 gap-l-0.75'}>
-                        <StateChip succeed={idCertified} label={'신분증 인증'}/>
-                        <StateChip succeed={accountCertified} label={'계좌 인증'}/>
-                        <StateChip succeed={phoneCertified} label={'휴대폰 인증'}/>
-                    </div>
+                    {/*<div className={'flex pt-l-0.5 gap-l-0.75'}>*/}
+                    {/*    <StateChip succeed={idCertified} label={'신분증 인증'}/>*/}
+                    {/*    <StateChip succeed={accountCertified} label={'계좌 인증'}/>*/}
+                    {/*    <StateChip succeed={phoneCertified} label={'휴대폰 인증'}/>*/}
+                    {/*</div>*/}
                 </div>
             </div>
             <CustomButton variant={'secondary'}
