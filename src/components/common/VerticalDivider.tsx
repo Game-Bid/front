@@ -1,6 +1,6 @@
 import React from 'react';
 import {cn} from "@/_utils/clsx";
-import Icon from "@/Icons/Icon";
+import CustomIcon from "@/Icons/Icon";
 
 interface VerticalDividerProps {
     className?: string;
@@ -8,7 +8,7 @@ interface VerticalDividerProps {
 
 const VerticalDivider = ({className}: VerticalDividerProps) => {
     return (
-       <Icon icon={'DIVIDER'} className={cn(className, 'w-[1px] h-[64px] stroke-[1px] stroke-borderDivider')}/>
+        <CustomIcon icon={'DIVIDER'} className={cn(className, 'w-[1px] stroke-[1px] stroke-borderDivider')}/>
     );
 };
 
