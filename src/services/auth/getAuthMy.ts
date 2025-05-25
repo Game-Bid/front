@@ -7,19 +7,14 @@ export const getAuthMy = async () => {
   try {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("accessToken")?.value;
-    console.log(accessToken);
 
     const res = await fetch(`${apiUrl}/api/v1/auth/my`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
-        // cookie: `accessToken=${accessToken}`,
       },
-      // credentials: "include",
     });
-
-    console.log(res);
 
     if (!res.ok) {
       console.log(res.statusText);
@@ -30,8 +25,6 @@ export const getAuthMy = async () => {
       };
     }
     const result = await res.json();
-
-    console.log(result);
 
     return { result };
   } catch (err) {
