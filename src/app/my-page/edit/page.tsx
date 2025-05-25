@@ -31,7 +31,7 @@ const MyPageEditPage = () => {
     return (
         <div className={'w-[793px] flex items-start gap-[20px] text-fgGrayDefault'}>
             <FormProvider {...form}>
-                <div className="self-stretch pt-16 inline-flex flex-col flex-1 justify-start items-start gap-[32px]">
+                <div className="self-stretch inline-flex flex-col flex-1 justify-start items-start gap-[32px]">
                     {/*<FormLabelProfileInput label={'프로필'} name={'profile'} nickname={'test'}/>*/}
                     <FormLabelTextInput label={'닉네임'} name={'nickname'}/>
                     <FormLabelPasswordInput label={'비밀번호'} name={'password'}/>
