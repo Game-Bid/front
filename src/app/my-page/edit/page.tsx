@@ -32,7 +32,6 @@ const MyPageEditPage = () => {
         <div className={'w-[793px] flex items-start gap-[20px] text-fgGrayDefault'}>
             <FormProvider {...form}>
                 <div className="self-stretch pt-16 inline-flex flex-col flex-1 justify-start items-start gap-[32px]">
-                    <h3 className={'text-2 mb-l-2 font-semibold leading-[1.3]'}>마이페이지 {'>'} 회원정보 수정</h3>
                     {/*<FormLabelProfileInput label={'프로필'} name={'profile'} nickname={'test'}/>*/}
                     <FormLabelTextInput label={'닉네임'} name={'nickname'}/>
                     <FormLabelPasswordInput label={'비밀번호'} name={'password'}/>

@@ -3,7 +3,7 @@ import {usePathname} from "next/navigation";
 
 const MY_PAGE_ROUTES: { [key: string]: string } = {
     '/my-page': '마이페이지',
-    '/my-page/edit': '마이페이지 > 수정',
+    '/my-page/edit': '마이페이지 > 회원정보 수정',
     '/my-page/payments': '결제 대기',
 }
 
