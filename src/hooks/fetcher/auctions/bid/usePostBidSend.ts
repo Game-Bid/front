@@ -12,10 +12,14 @@ export const usePostBidSend = ({ auctionId, bidAmount }: BidInType) => {
   return useMutation({
     mutationFn: () => postBidSend(auctionId, bidAmount),
     onSuccess: () => {
-      showToast("success", "입찰 성공", "입찰이 성공적으로 완료되었습니다.");
+      showToast(
+        "success",
+        "입찰 성공!",
+        "최종 낙찰여부는 경매 종료후 확인할 수 있습니다. "
+      );
     },
     onError: () => {
-      showToast("warning", "입찰 실패", "입찰이 실패했습니다.");
+      showToast("warning", "입찰 실패!", "서버오류로 입찰이 실패했습니다.");
     },
   });
 };

@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "motion/react";
-import React from "react";
+import React, { ReactNode } from "react";
 import Button from "./Button";
 import CustomIcon from "@/Icons/Icon";
 import { IconList } from "@/Icons";
@@ -7,8 +7,8 @@ import { IconList } from "@/Icons";
 interface AlertProps {
   isOpen: boolean;
   onSumbit: () => void;
-  title: string;
-  description: string;
+  title: string | ReactNode;
+  description: string | ReactNode;
   buttonTtile?: string;
   icon?: boolean;
   customIcon?: string;
