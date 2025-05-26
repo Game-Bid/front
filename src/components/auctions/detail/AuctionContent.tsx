@@ -14,11 +14,12 @@ import Image from "next/image";
 import AuctionInfo from "./AuctionInfo";
 interface AuctionContentProps {
   data: AuctionItem;
+  auctionId: string;
 }
 
 export type TimerStatus = "beforeStart" | "progress" | "disabled";
 
-const AuctionContent = ({ data }: AuctionContentProps) => {
+const AuctionContent = ({ data, auctionId }: AuctionContentProps) => {
   const start = dayjs.utc(data.startTime);
   const end = dayjs.utc(data.endTime);
 
@@ -142,7 +143,13 @@ const AuctionContent = ({ data }: AuctionContentProps) => {
         </div>
       </div>
       <div className="col-span-7 laptop:col-span-6 sticky tablet:relative top-[144px] tablet:top-0 w-full h-fit p-l-1.5 bg-bgGrayDepth2 rounded-lg flex flex-col gap-l-1.5">
-        <AuctionInfo status={status} data={data} />
+        <AuctionInfo
+          status={status}
+          data={data}
+          start={start}
+          end={end}
+          auctionId={auctionId}
+        />
       </div>
     </div>
   );

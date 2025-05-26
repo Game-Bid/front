@@ -7,16 +7,28 @@ import Timer from "@/components/common/Timer";
 import dayjs from "dayjs";
 import BidUserInfo from "./BidUserInfo";
 import Button from "@/components/common/Button";
+import BidButton from "./BidButton";
+import { useGetSubscribeAuctionId } from "@/hooks/fetcher/auctions/useGetSubscribeAuctionId";
 
 interface AuctionInfoProps {
   data: AuctionItem;
   status: TimerStatus;
+  start: dayjs.Dayjs;
+  end: dayjs.Dayjs;
+  auctionId: string;
 }
 
-const AuctionInfo = ({ data, status }: AuctionInfoProps) => {
-  const start = dayjs.utc(data.startTime);
-  const end = dayjs.utc(data.endTime);
-  const [bidPrice, setBidPrice] = useState<number>(data.currentPrice || 0);
+const AuctionInfo = ({
+  data,
+  status,
+  start,
+  end,
+  auctionId,
+}: AuctionInfoProps) => {
+  const { auction } = useGetSubscribeAuctionId(Number(auctionId));
+
+  const currentPrice = auction?.currentPrice || data.currentPrice;
+  const [bidPrice, setBidPrice] = useState<number>(currentPrice);
   const [buyNowPrice, setBuyNowPrice] = useState<number | null>(null);
 
   return (
@@ -27,7 +39,7 @@ const AuctionInfo = ({ data, status }: AuctionInfoProps) => {
       <div className="flex flex-col gap-0.25">
         <Timer startTime={start} endTime={end} status={status} />
         <p className="text-2.5 font-bold tracking-[-0.8px]">
-          {data.currentPrice.toLocaleString()}원{" "}
+          {currentPrice.toLocaleString()}원{" "}
         </p>
       </div>
       <div className="flex flex-col gap-l-1">
@@ -108,7 +120,7 @@ const AuctionInfo = ({ data, status }: AuctionInfoProps) => {
                   />
                 </div>
               </button>
-              <Button title="입찰하기" width="100%" />
+              <BidButton bidAmount={bidPrice} auctionId={Number(auctionId)} />
             </div>
           </div>
         </div>

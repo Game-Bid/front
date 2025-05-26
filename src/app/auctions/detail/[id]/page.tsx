@@ -1,10 +1,11 @@
 "use client";
 
+import React from "react";
+
 import AuctionSummaryItem from "@/components/auctions/AuctionSummaryItem";
 import AuctionContent from "@/components/auctions/detail/AuctionContent";
 import { useGetAuctionsId } from "@/hooks/fetcher/auctions/useGetAuctionsId";
 import { usePathname } from "next/navigation";
-import React from "react";
 
 const testArr = [1, 2, 3, 4, 5, 6];
 
@@ -17,7 +18,7 @@ const Page = () => {
 
   return (
     <div className="py-l-4 max-w-[1080px] w-full tablet:w-full flex flex-col gap-l-7.5 mx-auto laptop:px-[20px]">
-      <AuctionContent data={data?.result} />
+      <AuctionContent data={data?.result} auctionId={nowID} />
 
       <div className="flex flex-col gap-l-1.5">
         <p className="text-fgGrayDefault font-semibold text-1.5 leading-[1.4] tracking-[-0.48px]">
