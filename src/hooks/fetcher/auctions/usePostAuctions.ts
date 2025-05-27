@@ -1,6 +1,6 @@
 import { WriteFormData } from "@/_types/write/WriteFormData";
 import { showToast } from "@/components/common/Toast";
-import { postAuctions } from "@/services/auctions/postAuctions";
+import { postAuctions } from "@/services/auctions/write/postAuctions";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 

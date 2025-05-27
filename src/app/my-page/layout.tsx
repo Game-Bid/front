@@ -12,7 +12,7 @@ const MyPageLayout = ({children}: { children: React.ReactNode }) => {
                     <h3 className={'lg:hidden pt-l-4'}><MyPageTitle/></h3>
                     <MyPageSideMenu/>
                 </div>
-                <div className={'flex flex-col w-full'}>
+                <div className={'flex flex-col gap-l-2 w-full'}>
                     <h3 className={'pt-l-4 hidden lg:block'}><MyPageTitle/></h3>
                     {children}
                 </div>

@@ -1,11 +1,5 @@
-import CustomIcon from "@/Icons/Icon";
 import { AuctionItem } from "@/_types/auctions/AuctionItem";
-import Button from "@/components/common/Button";
-import Timer from "@/components/common/Timer";
-import CommonInput from "@/components/common/input/CommonInput";
-import React, { useState } from "react";
-import BidUserInfo from "./BidUserInfo";
-// import { useGetAuthMy } from "@/hooks/fetcher/auth/useGetAuthMy";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
@@ -13,15 +7,19 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 import { SwiperSlide, Swiper } from "swiper/react";
+import type { Swiper as SwiperClass } from "swiper";
+import "swiper/css";
 import ProfileImage from "@/components/common/ProfileImage";
+import Image from "next/image";
+import AuctionInfo from "./AuctionInfo";
 interface AuctionContentProps {
   data: AuctionItem;
+  auctionId: string;
 }
 
 export type TimerStatus = "beforeStart" | "progress" | "disabled";
 
-const AuctionContent = ({ data }: AuctionContentProps) => {
-  // console.log(data);
+const AuctionContent = ({ data, auctionId }: AuctionContentProps) => {
   const start = dayjs.utc(data.startTime);
   const end = dayjs.utc(data.endTime);
 
@@ -31,27 +29,52 @@ const AuctionContent = ({ data }: AuctionContentProps) => {
     ? "progress"
     : "disabled";
 
-  // const { data: authData } = useGetAuthMy();
+  const swiperRef = useRef<SwiperClass | null>(null);
+  const memoizedImages = useMemo(() => data.images, [data.images]);
+  const [activeImage, setActiveImage] = useState<number>(0);
 
-  // console.log(authData);
-
-  const [bidPrice, setBidPrice] = useState<number>(data.currentPrice || 0);
-  const [buyNowPrice, setBuyNowPrice] = useState<number | null>(null);
+  useEffect(() => {
+    const swiper = swiperRef.current;
+    return () => {
+      swiper?.destroy();
+    };
+  }, []);
 
   return (
-    <div className="grid grid-rows-1 grid-cols-16 laptop:grid-cols-12 tablet:flex tablet:flex-col  gap-[20px]">
+    <div className="grid grid-rows-1 grid-cols-16 laptop:grid-cols-12 tablet:flex tablet:flex-col-reverse gap-[20px]">
       <div className="col-span-9 laptop:col-span-6 flex flex-col gap-l-5">
         <div className="flex flex-col gap-l-2">
-          <div className="h-[337px] w-full border border-borderDivider bg-bgGrayDepth2 flex-center">
+          <div className="h-[337px] w-full border border-borderDivider bg-bgGrayDepth2 flex-center overflow-hidden">
             {data.images.length === 0 ? (
               <p className="text-fgGrayDefault text-0.875 leading-[1.4] tracking-[-0.28px]">
                 이미지가 없습니다.
               </p>
             ) : (
-              <Swiper className="w-full h-full" slidesPerView={1}>
-                {data.images.map((img) => (
-                  <SwiperSlide key={img.id}>
-                    <img src={img.imageUrl} alt="" />
+              <Swiper
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper;
+                }}
+                className="mySwiper w-full h-full"
+                slidesPerView={1}
+                slidesPerGroup={1}
+                loop={data.images.length > 1}
+                spaceBetween={0}
+                allowTouchMove={true}
+                onSlideChange={(swiper) => {
+                  setActiveImage(swiper.activeIndex);
+                }}
+              >
+                {memoizedImages.map((img) => (
+                  <SwiperSlide
+                    key={img.id}
+                    className="flex-center w-full h-full"
+                  >
+                    <Image
+                      src={img.imageUrl}
+                      alt={"bid-image"}
+                      className="w-full h-full object-contain"
+                      fill
+                    />
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -62,9 +85,20 @@ const AuctionContent = ({ data }: AuctionContentProps) => {
               {data.images.map((img, imgIdx) => (
                 <div
                   key={imgIdx}
-                  className="w-full border border-borderDivider h-[68px] cursor-pointer"
+                  // className="w-full border border-borderDivider h-[68px] cursor-pointer"
+                  className={`w-full h-[68px] border-2 ${
+                    activeImage === imgIdx
+                      ? "border-fgPrimaryDefault"
+                      : "border-transparent opacity-40"
+                  } h-[68px] cursor-pointer relative`}
+                  onClick={() => swiperRef.current?.slideToLoop(imgIdx)}
                 >
-                  <img src={img.imageUrl} className="w-full h-full" />
+                  <Image
+                    src={img.imageUrl}
+                    alt={"bid-image"}
+                    className="w-full h-full object-cover"
+                    fill
+                  />
                 </div>
               ))}
             </div>
@@ -108,100 +142,14 @@ const AuctionContent = ({ data }: AuctionContentProps) => {
           </div>
         </div>
       </div>
-      <div className="col-span-7 laptop:col-span-6 sticky top-[144px] w-full h-fit p-l-1.5 bg-bgGrayDepth2 rounded-lg flex flex-col gap-l-1.5">
-        <p className="text-fgGrayDefault text-1.5 font-semibold leading-[1.4] tracking-[-0.48px]">
-          {data?.title}
-        </p>
-        <div className="flex flex-col gap-0.25">
-          <Timer startTime={start} endTime={end} status={status} />
-          <p className="text-2.5 font-bold tracking-[-0.8px]">
-            {data.currentPrice.toLocaleString()}원{" "}
-          </p>
-        </div>
-        <div className="flex flex-col gap-l-1">
-          <div className="flex justify-between w-full">
-            <div className="flex items-center gap-0.25">
-              <CustomIcon icon="EYE_SVG" className="w-[24px] h-[24px]" />
-              <p className="text-0.875 text-fgFrayPlaceHolder leading-[1.4] tracking-[-0.28px]">
-                {data?.views}
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center text-0.875 leading-[1.4] tracking-[-0.28px]">
-            <p className="w-[56px] text-fgGrayPressed">종류</p>
-            <p className="text-fgGrayDefault">
-              {data.auctionType === "ITEM" ? "게임아이템" : "게임계정"}
-            </p>
-          </div>
-          <div className="flex items-center text-0.875 leading-[1.4] tracking-[-0.28px]">
-            <p className="w-[56px] text-fgGrayPressed">게임</p>
-            <p className="text-fgGrayDefault">
-              {data.gameName} {data.serverName && ` > ${data.serverName}`}{" "}
-              {data.serverNumName && ` > ${data.serverNumName}`}
-            </p>
-          </div>
-          <div className="flex items-center text-0.875 leading-[1.4] tracking-[-0.28px]">
-            <p className="w-[56px] text-fgGrayPressed">종류</p>
-            <p className="text-fgGrayDefault">{data.auctionCode}</p>
-          </div>
-        </div>
-        {status === "progress" && (
-          <div className="flex gap-0.75">
-            <div className="flex-1 w-full flex flex-col gap-l-0.25">
-              <p className="text-fgGrayDefault text-[14px]">즉시 구매가</p>
-              <div className="flex flex-col gap-l-0.5">
-                <CommonInput
-                  placeholder={data.buyNowPrice?.toLocaleString() || ""}
-                  value={buyNowPrice ? buyNowPrice.toLocaleString() : ""}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/[^0-9]/g, "");
-                    setBuyNowPrice(value ? Number(value) : null);
-                  }}
-                  onBlur={(e) => {
-                    if (buyNowPrice) {
-                      e.target.value = buyNowPrice.toLocaleString();
-                    }
-                  }}
-                  disabled={!data.buyNowPrice}
-                />
-                <Button
-                  title="즉시 구매하기"
-                  variant="secondary"
-                  width="100%"
-                  disabled={!data.buyNowPrice}
-                />
-              </div>
-            </div>
-            <div className="flex-1 flex flex-col gap-l-0.25">
-              <p className="text-fgGrayDefault text-[14px]">희망 입찰가</p>
-              <div className="flex flex-col gap-l-0.5">
-                <button className="input-base input-default flex items-center justify-between ">
-                  <div
-                    onClick={() =>
-                      setBidPrice((prev) => Math.max(0, prev - 10000))
-                    }
-                  >
-                    <CustomIcon
-                      icon="CIRCLE-MINUS"
-                      className="w-[20px] h-[20px]"
-                    />
-                  </div>
-                  <div className="w-full cursor-default text-1 leading-[1.4] tracking-[-0.32px]">
-                    {bidPrice?.toLocaleString() || 0}
-                  </div>
-                  <div onClick={() => setBidPrice((prev) => prev + 10000)}>
-                    <CustomIcon
-                      icon="CIRCLE-PLUS"
-                      className="w-[20px] h-[20px]"
-                    />
-                  </div>
-                </button>
-                <Button title="입찰하기" width="100%" />
-              </div>
-            </div>
-          </div>
-        )}
-        <BidUserInfo />
+      <div className="col-span-7 laptop:col-span-6 sticky tablet:relative top-[144px] tablet:top-0 w-full h-fit p-l-1.5 bg-bgGrayDepth2 rounded-lg flex flex-col gap-l-1.5">
+        <AuctionInfo
+          status={status}
+          data={data}
+          start={start}
+          end={end}
+          auctionId={auctionId}
+        />
       </div>
     </div>
   );

@@ -3,11 +3,11 @@ import MyPagePoint from "@/components/my-page/myPage/MyPagePoint";
 import BidHistory from "@/components/my-page/myPage/BidHistory";
 
 const SUB_TITLE_STYLE = 'text-1.25 mb-l-0.5';
-const page = () => {
+const Page = () => {
     const SECTION_STYLE = 'flex flex-col items-start gap-l-0.5 self-stretch';
 
     return <div className={'w-[793px] flex flex-col flex-start self-stretch font-semibold text-fgGrayDefault'}>
-        <div className={'flex flex-col gap-l-4 pt-l-2'}>
+        <div className={'flex flex-col gap-l-4'}>
             <div className={SECTION_STYLE}>
                 <p className={SUB_TITLE_STYLE}>프로필</p>
                 <MyPageProfile
@@ -35,5 +35,5 @@ const page = () => {
     </div>;
 };
 
-export default page;
+export default Page;
 

@@ -1,13 +1,13 @@
 import { AnimatePresence, motion } from "motion/react";
-import React from "react";
+import React, { ReactNode } from "react";
 import Button from "./Button";
 import CustomIcon from "@/Icons/Icon";
 import { IconList } from "@/Icons";
 
 interface ConfirmProps {
   isOpen: boolean;
-  title: string;
-  description: string;
+  title: string | ReactNode;
+  description: string | ReactNode;
   falseSubmit: () => void;
   trueSubmit: () => void;
   falseButtonTitle?: string;

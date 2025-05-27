@@ -62,12 +62,12 @@ const WriteContent = ({ games }: { games: GameList }) => {
   const { mutate: postAuction } = usePostAuctions();
 
   const onSubmit = async (data: WriteFormData) => {
-    console.log("전체 폼 데이터:", data);
-    console.log("이미지 파일들:", data.image);
-    console.log(
-      "이미지 타입:",
-      data.image.map((img) => img.constructor.name)
-    );
+    // console.log("전체 폼 데이터:", data);
+    // console.log("이미지 파일들:", data.image);
+    // console.log(
+    //   "이미지 타입:",
+    //   data.image.map((img) => img.constructor.name)
+    // );
 
     // write(data);
 
