@@ -6,7 +6,7 @@ import React, { useState } from "react";
 
 const Page = () => {
   const [resultVisible, setResultVisible] = useState(false);
-  const [userInfo, setUserInfo] = useState({ email: "", joined: "" });
+  const [userInfo, setUserInfo] = useState({ email: "" });
 
   return (
     <>

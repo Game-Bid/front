@@ -9,14 +9,19 @@ import MultiInput from "@/components/common/input/MultiInput";
 import { SignUpFormData } from "@/_types/signup/SignUpFormData";
 import TextInput from "@/components/common/input/TextInput";
 import LoginButton from "@/components/login/LoginButton";
+import { usePostAuthFindEmail } from "@/hooks/fetcher/auth/usePostAuthFindEmail";
 
 interface FindIdFormData {
   name: string;
-  phoneNum: string[];
+  phoneNum: {
+    first: string;
+    middle: string;
+    last: string;
+  };
 }
 
 interface FindIdFormProps {
-  onSuccess: (data: { email: string; joined: string }) => void;
+  onSuccess: (data: { email: string }) => void;
 }
 
 const FindIdForm = ({ onSuccess }: FindIdFormProps) => {
@@ -26,33 +31,43 @@ const FindIdForm = ({ onSuccess }: FindIdFormProps) => {
     formState: { isValid },
     watch,
     setValue,
-    getValues,
   } = useForm<FindIdFormData>({
     mode: "onChange",
     defaultValues: {
       name: "",
-      phoneNum: ["", "", ""],
+      phoneNum: {
+        first: "",
+        middle: "",
+        last: "",
+      },
+    },
+  });
+
+  const { mutate } = usePostAuthFindEmail({
+    onSuccess: (data) => {
+      onSuccess({
+        email: data.email,
+      });
     },
   });
 
   const name = watch("name");
 
   const onSubmit = (data: FindIdFormData) => {
-    console.log("Input:", data);
+    const phoneNum =
+      data.phoneNum.first + data.phoneNum.middle + data.phoneNum.last;
 
-    onSuccess({
-      email: "dongsu@gamebid",
-      joined: "2025.03.19 가입",
+    mutate({
+      name: data.name,
+      phoneNumber: phoneNum,
     });
   };
 
-  const clearField = (field: "name" | number) => {
+  const clearField = (field: "name" | "first" | "middle" | "last") => {
     if (field === "name") {
       setValue("name", "", { shouldValidate: true });
     } else {
-      const newPhoneNum = [...getValues("phoneNum")];
-      newPhoneNum[field] = "";
-      setValue("phoneNum", newPhoneNum, { shouldValidate: true });
+      setValue(`phoneNum.${field}`, "", { shouldValidate: true });
     }
   };
 
