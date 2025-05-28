@@ -5,15 +5,11 @@ import React from "react";
 interface FindIdResultProps {
   userInfo: {
     email: string;
-    joined: string;
   };
 }
 
 const FindIdResult = ({ userInfo }: FindIdResultProps) => {
-  const resultInfo = [
-    { label: "이메일", value: userInfo?.email },
-    { label: "계정정보", value: userInfo?.joined },
-  ];
+  const resultInfo = [{ label: "이메일", value: userInfo?.email }];
 
   return (
     <div className="flex flex-col gap-[20px]">
