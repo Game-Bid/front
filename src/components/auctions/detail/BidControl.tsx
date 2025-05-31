@@ -15,6 +15,8 @@ const BidControl = ({ data, currentPrice, auctionId }: BidControl) => {
   const [bidPrice, setBidPrice] = useState<number>(currentPrice);
   const [buyNowPrice, setBuyNowPrice] = useState<number | null>(null);
 
+  console.log(data);
+
   return (
     <div className="flex gap-0.75">
       <div className="flex-1 w-full flex flex-col gap-l-0.25">
@@ -47,7 +49,9 @@ const BidControl = ({ data, currentPrice, auctionId }: BidControl) => {
         <div className="flex flex-col gap-l-0.5">
           <button className="input-base input-default flex items-center justify-between ">
             <div
-              onClick={() => setBidPrice((prev) => Math.max(0, prev - 10000))}
+              onClick={() =>
+                setBidPrice((prev) => Math.max(bidPrice, prev - 10000))
+              }
             >
               <CustomIcon icon="CIRCLE-MINUS" className="w-[20px] h-[20px]" />
             </div>
