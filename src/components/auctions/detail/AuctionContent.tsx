@@ -12,6 +12,7 @@ import "swiper/css";
 import ProfileImage from "@/components/common/ProfileImage";
 import Image from "next/image";
 import AuctionInfo from "./AuctionInfo";
+import { useGetSubscribeAuctionRecent } from "@/hooks/fetcher/auctions/useGetSubscribeAuctionRecent";
 interface AuctionContentProps {
   data: AuctionItem;
   auctionId: string;
@@ -32,6 +33,9 @@ const AuctionContent = ({ data, auctionId }: AuctionContentProps) => {
   const swiperRef = useRef<SwiperClass | null>(null);
   const memoizedImages = useMemo(() => data.images, [data.images]);
   const [activeImage, setActiveImage] = useState<number>(0);
+  const { auction } = useGetSubscribeAuctionRecent(Number(auctionId));
+
+  console.log(auction);
 
   useEffect(() => {
     const swiper = swiperRef.current;
