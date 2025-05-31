@@ -142,7 +142,9 @@ const AuctionContent = ({ data, auctionId }: AuctionContentProps) => {
           </div>
         </div>
       </div>
-      <div className="col-span-7 laptop:col-span-6 sticky tablet:relative top-[144px] tablet:top-0 w-full h-fit p-l-1.5 bg-bgGrayDepth2 rounded-lg flex flex-col gap-l-1.5">
+      <div
+        className={`col-span-7 laptop:col-span-6 sticky tablet:relative top-[144px] tablet:top-0 w-full h-fit p-l-1.5 bg-bgGrayDepth2 tablet:bg-transparent rounded-lg flex flex-col gap-l-1.5 `}
+      >
         <AuctionInfo
           status={status}
           data={data}
