@@ -1,6 +1,6 @@
 import React, {Suspense} from "react";
 import MyPagePaymentsTop from "@/components/my-page/payments/MyPagePaymentsTop";
-import PaymentWaitingItem from "@/components/my-page/payments/PaymentWaitingItem";
+import AuctionSummaryItem from "@/components/auctions/AuctionSummaryItem";
 
 
 const MyPagePaymentPage = () => {
@@ -15,8 +15,10 @@ const MyPagePaymentPage = () => {
                 className={'flex h-[256px] justify-center items-center self-stretch font-normal text-0.875 leading-[1.4] rounded-lg bg-bgGrayDepth2'}>
                 결제 대기중인 경매가 없습니다
             </div>
-            : <div>
-                <PaymentWaitingItem/>
+            : <div className={'flex-1 h-full overflow-y-scroll'}>
+                <div className="grid grid-cols-2 gap-1.5">
+                    <AuctionSummaryItem/>
+                </div>
             </div>}
 
     </div>;
