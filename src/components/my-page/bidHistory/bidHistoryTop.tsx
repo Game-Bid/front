@@ -38,11 +38,6 @@ const BID_HISTORY_SORT: DropdownType[] = [
     }
 ];
 
-const filterCountTmp = {
-    all: 1234,
-    item: 123,
-    account: 123,
-}
 
 const BidHistoryTop = () => {
     const searchParams = useSearchParams();
@@ -68,7 +63,7 @@ const BidHistoryTop = () => {
                             <Chip key={item.value}
                                   listData={{
                                       ...item,
-                                      label: `${item.label} ${formatNumberWithCommas(filterCountTmp[item.value])}`,
+                                      label: `${item.label} ${formatNumberWithCommas(1234)}`,
                                   }}
                                   selected={filter === item.value}
                                   onClick={(value) => updateQueryString(status, value)}/>))
