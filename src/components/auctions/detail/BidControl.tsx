@@ -12,7 +12,7 @@ interface BidControl {
 }
 
 const BidControl = ({ data, currentPrice, auctionId }: BidControl) => {
-  const [bidPrice, setBidPrice] = useState<number>(currentPrice);
+  const [bidPrice, setBidPrice] = useState<number>(currentPrice + 10000);
   const [buyNowPrice, setBuyNowPrice] = useState<number | null>(null);
 
   console.log(data);
@@ -50,13 +50,13 @@ const BidControl = ({ data, currentPrice, auctionId }: BidControl) => {
           <button className="input-base input-default flex items-center justify-between ">
             <div
               onClick={() =>
-                setBidPrice((prev) => Math.max(bidPrice, prev - 10000))
+                setBidPrice((prev) => Math.max(bidPrice + 10000, prev - 10000))
               }
             >
               <CustomIcon icon="CIRCLE-MINUS" className="w-[20px] h-[20px]" />
             </div>
             <div className="w-full cursor-default text-1 leading-[1.4] tracking-[-0.32px]">
-              {bidPrice?.toLocaleString() || 0}
+              {bidPrice?.toLocaleString() + "원" || 0}
             </div>
             <div onClick={() => setBidPrice((prev) => prev + 10000)}>
               <CustomIcon icon="CIRCLE-PLUS" className="w-[20px] h-[20px]" />
