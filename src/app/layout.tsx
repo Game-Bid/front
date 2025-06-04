@@ -4,6 +4,7 @@ import QueryProvider from "@/components/QueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Header from "@/components/layout/Header";
 import localFont from "next/font/local";
+import ChatModalWrapper from "@/components/chat/ChatModalWrapper";
 
 export const metadata: Metadata = {
   title: "Game-Bid",
@@ -27,6 +28,7 @@ export default function RootLayout({
         <QueryProvider>
           <Header />
           <main className="mt-[82px]">{children}</main>
+          <ChatModalWrapper />
           <ReactQueryDevtools />
         </QueryProvider>
       </body>
