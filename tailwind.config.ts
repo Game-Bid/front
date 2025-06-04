@@ -70,6 +70,9 @@ export default {
 
         systemFailed: "var(--system-failed)",
         systemSuccess: "var(--system-success)",
+
+        colorTypeItem: "var(--type-item)",
+        colorTypeAccount: "var(--type-account)",
       },
       spacing: {
         "0.25": "4px",

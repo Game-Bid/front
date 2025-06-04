@@ -4,7 +4,8 @@ import {usePathname} from "next/navigation";
 const MY_PAGE_ROUTES: { [key: string]: string } = {
     '/my-page': '마이페이지',
     '/my-page/edit': '마이페이지 > 회원정보 수정',
-    '/my-page/payments': '결제 대기',
+    '/my-page/payments': '결제대기',
+    '/my-page/bid-history': '입찰내역',
 }
 
 const MyPageTitle = () => {

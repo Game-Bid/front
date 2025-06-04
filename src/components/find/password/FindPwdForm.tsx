@@ -9,6 +9,7 @@ import MultiInput from "@/components/common/input/MultiInput";
 import { SignUpFormData } from "@/_types/signup/SignUpFormData";
 import TextInput from "@/components/common/input/TextInput";
 import LoginButton from "@/components/login/LoginButton";
+import { usePostAuthFindPassword } from "@/hooks/fetcher/auth/usePostAuthFindPassword";
 
 interface FindPwdFormProps {
   onSuccess: () => void;
@@ -17,7 +18,11 @@ interface FindPwdFormProps {
 interface FindPwdFormData {
   name: string;
   email: string;
-  phoneNum: string[];
+  phoneNum: {
+    first: string;
+    middle: string;
+    last: string;
+  };
 }
 
 const LABEL_STYLES =
@@ -34,7 +39,11 @@ const FindPwdForm = ({ onSuccess }: FindPwdFormProps) => {
     mode: "onChange",
     defaultValues: {
       name: "",
-      phoneNum: ["", "", ""],
+      phoneNum: {
+        first: "",
+        middle: "",
+        last: "",
+      },
       email: "",
     },
   });
@@ -42,9 +51,17 @@ const FindPwdForm = ({ onSuccess }: FindPwdFormProps) => {
   const nameValue = watch("name");
   const emailValue = watch("email");
 
-  const onSubmit = () => {
-    console.log("비밀번호 찾기 버튼 클릭");
-    onSuccess();
+  const { mutate } = usePostAuthFindPassword({ onSuccess });
+
+  const onSubmit = (data: FindPwdFormData) => {
+    const phoneNum =
+      data.phoneNum.first + data.phoneNum.middle + data.phoneNum.last;
+
+    mutate({
+      email: data.email,
+      name: data.name,
+      phoneNumber: phoneNum,
+    });
   };
 
   const clearField = (field: "name" | "email") => {
@@ -108,6 +125,7 @@ const FindPwdForm = ({ onSuccess }: FindPwdFormProps) => {
           register={register as unknown as UseFormRegister<SignUpFormData>}
           className="w-full h-[48px] px-0.75 rounded-[12px] bg-fillGrayDefault focus:border focus:border-borderPrimary"
           required={true}
+          autoFocus={true}
           rightElement={
             emailValue && (
               <button type="button" onClick={() => clearField("email")}>
