@@ -3,11 +3,13 @@
 import Button from "@/components/common/Button";
 import Dnd from "@/components/common/Dnd";
 import { showToast } from "@/components/common/Toast";
+import { useChatModalStore } from "@/stores/chatModalStore";
 // import CustomIcon from "@/Icons";
 import React, { useState } from "react";
 
 const Page = () => {
   const [files, setFiles] = useState<File[]>([]);
+  const { open } = useChatModalStore();
 
   return (
     <div className="flex-center h-screen">
@@ -24,6 +26,7 @@ const Page = () => {
           onClick={() => showToast("warning", "Warning 제목", "Warning 메세지")}
         />
       </div>
+      <Button title="채팅 열기" onClick={() => open()} />
     </div>
   );
 };
