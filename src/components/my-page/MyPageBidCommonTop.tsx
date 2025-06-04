@@ -26,14 +26,18 @@ const PAYMENTS_SORT: DropdownType[] = [
     }
 ]
 
-const MyPagePaymentsTop = () => {
+interface MyPageBidCommonTopProps {
+    basePath: string;
+}
+
+const MyPageBidCommonTop = ({basePath}: MyPageBidCommonTopProps) => {
     const searchParams = useSearchParams();
     const router = useRouter();
     const filter = searchParams.get('filter') ?? 'all';
     const sort = searchParams.get('sort') ?? 'date_asc';
 
     const updateQueryString = (targetFilter: string = filter, targetSort: string = sort) => {
-        router.push(`/my-page/payments?filter=${targetFilter}&sort=${targetSort}`);
+        router.push(`${basePath}${basePath.includes('?') ? '&' : '?'}filter=${targetFilter}&sort=${targetSort}`);
     }
 
     return (
@@ -56,4 +60,4 @@ const MyPagePaymentsTop = () => {
     );
 };
 
-export default MyPagePaymentsTop;
+export default MyPageBidCommonTop;

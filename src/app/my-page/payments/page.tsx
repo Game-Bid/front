@@ -1,5 +1,5 @@
 import React, {Suspense} from "react";
-import MyPagePaymentsTop from "@/components/my-page/payments/MyPagePaymentsTop";
+import MyPageBidCommonTop from "@/components/my-page/MyPageBidCommonTop";
 import AuctionSummaryItem from "@/components/auctions/AuctionSummaryItem";
 
 
@@ -8,7 +8,7 @@ const MyPagePaymentPage = () => {
 
     return <div className={'w-[793px] flex flex-col gap-l-2 flex-start self-stretch font-semibold text-fgGrayDefault'}>
         <Suspense>
-            <MyPagePaymentsTop/>
+            <MyPageBidCommonTop basePath={'/my-page/payments'}/>
         </Suspense>
         {data.length <= 0 ?
             <div
