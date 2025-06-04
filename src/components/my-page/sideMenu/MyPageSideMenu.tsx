@@ -78,7 +78,7 @@ const MyPageSideMenu = () => {
                                             path={'purchase-history'}
                                             icon={'SERVER-02'}/>
                         <MyPageSideMenuItem name={'내 경매글'}
-                                            path={'sales-history'}
+                                            path={'my-bid'}
                                             icon={'TICKET-02'}/>
                         <ReactiveDivider verticalClassName={'h-[48px]'} horizontalClassName={'w-full'}/>
                         {/*<MyPageSideMenuItem name={'좋아요'}*/}

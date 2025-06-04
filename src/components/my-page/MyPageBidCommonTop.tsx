@@ -2,7 +2,7 @@
 
 import React from "react";
 import Chip from "@/components/common/Chip";
-import {useRouter, useSearchParams} from "next/navigation";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import Dropdown, {DropdownType} from "@/components/common/Dropdown";
 
 const PAYMENTS_FILTER = [
@@ -27,17 +27,26 @@ const PAYMENTS_SORT: DropdownType[] = [
 ]
 
 interface MyPageBidCommonTopProps {
-    basePath: string;
+    extraQuery?: Record<string, string>;
 }
 
-const MyPageBidCommonTop = ({basePath}: MyPageBidCommonTopProps) => {
+const MyPageBidCommonTop = ({extraQuery}: MyPageBidCommonTopProps) => {
     const searchParams = useSearchParams();
     const router = useRouter();
     const filter = searchParams.get('filter') ?? 'all';
     const sort = searchParams.get('sort') ?? 'date_asc';
 
+    const path = usePathname();
+    const pathName = `${path.split('/')[0]}/${path.split('/')[1]}`;
+
+
     const updateQueryString = (targetFilter: string = filter, targetSort: string = sort) => {
-        router.push(`${basePath}${basePath.includes('?') ? '&' : '?'}filter=${targetFilter}&sort=${targetSort}`);
+        const query = new URLSearchParams({
+            filter: targetFilter,
+            sort: targetSort,
+            ...extraQuery,
+        }).toString();
+        router.push(`${pathName}?${query}`);
     }
 
     return (

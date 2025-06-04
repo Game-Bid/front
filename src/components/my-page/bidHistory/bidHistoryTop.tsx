@@ -32,7 +32,7 @@ const BidHistoryTop = () => {
     return (
         <div className={'flex flex-col justify-center items-center gap-l-2 flex-1'}>
             <Tab tabs={BID_STATUS} activeTab={status} onTabChange={(value) => updateQueryString(value)}/>
-            <MyPageBidCommonTop basePath={`/my-page/bid-history?status=${status}`}/>
+            <MyPageBidCommonTop extraQuery={{status}}/>
         </div>
     );
 };
