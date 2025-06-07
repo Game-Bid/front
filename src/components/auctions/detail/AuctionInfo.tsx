@@ -5,7 +5,7 @@ import CustomIcon from "@/Icons/Icon";
 import Timer from "@/components/common/Timer";
 import dayjs from "dayjs";
 import BidUserInfo from "./BidUserInfo";
-import { useGetSubscribeAuctionId } from "@/hooks/fetcher/auctions/useGetSubscribeAuctionId";
+import { AuctionUpdate } from "@/hooks/fetcher/auctions/useGetSubscribeAuctionId";
 import BidControl from "./BidControl";
 import useDeviceSize from "@/hooks/responsive/useDeviceSize";
 
@@ -15,6 +15,7 @@ interface AuctionInfoProps {
   start: dayjs.Dayjs;
   end: dayjs.Dayjs;
   auctionId: string;
+  auction: AuctionUpdate | null;
 }
 
 const AuctionInfo = ({
@@ -23,8 +24,8 @@ const AuctionInfo = ({
   start,
   end,
   auctionId,
+  auction,
 }: AuctionInfoProps) => {
-  const { auction } = useGetSubscribeAuctionId(Number(auctionId));
   const { isTablet } = useDeviceSize();
 
   const currentPrice = auction?.currentPrice || data.currentPrice;

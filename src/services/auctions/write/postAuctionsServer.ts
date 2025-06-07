@@ -1,19 +1,21 @@
 "use server";
 
-// import { cookies } from "next/headers";
+import { cookies } from "next/headers";
 
 const apiUrl = process.env.NEXT_API_URL;
 
 export const postAuctionsServer = async (formData: FormData) => {
   try {
-    // const cookieStore = await cookies();
-    // const accessToken = cookieStore.get("accessToken")?.value;
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("accessToken")?.value;
+
+    console.log(accessToken);
 
     const res = await fetch(`${apiUrl}/api/v1/auctions`, {
       method: "POST",
-      // headers: {
-      //   Authorization: `Bearer ${accessToken}`,
-      // },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
       body: formData,
     });
 
