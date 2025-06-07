@@ -1,11 +1,17 @@
 import { getSubscribeAuctionId } from "@/services/auctions/detail/getSubscribeAuctionId";
 import { useState, useEffect } from "react";
 
-interface AuctionUpdate {
-  currentPrice: number;
+export interface Bids {
+  email: string;
+  amount: number;
+  updatedAt: string;
+}
 
-  bidCount?: number;
-  lastBidTime?: string;
+export interface AuctionUpdate {
+  currentPrice: number;
+  bidCount: number;
+  bids: Bids[];
+  status: string;
 }
 
 export const useGetSubscribeAuctionId = (auctionId: number) => {

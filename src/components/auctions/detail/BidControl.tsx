@@ -15,8 +15,6 @@ const BidControl = ({ data, currentPrice, auctionId }: BidControl) => {
   const [bidPrice, setBidPrice] = useState<number>(currentPrice + 10000);
   const [buyNowPrice, setBuyNowPrice] = useState<number | null>(null);
 
-  console.log(data);
-
   return (
     <div className="flex gap-0.75">
       <div className="flex-1 w-full flex flex-col gap-l-0.25">

@@ -6,7 +6,6 @@ import timezone from "dayjs/plugin/timezone";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.locale("ko");
-
 import { SwiperSlide, Swiper } from "swiper/react";
 import type { Swiper as SwiperClass } from "swiper";
 import "swiper/css";
@@ -17,6 +16,8 @@ import { useGetAuctionRecent } from "@/hooks/fetcher/auctions/useGetAuctionRecen
 import Button from "@/components/common/Button";
 import CustomIcon from "@/Icons/Icon";
 import AllBidModal from "./AllBidModal";
+import { useGetSubscribeAuctionId } from "@/hooks/fetcher/auctions/useGetSubscribeAuctionId";
+import { Bids } from "@/hooks/fetcher/auctions/useGetSubscribeAuctionId";
 interface AuctionContentProps {
   data: AuctionItem;
   auctionId: string;
@@ -39,7 +40,17 @@ const AuctionContent = ({ data, auctionId }: AuctionContentProps) => {
   const swiperRef = useRef<SwiperClass | null>(null);
   const memoizedImages = useMemo(() => data.images, [data.images]);
   const [activeImage, setActiveImage] = useState<number>(0);
-  const { data: bidRecent } = useGetAuctionRecent(Number(auctionId));
+  const { data: getBidRecent } = useGetAuctionRecent(Number(auctionId), {
+    enabled: data.bidCount > 0,
+  });
+  const { auction } = useGetSubscribeAuctionId(Number(auctionId));
+  const [bidRecent, setBidRecent] = useState<Bids[]>([]);
+
+  useEffect(() => {
+    if (getBidRecent) {
+      setBidRecent(getBidRecent);
+    }
+  }, [getBidRecent]);
 
   useEffect(() => {
     const swiper = swiperRef.current;
@@ -47,6 +58,14 @@ const AuctionContent = ({ data, auctionId }: AuctionContentProps) => {
       swiper?.destroy();
     };
   }, []);
+
+  useEffect(() => {
+    if (auction && auction.bids.length > 0) {
+      setBidRecent(auction.bids);
+    }
+  }, [auction]);
+
+  console.log(auction);
 
   return (
     <>
@@ -94,7 +113,6 @@ const AuctionContent = ({ data, auctionId }: AuctionContentProps) => {
                 {data.images.map((img, imgIdx) => (
                   <div
                     key={imgIdx}
-                    // className="w-full border border-borderDivider h-[68px] cursor-pointer"
                     className={`w-full h-[68px] border-2 ${
                       activeImage === imgIdx
                         ? "border-fgPrimaryDefault"
@@ -145,7 +163,7 @@ const AuctionContent = ({ data, auctionId }: AuctionContentProps) => {
               }`}
             >
               {data.bidCount === 0 ? (
-                <p className="text-1 leading-[1.4] tracking-[-0.32px]h-[256px]">
+                <p className="text-1 leading-[1.4] tracking-[-0.32px] min-h-[256px] flex-center">
                   입찰 내역이 없습니다.
                 </p>
               ) : (
@@ -183,6 +201,7 @@ const AuctionContent = ({ data, auctionId }: AuctionContentProps) => {
             start={start}
             end={end}
             auctionId={auctionId}
+            auction={auction}
           />
         </div>
       </div>
