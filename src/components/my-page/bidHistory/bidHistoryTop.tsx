@@ -2,10 +2,8 @@
 
 import Tab from "@/components/common/tab/Tab";
 import {useRouter, useSearchParams} from "next/navigation";
-import Dropdown, {DropdownType} from "@/components/common/Dropdown";
-import Chip from "@/components/common/Chip";
 import React from "react";
-import {formatNumberWithCommas} from "@/_utils/NumberUtils";
+import MyPageBidCommonTop from "@/components/my-page/MyPageBidCommonTop";
 
 const BID_STATUS = [
     {
@@ -16,28 +14,6 @@ const BID_STATUS = [
         value: 'closed'
     }
 ];
-
-const BID_HISTORY_FILTER = [
-    {
-        label: '모두',
-        value: 'all',
-    }, {
-        label: '아이템',
-        value: 'item',
-    },
-    {
-        label: '계정',
-        value: 'account'
-    }
-];
-
-const BID_HISTORY_SORT: DropdownType[] = [
-    {
-        label: '최신순',
-        value: 'date_asc'
-    }
-];
-
 
 const BidHistoryTop = () => {
     const searchParams = useSearchParams();
@@ -56,25 +32,7 @@ const BidHistoryTop = () => {
     return (
         <div className={'flex flex-col justify-center items-center gap-l-2 flex-1'}>
             <Tab tabs={BID_STATUS} activeTab={status} onTabChange={(value) => updateQueryString(value)}/>
-            <div className={'flex justify-between items-center self-stretch'}>
-                <div className={'flex items-start gap-0.75'}>
-                    {
-                        BID_HISTORY_FILTER.map((item) => (
-                            <Chip key={item.value}
-                                  listData={{
-                                      ...item,
-                                      label: `${item.label} ${formatNumberWithCommas(1234)}`,
-                                  }}
-                                  selected={filter === item.value}
-                                  onClick={(value) => updateQueryString(status, value)}/>))
-                    }
-                </div>
-                <div className={'w-[200px] h-[48px]'}>
-                    <Dropdown listData={BID_HISTORY_SORT}
-                              select={BID_HISTORY_SORT.find(item => item.value === sort) ?? BID_HISTORY_SORT[0]}
-                              setSelect={(value) => updateQueryString(status, filter, value?.value)}/>
-                </div>
-            </div>
+            <MyPageBidCommonTop extraQuery={{status}}/>
         </div>
     );
 };
