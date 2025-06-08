@@ -92,7 +92,5 @@ export const useGetAuctionRecent = (
     queryKey: ["auction-recent", auctionId],
     queryFn: () => getAuctionRecent(auctionId),
     enabled: !!auctionId && (options?.enabled ?? true),
-    // refetchInterval: 5000, // 5초마다 새로고침 (필요에 따라 조정)
-    // refetchOnWindowFocus: true,
   });
 };
