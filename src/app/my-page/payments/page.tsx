@@ -1,26 +1,17 @@
 import React, {Suspense} from "react";
 import MyPageBidCommonTop from "@/components/my-page/MyPageBidCommonTop";
-import AuctionSummaryItem from "@/components/auctions/AuctionSummaryItem";
+import MyPageEmptyBid from "@/components/my-page/MyPageEmptyBid";
+import MyPageTitle from "@/components/my-page/MyPageTitle";
 
 
 const MyPagePaymentPage = () => {
-    const data = [1];
-
-    return <div className={'w-[793px] flex flex-col gap-l-2 flex-start self-stretch font-semibold text-fgGrayDefault'}>
+    return <div
+        className={'w-full md:mt-l-4 md:w-[793px] flex flex-col gap-l-2 flex-start self-stretch font-semibold text-fgGrayDefault'}>
+        <MyPageTitle/>
         <Suspense>
-            <MyPageBidCommonTop />
+            <MyPageBidCommonTop/>
         </Suspense>
-        {data.length <= 0 ?
-            <div
-                className={'flex h-[256px] justify-center items-center self-stretch font-normal text-0.875 leading-[1.4] rounded-lg bg-bgGrayDepth2'}>
-                결제 대기중인 경매가 없습니다
-            </div>
-            : <div className={'flex-1 h-full overflow-y-scroll'}>
-                <div className="grid grid-cols-2 gap-1.5">
-                    <AuctionSummaryItem/>
-                </div>
-            </div>}
-
+        <MyPageEmptyBid label={'결제 대기중인 경매가 없습니다'}/>
     </div>;
 };
 

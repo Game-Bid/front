@@ -27,7 +27,7 @@ const BidHistory = ({bidCount, successBidCount, postCount, dealCount}: DealStatu
                     <Chip key={item.value} listData={item} selected={currentMod === item.value}
                           onClick={(value) => setCurrentMode(value)}/>))}
             </div>
-            <div className={'flex w-[793px] h-[133px] p-l-2 justify-between items-center rounded-lg bg-bgGrayDepth2'}>
+            <div className={'flex w-full h-[133px] p-l-2 justify-between items-center rounded-lg bg-bgGrayDepth2'}>
                 <BidHistoryCount count={bidCount} label={'입찰 내역'}/>
                 <VerticalDivider className={'h-[65px]'}/>
                 <BidHistoryCount count={successBidCount} label={'낙찰 내역'}/>
