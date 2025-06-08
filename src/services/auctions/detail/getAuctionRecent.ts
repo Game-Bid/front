@@ -1,16 +1,7 @@
-// "use client";
-
-// export const getSubscribeAuctionRecent = (auctionId: number) => {
-//   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-//   const url = `${apiUrl}/api/v1/auctions/${auctionId}/bids/recent`;
-
-//   return new EventSource(url, { withCredentials: true });
-// };
-
-"use client";
+"use server";
 
 export const getAuctionRecent = async (auctionId: number) => {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = process.env.NEXT_API_URL;
   const url = `${apiUrl}/api/v1/auctions/${auctionId}/bids/recent`;
 
   try {
