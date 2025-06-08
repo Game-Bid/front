@@ -1,5 +1,8 @@
 import { NextRequest } from "next/server";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 export const GET = async (
   request: NextRequest,
   { params }: { params: Promise<{ auctionId: string }> }
@@ -8,7 +11,6 @@ export const GET = async (
   const apiUrl = process.env.NEXT_API_URL;
 
   try {
-    // 백엔드 SSE 서버에 연결
     const response = await fetch(
       `${apiUrl}/api/v1/auction/subscribe/${auctionId}`,
       {
@@ -20,11 +22,10 @@ export const GET = async (
       }
     );
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (!response.ok || !response.body) {
+      throw new Error(`SSE 요청 실패: ${response.status}`);
     }
 
-    // 백엔드에서 받은 SSE 스트림을 그대로 클라이언트로 전달
     return new Response(response.body, {
       headers: {
         "Content-Type": "text/event-stream",

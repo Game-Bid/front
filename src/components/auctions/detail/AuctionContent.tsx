@@ -18,6 +18,7 @@ import CustomIcon from "@/Icons/Icon";
 import AllBidModal from "./AllBidModal";
 import { useGetSubscribeAuctionId } from "@/hooks/fetcher/auctions/useGetSubscribeAuctionId";
 import { Bids } from "@/hooks/fetcher/auctions/useGetSubscribeAuctionId";
+
 interface AuctionContentProps {
   data: AuctionItem;
   auctionId: string;
@@ -47,10 +48,10 @@ const AuctionContent = ({ data, auctionId }: AuctionContentProps) => {
   const [bidRecent, setBidRecent] = useState<Bids[]>([]);
 
   useEffect(() => {
-    if (getBidRecent) {
+    if (getBidRecent && bidRecent.length === 0) {
       setBidRecent(getBidRecent);
     }
-  }, [getBidRecent]);
+  }, [getBidRecent, bidRecent]);
 
   useEffect(() => {
     const swiper = swiperRef.current;
@@ -64,8 +65,6 @@ const AuctionContent = ({ data, auctionId }: AuctionContentProps) => {
       setBidRecent(auction.bids);
     }
   }, [auction]);
-
-  console.log(auction);
 
   return (
     <>
