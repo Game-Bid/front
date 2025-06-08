@@ -10,13 +10,18 @@ const MY_PAGE_ROUTES: { [key: string]: string } = {
     '/my-page/my-bid': '내 경매글',
 }
 
-const MyPageTitle = () => {
+interface MyPageTitleProps {
+    type?: 'layout' | 'page';
+}
+
+const MyPageTitle = ({type = 'page'}: MyPageTitleProps) => {
     const path = usePathname();
     const segments = path.split('/').filter(Boolean);
     const pathName = '/' + segments.slice(0, 2).join('/');
 
     return (
-        <div className={'text-2 font-semibold text-fgGrayDefault'}>
+        <div
+            className={['text-2 font-semibold text-fgGrayDefault', type === 'page' && 'hidden lg:block'].join(' ')}>
             {MY_PAGE_ROUTES[pathName]}
         </div>
     );

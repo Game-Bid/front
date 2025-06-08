@@ -9,11 +9,10 @@ const MyPageLayout = ({children}: { children: React.ReactNode }) => {
             <MyPageBanner/>
             <div className={'w-full flex flex-col lg:flex-row items-start gap-l lg:gap-[122px]'}>
                 <div className={'flex flex-col w-full'}>
-                    <h3 className={'lg:hidden pt-l-4'}><MyPageTitle/></h3>
+                    <h3 className={'lg:hidden pt-l-4'}><MyPageTitle type={'layout'}/></h3>
                     <MyPageSideMenu/>
                 </div>
-                <div className={'flex flex-col gap-l-2 w-full'}>
-                    <h3 className={'pt-l-4 hidden lg:block'}><MyPageTitle/></h3>
+                <div className={'flex gap-l-2 w-full'}>
                     {children}
                 </div>
             </div>

@@ -2,7 +2,7 @@
 
 import React from "react";
 import Chip from "@/components/common/Chip";
-import {usePathname, useRouter, useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import Dropdown, {DropdownType} from "@/components/common/Dropdown";
 
 const PAYMENTS_FILTER = [
@@ -23,47 +23,57 @@ const PAYMENTS_SORT: DropdownType[] = [
     {
         label: '최신순',
         value: 'date_asc'
-    }
+    },
+    {
+        label: '조회수순',
+        value: 'view_desc'
+    },
+    {
+        label: '마감 임박순',
+        value: 'deadline_asc'
+    },
+    {
+        label: '가격 낮은순',
+        value: 'price_asc'
+    },
+    {
+        label: '가격 높은순',
+        value: 'price_desc'
+    },
 ]
 
-interface MyPageBidCommonTopProps {
-    extraQuery?: Record<string, string>;
-}
-
-const MyPageBidCommonTop = ({extraQuery}: MyPageBidCommonTopProps) => {
+const MyPageBidCommonTop = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
     const filter = searchParams.get('filter') ?? 'all';
     const sort = searchParams.get('sort') ?? 'date_asc';
 
-    const path = usePathname();
-    const pathName = `${path.split('/')[0]}/${path.split('/')[1]}`;
+    const updateQueryString = (targetQuery: { [key: string]: string }) => {
+        const params = new URLSearchParams(searchParams.toString());
 
+        Object.entries(targetQuery).forEach(([key, value]) => {
+            params.set(key, value);
+        });
 
-    const updateQueryString = (targetFilter: string = filter, targetSort: string = sort) => {
-        const query = new URLSearchParams({
-            filter: targetFilter,
-            sort: targetSort,
-            ...extraQuery,
-        }).toString();
-        router.push(`${pathName}?${query}`);
+        router.push(`?${params}`);
     }
 
     return (
-        <div className={'flex justify-between items-center self-stretch'}>
+        <div
+            className={'flex flex-col items-start gap-l-2 mt-l-2 md:flex-row md:mt-0 md:justify-between md:items-center self-stretch'}>
             <div className={'flex items-start gap-0.75'}>
                 {
                     PAYMENTS_FILTER.map((item) => (
                         <Chip key={item.value}
                               listData={item}
                               selected={filter === item.value}
-                              onClick={(value) => updateQueryString(value, sort)}/>))
+                              onClick={(value) => updateQueryString({filter: value})}/>))
                 }
             </div>
             <div className={'w-[200px] h-[48px]'}>
                 <Dropdown listData={PAYMENTS_SORT}
                           select={PAYMENTS_SORT.find(item => item.value === sort) ?? PAYMENTS_SORT[0]}
-                          setSelect={(value) => updateQueryString(filter, value?.value)}/>
+                          setSelect={(value) => updateQueryString({sort: value?.value ?? 'date_asc'})}/>
             </div>
         </div>
     );

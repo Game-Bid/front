@@ -84,11 +84,14 @@ interface AuctionUpdate {
   updatedAt: string;
 }
 
-export const useGetAuctionRecent = (auctionId: number) => {
+export const useGetAuctionRecent = (
+  auctionId: number,
+  options?: { enabled?: boolean }
+) => {
   return useQuery<AuctionUpdate[]>({
     queryKey: ["auction-recent", auctionId],
     queryFn: () => getAuctionRecent(auctionId),
-    enabled: !!auctionId,
+    enabled: !!auctionId && (options?.enabled ?? true),
     // refetchInterval: 5000, // 5초마다 새로고침 (필요에 따라 조정)
     // refetchOnWindowFocus: true,
   });
