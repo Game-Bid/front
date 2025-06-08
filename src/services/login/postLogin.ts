@@ -26,12 +26,8 @@ export const postLogin = async (formData: PostLoginData) => {
       throw new Error(errorData || "로그인 응답 에러");
     }
 
-    console.log(res);
-
     const responseCookies = new ResponseCookies(res.headers);
     const accessToken = responseCookies.get("Authorization");
-
-    console.log(accessToken);
 
     const cookieStore = await cookies();
 

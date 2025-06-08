@@ -1,7 +1,7 @@
-"use client";
+"use server";
 
 export const getAuctionBids = async (auctionId: number) => {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = process.env.NEXT_API_URL;
   const url = `${apiUrl}/api/v1/auctions/${auctionId}/bids`;
 
   try {
