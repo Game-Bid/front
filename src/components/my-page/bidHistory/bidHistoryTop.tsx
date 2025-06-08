@@ -19,20 +19,20 @@ const BidHistoryTop = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
     const status = searchParams.get('status') ?? 'progress';
-    const filter = searchParams.get('filter') ?? 'all';
-    const sort = searchParams.get('sort') ?? 'date_asc';
 
     const updateQueryString = (
-        targetStatus: string = status,
-        targetFilter: string = filter,
-        targetSort: string = sort) => {
-        router.push(`/my-page/bid-history?status=${targetStatus}&filter=${targetFilter}&sort=${targetSort}`);
+        targetStatus: string = status) => {
+
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('status', targetStatus);
+
+        router.push(`?${params}`);
     }
 
     return (
-        <div className={'flex flex-col justify-center items-center gap-l-2 flex-1'}>
+        <div className={'flex flex-col mt-l-2 justify-center items-center gap-l-2 flex-1 md:mt-0'}>
             <Tab tabs={BID_STATUS} activeTab={status} onTabChange={(value) => updateQueryString(value)}/>
-            <MyPageBidCommonTop extraQuery={{status}}/>
+            <MyPageBidCommonTop/>
         </div>
     );
 };
