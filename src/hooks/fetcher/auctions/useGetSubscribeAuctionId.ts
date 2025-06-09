@@ -14,11 +14,16 @@ export interface AuctionUpdate {
   status: string;
 }
 
-export const useGetSubscribeAuctionId = (auctionId: number) => {
+export const useGetSubscribeAuctionId = (
+  auctionId: number,
+  enabled: boolean
+) => {
   const [auction, setAuction] = useState<AuctionUpdate | null>(null);
   const [error] = useState<Error | null>(null);
 
   useEffect(() => {
+    if (!enabled) return;
+
     const eventSource = getSubscribeAuctionId(auctionId);
 
     eventSource.onmessage = (event: MessageEvent) => {
@@ -48,7 +53,7 @@ export const useGetSubscribeAuctionId = (auctionId: number) => {
     return () => {
       eventSource.close();
     };
-  }, [auctionId]);
+  }, [auctionId, enabled]);
 
   return { auction, error };
 };
