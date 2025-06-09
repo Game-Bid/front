@@ -44,7 +44,10 @@ const AuctionContent = ({ data, auctionId }: AuctionContentProps) => {
   const { data: getBidRecent } = useGetAuctionRecent(Number(auctionId), {
     enabled: data.bidCount > 0,
   });
-  const { auction } = useGetSubscribeAuctionId(Number(auctionId));
+  const { auction } = useGetSubscribeAuctionId(
+    Number(auctionId),
+    status === "progress"
+  );
   const [bidRecent, setBidRecent] = useState<Bids[]>([]);
 
   useEffect(() => {
@@ -173,7 +176,7 @@ const AuctionContent = ({ data, auctionId }: AuctionContentProps) => {
                     <div key={idx} className="flex items-center w-full gap-1">
                       <div className="flex items-center gap-[8px] w-[calc(100%/3)]">
                         <ProfileImage nickname={item.email} size="sm" />
-                        <p>{item.email}</p>
+                        <p className="truncate">{item.email}</p>
                       </div>
                       <div className="w-[calc(100%/3)]">
                         {item.amount.toLocaleString()}원
