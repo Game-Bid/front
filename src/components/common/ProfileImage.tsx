@@ -17,7 +17,8 @@ const ProfileImage = ({
   hover = true,
   setFile,
 }: ProfileImageProps) => {
-  const sizeStyle = size === "lg" ? "w-[80px] h-[80px]" : "w-[40px] h-[40px]";
+  const sizeStyle =
+    size === "lg" ? "min-w-[80px] min-h-[80px]" : "min-w-[40px] min-h-[40px]";
   const fontStyle =
     size === "lg"
       ? "text-1.75 tracking-[-0.56px]"
@@ -29,7 +30,9 @@ const ProfileImage = ({
       {hover && size === "lg" && (
         <>
           <label htmlFor="profileImage">
-            <div className="absolute-center p-[6px] bg-fillGrayHovered shadow-sm rounded-[6px] z-10 hidden group-hover:block">
+            <div
+              className={`absolute-center p-[6px] bg-fillGrayHovered shadow-sm rounded-[6px] z-10 hidden group-hover:block`}
+            >
               <CustomIcon icon="ARROW-REFRESH" className="w-[24px] h-[24px]" />
             </div>
           </label>
@@ -48,13 +51,17 @@ const ProfileImage = ({
           fill
           alt={nickname}
           className={`${
-            hover && "group-hover:opacity-90 group-hover:blur-[2px]"
+            size === "lg" &&
+            hover &&
+            "group-hover:opacity-90 group-hover:blur-[2px]"
           }`}
         />
       ) : (
         <p
           className={`${fontStyle} text-fgGrayDefault font-semibold uppercase leading-[1.3] w-full h-full flex-center ${
-            hover && "group-hover:opacity-90 group-hover:blur-[2px]"
+            size === "lg" &&
+            hover &&
+            "group-hover:opacity-90 group-hover:blur-[2px]"
           }`}
         >
           {nickname.slice(0, 1)}
