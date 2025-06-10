@@ -1,4 +1,6 @@
-"use client";
+"use server";
+
+import {cookies} from "next/headers";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -24,11 +26,15 @@ export interface MyPageUserInfo {
 
 export const getMyPageUserInfo = async () => {
     try {
+        const cookieStore = await cookies();
+        const accessToken = cookieStore.get("accessToken")?.value;
+
         const res = await fetch(`${apiUrl}/api/v1/auth/my`, {
             method: "GET",
             credentials: "include",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
             },
         });
 

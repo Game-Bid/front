@@ -10,7 +10,7 @@ interface FormLabelPasswordInputProps extends InputHTMLAttributes<HTMLInputEleme
     name: string;
     disabled?: boolean;
     warning?: boolean;
-    isConfirm?: boolean
+    isConfirm?: boolean;
 }
 
 const FormLabelPasswordInput = ({
