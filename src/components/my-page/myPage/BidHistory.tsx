@@ -7,9 +7,9 @@ import VerticalDivider from "@/components/common/VerticalDivider";
 
 interface DealStatusProps {
     bidCount: number;
-    successBidCount: number;
-    postCount: number;
-    dealCount: number;
+    purchaseCount: number;
+    myBidCount: number;
+    bidHistoryCount: number;
 }
 
 const bidHistoryList = [
@@ -18,7 +18,7 @@ const bidHistoryList = [
     {label: "계정", value: "account"},
 ]
 
-const BidHistory = ({bidCount, successBidCount, postCount, dealCount}: DealStatusProps) => {
+const BidHistory = ({bidCount, purchaseCount, myBidCount, bidHistoryCount}: DealStatusProps) => {
     const [currentMod, setCurrentMode] = useState('all');
     return (
         <>
@@ -30,11 +30,11 @@ const BidHistory = ({bidCount, successBidCount, postCount, dealCount}: DealStatu
             <div className={'flex w-full h-[133px] p-l-2 justify-between items-center rounded-lg bg-bgGrayDepth2'}>
                 <BidHistoryCount count={bidCount} label={'입찰 내역'}/>
                 <VerticalDivider className={'h-[65px]'}/>
-                <BidHistoryCount count={successBidCount} label={'낙찰 내역'}/>
+                <BidHistoryCount count={purchaseCount} label={'낙찰 내역'}/>
                 <VerticalDivider className={'h-[65px]'}/>
-                <BidHistoryCount count={postCount} label={'내 경매글'}/>
+                <BidHistoryCount count={myBidCount} label={'내 경매글'}/>
                 <VerticalDivider className={'h-[65px]'}/>
-                <BidHistoryCount count={dealCount} label={'거래 내역'}/>
+                <BidHistoryCount count={bidHistoryCount} label={'거래 내역'}/>
             </div>
         </>
     );
