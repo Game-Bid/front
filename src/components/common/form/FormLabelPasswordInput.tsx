@@ -1,30 +1,32 @@
 'use client'
 
 import React, {InputHTMLAttributes, useState} from 'react';
-import {Controller, RegisterOptions, useFormContext} from "react-hook-form";
+import {Controller, useFormContext} from "react-hook-form";
 import InputWithSubfix from "@/components/common/input/InputWithSubfix";
 import CustomIcon from "@/Icons";
 
 interface FormLabelPasswordInputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
     name: string;
-    rules?: RegisterOptions;
     disabled?: boolean;
     warning?: boolean;
+    isConfirm?: boolean
 }
 
 const FormLabelPasswordInput = ({
                                     label,
                                     name,
-                                    rules,
                                     disabled = false,
                                     warning = false,
+                                    isConfirm = false,
                                     ...props
                                 }: FormLabelPasswordInputProps) => {
     const [showPassword, setShowPassword] = useState(false);
-    const {control, setValue} = useFormContext();
+    const {control, setValue, watch} = useFormContext();
 
     const id = `form-${name}-input`;
+    const passwordValue = watch("password");
+
 
     return (
         <div className={'self-stretch h-[81px] inline-flex flex-col justify-start items-start gap-[8px]'}>
@@ -35,7 +37,20 @@ const FormLabelPasswordInput = ({
             <Controller
                 control={control}
                 name={name}
-                rules={rules}
+                rules={{
+                    pattern: {
+                        value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/,
+                        message: '영문, 숫자, 특수문자를 포함한 8자 이상이어야 합니다.',
+                    },
+                    validate: (value) => {
+                        if (isConfirm && value !== passwordValue) {
+                            return '비밀번호가 일치하지 않습니다.';
+                        }
+
+                        if (!value) return true;
+                        return true;
+                    },
+                }}
                 render={({field}) => (
                     <InputWithSubfix
                         {...field}
