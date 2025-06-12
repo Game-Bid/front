@@ -13,8 +13,10 @@ interface MyPageSideMenuItemProps {
 }
 
 const MyPageSideMenuItem = ({name, path, icon, count = 0}: MyPageSideMenuItemProps) => {
-    const segment = useSelectedLayoutSegment()
-    const BACKGROUND_STYLE = `flex h-[48px] p-0.75 items-center gap-l-0.5 self-stretch rounded-md hover:bg-fillGrayHovered hover:font-bold ${segment === path && 'bg-fillGrayFocused font-bold'}`;
+    const segment = useSelectedLayoutSegment();
+    const active = path === null ? (segment === null || segment === 'edit') : segment === path;
+    const BACKGROUND_STYLE = `flex h-[48px] p-0.75 items-center gap-l-0.5 self-stretch rounded-md hover:bg-fillGrayHovered hover:font-bold ${active && 'bg-fillGrayFocused font-bold'}`;
+
 
     return (
         <Link href={path ? `/my-page/${path}` : '/my-page'} className={BACKGROUND_STYLE}>

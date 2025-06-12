@@ -3,14 +3,15 @@
 import {MyPageUserInfo} from "@/services/myPage/getMyPageUserInfo";
 import {cookies} from "next/headers";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const apiUrl = process.env.NEXT_API_URL;
 
 
 export interface MyPageUserInfoRequest {
     nickname: string;
     name: string;
-    password: string;
-    passwordConfirm: string;
+    currentPassword: string;
+    newPassword: string;
+    newPasswordConfirm: string;
     phoneNumber: string;
     birthDate: string;
     favoriteGame: string;

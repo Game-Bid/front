@@ -2,7 +2,7 @@
 
 import {cookies} from "next/headers";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const apiUrl = process.env.NEXT_API_URL;
 
 export interface MyPageUserInfo {
     id: number;
