@@ -4,8 +4,7 @@ import MyPageProfile from "@/components/my-page/myPage/MyPageProfile";
 import MyPagePoint from "@/components/my-page/myPage/MyPagePoint";
 import BidHistory from "@/components/my-page/myPage/BidHistory";
 import MyPageTitle from "@/components/my-page/MyPageTitle";
-import React from "react";
-import {useGetMyPageUserInfo} from "@/hooks/fetcher/mypage/useGetMyPageUserInfo";
+import {useGetMyPageUserInfo} from "@/hooks/fetcher/myPage/useGetMyPageUserInfo";
 
 const SUB_TITLE_STYLE = 'text-1.25 mb-l-0.5';
 const Page = () => {

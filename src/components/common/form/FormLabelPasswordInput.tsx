@@ -11,6 +11,8 @@ interface FormLabelPasswordInputProps extends InputHTMLAttributes<HTMLInputEleme
     disabled?: boolean;
     warning?: boolean;
     isConfirm?: boolean;
+    watchTarget?: string;
+    isRequired?: boolean;
 }
 
 const FormLabelPasswordInput = ({
@@ -19,13 +21,15 @@ const FormLabelPasswordInput = ({
                                     disabled = false,
                                     warning = false,
                                     isConfirm = false,
+                                    isRequired=false,
+                                    watchTarget,
                                     ...props
                                 }: FormLabelPasswordInputProps) => {
     const [showPassword, setShowPassword] = useState(false);
     const {control, setValue, watch} = useFormContext();
 
     const id = `form-${name}-input`;
-    const passwordValue = watch("password");
+    const passwordValue = watch(watchTarget ?? 'password');
 
 
     return (
@@ -47,9 +51,9 @@ const FormLabelPasswordInput = ({
                             return '비밀번호가 일치하지 않습니다.';
                         }
 
-                        if (!value) return true;
                         return true;
                     },
+                    ...(isRequired && {required: "필수 입력 항목입니다."})
                 }}
                 render={({field}) => (
                     <InputWithSubfix

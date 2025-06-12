@@ -63,10 +63,12 @@ const Header = () => {
                 icon="GNB2"
                 className="w-[1.5rem] h-[1.5rem] cursor-pointer"
               />
-              <CustomIcon
-                icon="GNB3"
-                className="w-[1.5rem] h-[1.5rem] cursor-pointer"
-              />
+              <Link href={"/my-page"}>
+                <CustomIcon
+                    icon="GNB3"
+                    className="w-[1.5rem] h-[1.5rem] cursor-pointer"
+                />
+              </Link>
             </div>
             <Link href={"/write"}>
               <button className={buttonStyle}>경매 생성</button>
