@@ -8,6 +8,7 @@ dayjs.extend(timezone);
 dayjs.locale("ko");
 import { SwiperSlide, Swiper } from "swiper/react";
 import type { Swiper as SwiperClass } from "swiper";
+import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import ProfileImage from "@/components/common/ProfileImage";
 import Image from "next/image";
@@ -50,6 +51,8 @@ const AuctionContent = ({ data, auctionId }: AuctionContentProps) => {
   );
   const [bidRecent, setBidRecent] = useState<Bids[]>([]);
 
+  console.log(bidRecent);
+
   useEffect(() => {
     if (getBidRecent && bidRecent.length === 0) {
       setBidRecent(getBidRecent);
@@ -81,6 +84,7 @@ const AuctionContent = ({ data, auctionId }: AuctionContentProps) => {
                 </p>
               ) : (
                 <Swiper
+                  modules={[Autoplay]}
                   onSwiper={(swiper) => {
                     swiperRef.current = swiper;
                   }}
@@ -93,6 +97,11 @@ const AuctionContent = ({ data, auctionId }: AuctionContentProps) => {
                   onSlideChange={(swiper) => {
                     setActiveImage(swiper.activeIndex);
                   }}
+                  autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                  }}
+                  speed={1000}
                 >
                   {memoizedImages.map((img) => (
                     <SwiperSlide

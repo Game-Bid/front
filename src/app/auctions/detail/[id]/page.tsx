@@ -27,11 +27,21 @@ const Page = () => {
           <span className="text-fgPrimaryAccent">{data.result.gameName}</span>{" "}
           아이템
         </p>
-        <div className="grid grid-cols-3 gap-1.5">
-          {games.result.map((item: AuctionIdGame, idx: number) => (
-            <AuctionSummaryItem key={idx} game={item} />
-          ))}
-        </div>
+        {games.result.length > 0 ? (
+          <div className="grid grid-cols-3 gap-1.5">
+            <>
+              {games.result.map((item: AuctionIdGame, idx: number) => (
+                <AuctionSummaryItem key={idx} game={item} />
+              ))}
+            </>
+          </div>
+        ) : (
+          <div className="flex-center w-full h-[337px] rounded-md bg-bgGrayDepth2 flex-center overflow-hidden">
+            <p className="text-fgGrayDefault text-1.125 leading-[1.4] tracking-[-0.28px]">
+              경매중인 아이템이 없습니다.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
