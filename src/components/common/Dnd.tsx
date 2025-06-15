@@ -91,9 +91,20 @@ const Dnd = ({ files, setFiles }: Props) => {
   };
 
   const addFiles = (newFiles: File[]) => {
-    // console.log(newFiles);
     const existingFileNames = files.map((file) => file.name);
-    // let duplicateFileName: string | null = null;
+
+    const maxFileSize = 10 * 1024 * 1024;
+    const maxTotalSize = 50 * 1024 * 1024;
+
+    const oversizedFiles = newFiles.filter((file) => file.size > maxFileSize);
+    if (oversizedFiles.length > 0) {
+      showToast(
+        "warning",
+        "파일 사이즈 초과",
+        "개별 파일은 10MB 이하로 업로드해주세요."
+      );
+      return;
+    }
 
     const filteredFiles = newFiles.filter((file) => {
       if (existingFileNames.includes(file.name)) {
@@ -119,6 +130,24 @@ const Dnd = ({ files, setFiles }: Props) => {
     } else {
       setFiles((prev) => [...prev, ...filteredFiles]);
     }
+
+    const currentTotalSize = files.reduce((sum, file) => sum + file.size, 0);
+    const newFilesTotalSize = filteredFiles.reduce(
+      (sum, file) => sum + file.size,
+      0
+    );
+    const totalSize = currentTotalSize + newFilesTotalSize;
+
+    if (totalSize > maxTotalSize) {
+      showToast(
+        "warning",
+        "전체 파일 사이즈 초과",
+        "전체 파일 사이즈는 50MB 이하로 업로드해주세요."
+      );
+      return;
+    }
+
+    setFiles((prev) => [...prev, ...filteredFiles]);
 
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
