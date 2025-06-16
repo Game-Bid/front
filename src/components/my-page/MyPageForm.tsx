@@ -3,20 +3,20 @@
 import {FormProvider, useForm} from "react-hook-form";
 import MyPageTitle from "@/components/my-page/MyPageTitle";
 import FormLabelTextInput from "@/components/common/form/FormLabelTextInput";
-import FormLabelPasswordInput from "@/components/common/form/FormLabelPasswordInput";
-import FormLabelMultiInput from "@/components/common/form/FormLabelMultiInput";
-import FormLabelDropdown from "@/components/common/form/FormLabelDropdown";
 import CustomButton from "@/components/common/CustomButton";
 import CustomIcon from "@/Icons";
 import Button from "@/components/common/Button";
-import {useGetMyPageUserInfo} from "@/hooks/fetcher/mypage/useGetMyPageUserInfo";
+import {useGetMyPageUserInfo} from "@/hooks/fetcher/myPage/useGetMyPageUserInfo";
 import {useGetGames} from "@/hooks/fetcher/game/useGetGames";
 import {useRouter} from "next/navigation";
 import {GameList} from "@/_types/game/game";
-import {usePostMyPageUserInfo} from "@/hooks/fetcher/mypage/usePostMyPageUserInfo";
 import {MyPageUserInfoRequest} from "@/services/myPage/postMyPageUserInfo";
 import {DropdownType} from "@/components/common/Dropdown";
 import {useEffect} from "react";
+import FormLabelPasswordInput from "@/components/common/form/FormLabelPasswordInput";
+import FormLabelMultiInput from "../common/form/FormLabelMultiInput";
+import FormLabelDropdown from "@/components/common/form/FormLabelDropdown";
+import {usePostMyPageUserInfo} from "@/hooks/fetcher/myPage/usePostMyPageUserInfo";
 
 interface MyPageUserInfoFormData extends Omit<MyPageUserInfoRequest, 'phoneNumber' | 'birthDate' | 'favoriteGame'> {
     phoneNumber: {
@@ -42,8 +42,10 @@ const MyPageForm = () => {
             label: name,
             value: id.toString()
         }));
-    const form = useForm<MyPageUserInfoFormData>();
+    const form = useForm<MyPageUserInfoFormData>({mode: "onChange"});
     const {mutate: submit} = usePostMyPageUserInfo();
+    const {isValid, isDirty} = form.formState;
+    const buttonDisabled = !isValid || !isDirty;
 
     useEffect(() => {
         if (userInfo?.result && gamesData?.result) {
@@ -52,12 +54,13 @@ const MyPageForm = () => {
             form.reset({
                 nickname,
                 name,
-                password: '',
-                passwordConfirm: '',
+                currentPassword: '',
+                newPassword: '',
+                newPasswordConfirm: '',
                 phoneNumber: {
-                    first: phoneNumber.substring(0, 3),
-                    middle: phoneNumber.substring(3, 7),
-                    last: phoneNumber.substring(7, 11),
+                    first: phoneNumber.split('-')[0],
+                    middle: phoneNumber.split('-')[1],
+                    last: phoneNumber.split('-')[2],
                 },
                 birthDate: {
                     year: birthDate.split('-')[0],
@@ -96,12 +99,12 @@ const MyPageForm = () => {
                 <div className="self-stretch inline-flex flex-col flex-1 justify-start items-start gap-[32px]">
                     {/*<FormLabelProfileInput label={'프로필'} name={'profile'} nickname={'test'}/>*/}
                     <FormLabelTextInput label={'닉네임'} name={'nickname'} rules={{required: "필수 입력 항목입니다."}}/>
+                    <FormLabelPasswordInput label={'기존 비밀번호'}
+                                            name={'currentPassword'} isRequired={true}/>
                     <FormLabelPasswordInput label={'새 비밀번호'}
-                                            name={'password'}/>
+                                            name={'newPassword'}/>
                     <FormLabelPasswordInput label={'새 비밀번호 확인'}
-                                            name={'passwordConfirm'} isConfirm/>
-                    <FormLabelPasswordInput label={'비밀번호'}
-                                            name={'existingPassword'}/>
+                                            name={'newPasswordConfirm'} isConfirm watchTarget={'newPassword'}/>
                     <FormLabelTextInput label={'이름'} name={'name'} rules={{required: "필수 입력 항목입니다."}}/>
                     <FormLabelMultiInput label={'휴대폰 번호'}
                                          names={['phoneNumber.first', 'phoneNumber.middle', 'phoneNumber.last']}
@@ -120,12 +123,17 @@ const MyPageForm = () => {
                     <FormLabelDropdown label={'관심 게임'}
                                        rules={{required: "필수 입력 항목입니다."}}
                                        name={'favoriteGame'}
-                                       listData={gameDropdown}/>
+                                       listData={gameDropdown}></FormLabelDropdown>
                 </div>
             </div>
             <div className={'flex w-[183px] flex-col items-end gap-l-0.75 shrink-0'}>
-                <CustomButton className={'w-full h-[48px] p-0.75'} onClick={form.handleSubmit(onSubmit)}>
-                    <CustomIcon icon={'SAVE-01'} className={'w-[24px] h-[24px]'}/>
+                <CustomButton
+                    disabled={buttonDisabled}
+                    className={`w-full h-[48px] p-0.75 `}
+                    onClick={form.handleSubmit(onSubmit)}>
+                    <CustomIcon icon={'SAVE-01'}
+                                fill={buttonDisabled ? '#94949c' : '#EFEFF0'}
+                                className={'w-[24px] h-[24px]'}/>
                     <div>저장</div>
                 </CustomButton>
                 <Button title={'취소'}

@@ -40,7 +40,7 @@ const MyPageSideMenu = () => {
             leftObserver.disconnect();
             rightObserver.disconnect();
         }
-    }, [leftEl.current, rightEl.current]);
+    }, [isMobile, isTablet]);
 
     const scrollNav = (dir: number) => {
         if (sidebarRef.current) {

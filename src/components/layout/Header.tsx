@@ -6,11 +6,15 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import ResponsiverSidebar from "./ResponsiverSidebar";
 import { usePathname } from "next/navigation";
+import useAuthStore from "@/stores/authStore";
+import { useChatModalStore } from "@/stores/chatModalStore";
 
 const Header = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { isTablet } = useDeviceSize();
+  const { isAuthenticated } = useAuthStore();
+  const { open } = useChatModalStore();
   const pathname = usePathname();
   const buttonStyle =
     "flex-center h-[40px] px-1.125 rounded-[20px] border border-borderPrimary text-1 leading-[1.4] tracking-[-0.32px] font-semibold text-fgGrayDefault";
@@ -52,28 +56,38 @@ const Header = () => {
           </div>
         ) : (
           <div className="flex items-center gap-1.25">
-            <div className="flex items-center gap-[15px]">
-              <Link href={"/my-page"}>
-                <CustomIcon
-                  icon="GNB1"
-                  className="w-[1.5rem] h-[1.5rem] cursor-pointer"
-                />
+            {isAuthenticated ? (
+              <>
+                {" "}
+                <div className="flex items-center gap-[15px]">
+                  <Link href={"/my-page"}>
+                    <CustomIcon
+                      icon="GNB1"
+                      className="w-[1.5rem] h-[1.5rem] cursor-pointer"
+                    />
+                  </Link>
+                  <div onClick={() => open()}>
+                    <CustomIcon
+                      icon="GNB2"
+                      className="w-[1.5rem] h-[1.5rem] cursor-pointer"
+                    />
+                  </div>
+                  <Link href={"/my-page"}>
+                    <CustomIcon
+                      icon="GNB3"
+                      className="w-[1.5rem] h-[1.5rem] cursor-pointer"
+                    />
+                  </Link>
+                </div>
+                <Link href={"/write"}>
+                  <button className={buttonStyle}>경매 생성</button>
+                </Link>{" "}
+              </>
+            ) : (
+              <Link href={"/login"}>
+                <button className={buttonStyle}>로그인</button>
               </Link>
-              <CustomIcon
-                icon="GNB2"
-                className="w-[1.5rem] h-[1.5rem] cursor-pointer"
-              />
-              <CustomIcon
-                icon="GNB3"
-                className="w-[1.5rem] h-[1.5rem] cursor-pointer"
-              />
-            </div>
-            <Link href={"/write"}>
-              <button className={buttonStyle}>경매 생성</button>
-            </Link>
-            <Link href={"/login"}>
-              <button className={buttonStyle}>로그인</button>
-            </Link>
+            )}
           </div>
         )}
       </div>
