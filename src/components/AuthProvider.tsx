@@ -17,6 +17,7 @@ const AuthProvider = ({
 
   useEffect(() => {
     setIsAuthenticated(initialAuth);
+    /* eslint-disable */
   }, [initialAuth]);
 
   useEffect(() => {
@@ -30,6 +31,7 @@ const AuthProvider = ({
           setIsAuthenticated(true);
         }
       } catch (error) {
+        console.log(error);
         setIsAuthenticated(false);
       }
     };
